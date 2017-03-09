@@ -71,7 +71,8 @@ public class GameModel {
         return rect1.intersects(rect2);
     }
 
-    private Rectangle getRect() {
+    public Rectangle getRect() {
         return new Rectangle(x, y, width, height);
     }
+
 }

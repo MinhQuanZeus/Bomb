@@ -1,5 +1,6 @@
 package controllers;
 
+import models.EnemyModel;
 import models.GameModel;
 import views.GameView;
 
