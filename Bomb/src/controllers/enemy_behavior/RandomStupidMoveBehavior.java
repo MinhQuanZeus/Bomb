@@ -3,10 +3,5 @@ package controllers.enemy_behavior;
 /**
  * Created by l on 3/10/2017.
  */
-public class RandomMoveBehavior extends EnemyMoveBehavior{
-
-    @Override
-    public void move() {
-
-    }
+public class RandomStupidMoveBehavior {
 }
