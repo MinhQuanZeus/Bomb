@@ -17,7 +17,7 @@ public class GameManager {
 
     public GameManager() {
         controllerManager = new ControllerManager();
-        playerController = new PlayerController(new PlayerModel(50, 50), new PlayerView("Bomberman/standdown"));
+        playerController = new PlayerController(new PlayerModel(50, 50), new PlayerView(PlayerView.MOVE_DOWN));
         controllerManager.add(playerController);
     }
 
