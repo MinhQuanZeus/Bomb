@@ -42,6 +42,7 @@ public class AFrameOnImage {
 
         if(enablePaintRect) PaintBound(g);
     }
+
     private void PaintBound(Graphics g){
 
     }

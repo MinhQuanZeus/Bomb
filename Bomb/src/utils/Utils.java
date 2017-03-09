@@ -12,10 +12,10 @@ import java.util.Random;
 public class Utils {
     public static Image loadImageFromRes(String url) {
         try {
-            Image image = ImageIO.read(new File("resources/" + url));
+            Image image = ImageIO.read(new File("resources/" + url + ".png"));
             return image;
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error! LoadImage");
             return null;
         }
 

@@ -1,7 +1,9 @@
 package controllers;
 
 import models.PlayerModel;
+import views.Animation;
 import views.GameView;
+import views.PlayerView;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -11,11 +13,12 @@ import java.awt.event.KeyListener;
  * Created by QuanT on 3/9/2017.
  */
 public class PlayerController extends GameController implements KeyListener {
-    public static final int SPEED = 10;
+
+    public static final int SPEED = 2;
     private KeyInputManager keyInputManage;
 
-    private PlayerController(PlayerModel plane, GameView view) {
-        super(plane, view);
+    public PlayerController(PlayerModel model, GameView view) {
+        super(model, view);
         this.keyInputManage = new KeyInputManager();
     }
 
@@ -50,7 +53,6 @@ public class PlayerController extends GameController implements KeyListener {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
                 this.keyInputManage.keyUp = false;
-
                 break;
             case KeyEvent.VK_DOWN:
                 this.keyInputManage.keyDown = false;
@@ -70,7 +72,6 @@ public class PlayerController extends GameController implements KeyListener {
     @Override
     public void draw(Graphics g) {
         super.draw(g);
-
     }
 
     @Override
@@ -79,15 +80,20 @@ public class PlayerController extends GameController implements KeyListener {
         this.vector.dx = 0;
         this.vector.dy = 0;
 
+        PlayerView view = (PlayerView) this.view;
         if (keyInputManage.keyDown && !keyInputManage.keyUp) {
+            view.setImage(PlayerView.MOVE_DOWN);
             this.vector.dy = SPEED;
         } else if (!keyInputManage.keyDown && keyInputManage.keyUp) {
+            view.setImage(PlayerView.MOVE_UP);
             this.vector.dy = -SPEED;
         }
 
         if (keyInputManage.keyLeft && !keyInputManage.keyRight) {
+            view.setImage(PlayerView.MOVE_LEFT);
             this.vector.dx = -SPEED;
         } else if (!keyInputManage.keyLeft && keyInputManage.keyRight) {
+            view.setImage(PlayerView.MOVE_RIGHT);
             this.vector.dx = SPEED;
         }
 

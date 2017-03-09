@@ -8,6 +8,7 @@ import java.util.Vector;
  * Created by QuanT on 3/9/2017.
  */
 public class ControllerManager implements BaseController {
+
     private Vector<GameController> gameControllerVector;
 
     public ControllerManager() {
