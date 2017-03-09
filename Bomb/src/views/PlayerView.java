@@ -17,7 +17,7 @@ public class PlayerView extends GameView {
     private Animation animation;
 
     public PlayerView(String url) {
-        super(url);
+        super(url + "-0");
         animation = new Animation(200, MOVE_DOWN);
     }
 
