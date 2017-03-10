@@ -4,9 +4,9 @@ package models;
  * Created by QuanT on 3/9/2017.
  */
 public class EnemyModel extends GameModel {
-    public static final int WIDTH = 10;
-    public static final int HEIGHT = 10;
-    public int speed = 5;
+    public static final int WIDTH = 40;
+    public static final int HEIGHT = 40;
+    public int speed = 3;
 
     public boolean destroy = false;
 

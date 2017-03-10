@@ -21,7 +21,7 @@ public class Enemy_Duck_Controller extends EnemyController{
     protected long lastTime = System.currentTimeMillis();
 
     public Enemy_Duck_Controller(int x, int y, int speed, PlayerModel playerModel, Vector<GameModel>gameModels){
-        super(new EnemyModel(x,y,speed),new GameView(AutoLoadPic.enemyDuckImages.get("xuong1")),playerModel,gameModels);
+        super(new EnemyModel(x,y,speed),new EnemyView(AutoLoadPic.enemyDuckImages.get("xuong0")),playerModel,gameModels);
         enemyMoveBehavior = new RandomStupidMoveBehavior();
     }
 
