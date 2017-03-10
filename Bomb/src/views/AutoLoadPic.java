@@ -23,13 +23,13 @@ public class AutoLoadPic {
             }else if(i >= 6 && i < 8){
                 if(i == 7){
                     enemyDuckImages.put("phai" + c,Utils.loadImageFromRes(i + ".png"));
-                    enemyDuckImages.put("phai" + c,Utils.loadImageFromRes(i + ".png"));
                     c++;
+                    enemyDuckImages.put("phai" + c,Utils.loadImageFromRes(i + ".png"));
+                }else{
+                    enemyDuckImages.put("phai" + c,Utils.loadImageFromRes(i + ".png"));
                 }
-                enemyDuckImages.put("phai" + c,Utils.loadImageFromRes(i + ".png"));
             }else{
                 enemyDuckImages.put("trai" + c,Utils.loadImageFromRes(i + ".png"));
-                c++;
             }
             c++;
             if(c == 3){

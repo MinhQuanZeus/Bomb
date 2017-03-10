@@ -15,12 +15,7 @@ import java.util.Vector;
  * Created by l on 3/10/2017.
  */
 public class RandomStupidMoveBehavior extends EnemyMoveBehavior {
-    public static final long RANDOM_STUPID_MOVE_DELAY = 500;
-
-
     public String lastMove = "";
-    public int drawState = 0;
-    public long lastTime = System.currentTimeMillis();
 
     @Override
     public void move(EnemyModel model, EnemyView view, PlayerModel playerModel, Vector<GameModel> gameModels) {
@@ -104,20 +99,7 @@ public class RandomStupidMoveBehavior extends EnemyMoveBehavior {
                 model.moveUp();
             }
         }
-
-        setImage(view);
     }
 
-    public void setImage(EnemyView v) {
-        if (lastMove.equals("")) {
-            v.setImage(AutoLoadPic.enemyDuckImages.get("xuong0"));
 
-        }
-        v.setImage(AutoLoadPic.enemyDuckImages.get(lastMove + drawState));
-        long currentTime = System.currentTimeMillis();
-        if (currentTime - lastTime > RANDOM_STUPID_MOVE_DELAY) {
-            lastTime = currentTime;
-            drawState++;
-        }
-    }
 }
