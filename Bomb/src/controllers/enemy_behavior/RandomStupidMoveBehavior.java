@@ -62,41 +62,33 @@ public class RandomStupidMoveBehavior extends EnemyMoveBehavior {
             }
         }
 
-        if (x1 != model.getX()) {
-            Rectangle r = new Rectangle(x1, y1, EnemyModel.WIDTH, EnemyModel.HEIGHT);
-            Iterator i = gameModels.iterator();
-            while (i.hasNext()) {
-                GameModel g = (GameModel) i.next();
-                if (g.getRect().intersects(r)) {
-                    lastMove = "";
-                    return;
-                }
+        Rectangle r = new Rectangle(x1, y1, EnemyModel.WIDTH, EnemyModel.HEIGHT);
+
+        for(int i = 0;i < gameModels.size();i++){
+
+            if (gameModels.get(i).getRect().intersects(r)) {
+                lastMove = "";
+                return;
             }
+        }
+
+        if (x1 != model.getX()) {
+
 
             if (model.getX() > x1) {
                 lastMove = "trai";
-                model.moveDown();
+                model.moveLeft();
             } else {
                 lastMove = "phai";
                 model.moveUp();
             }
         } else {
-            Rectangle r = new Rectangle(x1, y1, EnemyModel.WIDTH, EnemyModel.HEIGHT);
-            Iterator i = gameModels.iterator();
-            while (i.hasNext()) {
-                GameModel g = (GameModel) i.next();
-                if (g.getRect().intersects(r)) {
-                    lastMove = "";
-                    return;
-                }
-            }
-
-            if (model.getY() > x1) {
+            if (model.getY() > y1) {
                 lastMove = "len";
-                model.moveDown();
+                model.moveUp();
             } else {
                 lastMove = "xuong";
-                model.moveUp();
+                model.moveDown();
             }
         }
     }

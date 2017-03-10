@@ -27,8 +27,16 @@ public class GameManager {
         controllerManager.add(playerController);
 
         Vector<GameModel> gameModels = new Vector<>();
+
+        //check di chuyen ran dom 4 cái tường (Chỉ để nhìn) XÓA ĐC :v
+        gameModels.add(new GameModel(50,0,50,1));
+        gameModels.add(new GameModel(50,100,50,1));
+        gameModels.add(new GameModel(50,0,1,100));
+        gameModels.add(new GameModel(100,0,1,100));
+        //
+
         PlayerModel playerModel = (PlayerModel) playerController.getModel();
-        controllerManager.add(new Enemy_Duck_Controller(50,50,2,playerModel,gameModels));
+        controllerManager.add(new Enemy_Duck_Controller(52,52,2,playerModel,gameModels));
     }
 
     public void run() {

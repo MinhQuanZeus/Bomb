@@ -6,13 +6,13 @@ package models;
 public class EnemyModel extends GameModel {
     public static final int WIDTH = 40;
     public static final int HEIGHT = 40;
-    public int speed = 3;
+    public int speed;
 
     public boolean destroy = false;
 
     public EnemyModel(int x, int y, int width, int height,int speed) {
         super(x, y, width, height);
-
+        this.speed = speed;
     }
 
     public EnemyModel(int x, int y,int speed) {
@@ -48,7 +48,7 @@ public class EnemyModel extends GameModel {
     }
 
     public void moveRight(){
-        GameVector v = new GameVector(0,speed);
+        GameVector v = new GameVector(speed,0);
         super.move(v);
     }
 
