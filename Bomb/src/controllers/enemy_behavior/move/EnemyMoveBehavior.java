@@ -1,4 +1,4 @@
-package controllers.enemy_behavior;
+package controllers.enemy_behavior.move;
 
 import controllers.EnemyController;
 import models.EnemyModel;
@@ -15,6 +15,8 @@ import java.util.Vector;
  * Created by l on 3/10/2017.
  */
 public class EnemyMoveBehavior {
+    protected EnemyController enemyController;
+    protected EnemyModel model;
 
     protected EnemyView view;
     protected EnemyController.EnemyType type;
@@ -35,16 +37,17 @@ public class EnemyMoveBehavior {
         this.howManyPicOnAMove = howManyPicOnAMove;
     }
 
-    public void move(EnemyModel model, EnemyView view, PlayerModel playerModel, Vector<GameModel> gameModels, EnemyController.EnemyType type){
+    public void move(EnemyModel model, EnemyView view, PlayerModel playerModel, Vector<GameModel> gameModels, EnemyController.EnemyType type,EnemyController enemyController){
         this.view = view;
         this.type = type;
-
+        this.enemyController = enemyController;
+        this.model = model;
     }
 
     public void setImage() {
         HashMap<String,Image> map = new HashMap<>();
 
-        map = AutoLoadPic.imageHashMapFactory(EnemyController.EnemyType.DUCK);
+        map = AutoLoadPic.imageHashMapFactory(type);
 
         if (drawMove.equals("")) {
             view.setImage(map.get("xuong0"));

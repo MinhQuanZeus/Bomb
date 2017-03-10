@@ -13,10 +13,12 @@ import java.util.HashMap;
 public class AutoLoadPic {
     public static HashMap<String,Image> enemy_Duck_Image_Hashmap;
     public static HashMap<String,Image> explosionImageMap;
+    public static HashMap<String,Image> enemy_SlimJellyHead_ImageMap;
 
     public static void init(){
         enemy_Duck_Image_Hashmap = new HashMap<>();
         explosionImageMap = new HashMap<>();
+        enemy_SlimJellyHead_ImageMap = new HashMap<>();
 
         int c =0;
         for(int i = 0;i < 11;i++){
@@ -50,12 +52,28 @@ public class AutoLoadPic {
                 c += 1;
             }
         }
+
+        enemy_SlimJellyHead_ImageMap.put("xuong0",Utils.loadImageFromRes("Enemies/110"));
+        enemy_SlimJellyHead_ImageMap.put("xuong1",Utils.loadImageFromRes("Enemies/113"));
+        enemy_SlimJellyHead_ImageMap.put("xuong2",Utils.loadImageFromRes("Enemies/114"));
+        enemy_SlimJellyHead_ImageMap.put("phai0",Utils.loadImageFromRes("Enemies/111"));
+        enemy_SlimJellyHead_ImageMap.put("phai1",Utils.loadImageFromRes("Enemies/112"));
+        enemy_SlimJellyHead_ImageMap.put("phai2",Utils.loadImageFromRes("Enemies/111"));
+        enemy_SlimJellyHead_ImageMap.put("len0",Utils.loadImageFromRes("Enemies/115"));
+        enemy_SlimJellyHead_ImageMap.put("len1",Utils.loadImageFromRes("Enemies/116"));
+        enemy_SlimJellyHead_ImageMap.put("len2",Utils.loadImageFromRes("Enemies/115"));
+        enemy_SlimJellyHead_ImageMap.put("trai0",Utils.loadImageFromRes("Enemies/110"));
+        enemy_SlimJellyHead_ImageMap.put("trai1",Utils.loadImageFromRes("Enemies/113"));
+        enemy_SlimJellyHead_ImageMap.put("trai2",Utils.loadImageFromRes("Enemies/114"));
     }
 
     public static HashMap<String,Image> imageHashMapFactory(EnemyController.EnemyType type){
         switch (type){
             case DUCK:{
                 return enemy_Duck_Image_Hashmap;
+            }
+            case SLIM_JELLY_HEAD:{
+                return enemy_SlimJellyHead_ImageMap;
             }
         }
 

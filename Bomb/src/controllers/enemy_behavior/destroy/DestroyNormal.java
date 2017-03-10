@@ -1,13 +1,9 @@
-package controllers.enemy_behavior;
+package controllers.enemy_behavior.destroy;
 
 import controllers.ControllerManager;
-import controllers.EnemyController;
 import models.EnemyModel;
 import views.AutoLoadPic;
 import views.EnemyView;
-
-import java.awt.*;
-import java.util.HashMap;
 
 /**
  * Created by l on 3/10/2017.

@@ -1,4 +1,4 @@
-package controllers.enemy_behavior;
+package controllers.enemy_behavior.destroy;
 
 import controllers.ControllerManager;
 import controllers.EnemyController;

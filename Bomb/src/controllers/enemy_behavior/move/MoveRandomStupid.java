@@ -1,28 +1,25 @@
-package controllers.enemy_behavior;
+package controllers.enemy_behavior.move;
 
 import controllers.EnemyController;
 import models.EnemyModel;
 import models.GameModel;
 import models.PlayerModel;
 import utils.Utils;
-import views.AutoLoadPic;
 import views.EnemyView;
 
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Vector;
 
 /**
  * Created by l on 3/10/2017.
  */
-public class RandomStupidMove extends EnemyMoveBehavior {
+public class MoveRandomStupid extends EnemyMoveBehavior {
     // hướng đi trước
     private String lastMove = "";
 
     @Override
-    public void move(EnemyModel model, EnemyView view, PlayerModel playerModel, Vector<GameModel> gameModels, EnemyController.EnemyType type) {
-        super.move(model,view,playerModel,gameModels,type);
+    public void move(EnemyModel model, EnemyView view, PlayerModel playerModel, Vector<GameModel> gameModels, EnemyController.EnemyType type,EnemyController enemyController) {
+        super.move(model,view,playerModel,gameModels,type,enemyController);
         int x1 = model.getX();
         int y1 = model.getY();
 
