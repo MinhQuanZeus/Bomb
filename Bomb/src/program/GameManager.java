@@ -4,6 +4,7 @@ import controllers.ControllerManager;
 import controllers.EnemyController;
 import controllers.GameController;
 import controllers.PlayerController;
+import models.EnemyModel;
 import models.GameModel;
 import models.PlayerModel;
 import views.AutoLoadPic;
@@ -36,7 +37,8 @@ public class GameManager {
         //
 
         PlayerModel playerModel = (PlayerModel) playerController.getModel();
-        controllerManager.add(EnemyController.create(EnemyController.EnemyType.DUCK,50,50,2,playerModel,gameModels));
+        EnemyController enemyController = EnemyController.create(EnemyController.EnemyType.DUCK,50,50,2,playerModel,gameModels,controllerManager);
+        controllerManager.add(enemyController);
     }
 
     public void run() {

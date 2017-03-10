@@ -1,5 +1,6 @@
 package controllers.enemy_behavior;
 
+import controllers.EnemyController;
 import models.EnemyModel;
 import models.GameModel;
 import models.PlayerModel;
@@ -8,25 +9,20 @@ import views.AutoLoadPic;
 import views.EnemyView;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
 /**
  * Created by l on 3/10/2017.
  */
-public class RandomStupidMoveBehavior extends EnemyMoveBehavior {
+public class RandomStupidMove extends EnemyMoveBehavior {
+    // hướng đi trước
     private String lastMove = "";
-    private int drawCount = 1;
-    private long lastTime;
-    private long delay = 1000;
-
-    private EnemyView view;
 
     @Override
-    public void move(EnemyModel model, EnemyView view, PlayerModel playerModel, Vector<GameModel> gameModels) {
-        this.view = view;
-        lastTime = System.currentTimeMillis();
-
+    public void move(EnemyModel model, EnemyView view, PlayerModel playerModel, Vector<GameModel> gameModels, EnemyController.EnemyType type) {
+        super.move(model,view,playerModel,gameModels,type);
         int x1 = model.getX();
         int y1 = model.getY();
 
@@ -84,45 +80,25 @@ public class RandomStupidMoveBehavior extends EnemyMoveBehavior {
 
             if (model.getX() > x1) {
                 lastMove = "trai";
+                drawMove = "trai";
                 model.moveLeft();
             } else {
                 lastMove = "phai";
+                drawMove = "phai";
                 model.moveRight();
             }
         } else {
             if (model.getY() > y1) {
                 lastMove = "len";
+                drawMove = "len";
                 model.moveUp();
             } else {
                 lastMove = "xuong";
+                drawMove = "xuong";
                 model.moveDown();
             }
         }
 
         setImage();
-    }
-
-
-    public void setImage() {
-        if (lastMove.equals("")) {
-            view.setImage(AutoLoadPic.enemyDuckImages.get("xuong" + drawCount));
-            long currentTime = System.currentTimeMillis();
-            if (currentTime - lastTime >  delay) {
-                lastTime = currentTime;
-                drawCount++;
-                if(drawCount >= 3){
-                    drawCount = 0;
-                }
-            }
-        }
-        view.setImage(AutoLoadPic.enemyDuckImages.get(lastMove + drawCount));
-        long currentTime = System.currentTimeMillis();
-        if (currentTime - lastTime >  delay) {
-            lastTime = currentTime;
-            drawCount++;
-            if(drawCount >= 3){
-                drawCount = 0;
-            }
-        }
     }
 }

@@ -7,7 +7,7 @@ public class EnemyModel extends GameModel {
     public static final int WIDTH = 40;
     public static final int HEIGHT = 40;
     public int speed;
-
+    public int hp = 1;
     public boolean destroy = false;
 
     public EnemyModel(int x, int y, int width, int height,int speed) {
@@ -15,9 +15,10 @@ public class EnemyModel extends GameModel {
         this.speed = speed;
     }
 
-    public EnemyModel(int x, int y,int speed) {
+    public EnemyModel(int x, int y,int speed,int hp) {
         super(x, y, WIDTH, HEIGHT);
         this.speed = speed;
+        this.hp = hp;
     }
 
     public int getHang(){
@@ -76,5 +77,13 @@ public class EnemyModel extends GameModel {
 
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 }
