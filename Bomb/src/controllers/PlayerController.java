@@ -8,6 +8,7 @@ import views.PlayerView;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.BitSet;
 
 /**
  * Created by QuanT on 3/9/2017.
@@ -15,11 +16,11 @@ import java.awt.event.KeyListener;
 public class PlayerController extends GameController implements KeyListener {
 
     public static final int SPEED = 2;
-    private KeyInputManager keyInputManage;
+    private BitSet bitSet;
 
     public PlayerController(PlayerModel model, GameView view) {
         super(model, view);
-        this.keyInputManage = new KeyInputManager();
+        bitSet = new BitSet(256);
     }
 
     @Override
@@ -29,44 +30,12 @@ public class PlayerController extends GameController implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_UP:
-                this.keyInputManage.keyUp = true;
-                break;
-            case KeyEvent.VK_DOWN:
-                this.keyInputManage.keyDown = true;
-                break;
-            case KeyEvent.VK_LEFT:
-                this.keyInputManage.keyLeft = true;
-                break;
-            case KeyEvent.VK_RIGHT:
-                this.keyInputManage.keyRight = true;
-                break;
-            case KeyEvent.VK_SPACE:
-                this.keyInputManage.keySpace = true;
-                break;
-        }
+        bitSet.set(e.getKeyCode());
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_UP:
-                this.keyInputManage.keyUp = false;
-                break;
-            case KeyEvent.VK_DOWN:
-                this.keyInputManage.keyDown = false;
-                break;
-            case KeyEvent.VK_LEFT:
-                this.keyInputManage.keyLeft = false;
-                break;
-            case KeyEvent.VK_RIGHT:
-                this.keyInputManage.keyRight = false;
-                break;
-            case KeyEvent.VK_SPACE:
-                this.keyInputManage.keySpace = false;
-                break;
-        }
+        bitSet.clear(e.getKeyCode());
     }
 
     @Override
@@ -81,20 +50,20 @@ public class PlayerController extends GameController implements KeyListener {
         this.vector.dy = 0;
 
         PlayerView view = (PlayerView) this.view;
-        if (keyInputManage.keyDown && !keyInputManage.keyUp) {
+        if (bitSet.get(KeyEvent.VK_DOWN)) {
             view.setImage(PlayerView.MOVE_DOWN);
             this.vector.dy = SPEED;
-        } else if (!keyInputManage.keyDown && keyInputManage.keyUp) {
+        } else if (bitSet.get(KeyEvent.VK_UP)) {
             view.setImage(PlayerView.MOVE_UP);
             this.vector.dy = -SPEED;
-        }
-
-        if (keyInputManage.keyLeft && !keyInputManage.keyRight) {
+        } else if (bitSet.get(KeyEvent.VK_LEFT)) {
             view.setImage(PlayerView.MOVE_LEFT);
             this.vector.dx = -SPEED;
-        } else if (!keyInputManage.keyLeft && keyInputManage.keyRight) {
+        } else if (bitSet.get(KeyEvent.VK_RIGHT)) {
             view.setImage(PlayerView.MOVE_RIGHT);
             this.vector.dx = SPEED;
+        } else {
+            view.setImageHold();
         }
 
     }

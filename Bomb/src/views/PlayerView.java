@@ -1,6 +1,7 @@
 package views;
 
 import models.GameModel;
+import utils.Utils;
 
 import java.awt.*;
 
@@ -18,12 +19,13 @@ public class PlayerView extends GameView {
 
     public PlayerView(String url) {
         super(url + "-0");
-        animation = new Animation(200, MOVE_DOWN);
+        animation = new Animation(170, MOVE_DOWN);
     }
 
     public void setImage(String url) {
         if (!animation.getUrl().equals(url)) {
             animation.setUrl(url);
+            animation.reload();
         }
 
         if (animation.getImage() != null) {
@@ -31,5 +33,9 @@ public class PlayerView extends GameView {
         } else {
             animation.reload();
         }
+    }
+
+    public void setImageHold() {
+        image = Utils.loadImageFromRes(animation.getUrl() + "-1");
     }
 }
