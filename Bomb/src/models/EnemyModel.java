@@ -1,5 +1,7 @@
 package models;
 
+import controllers.EnemyController;
+
 /**
  * Created by QuanT on 3/9/2017.
  */
@@ -7,17 +9,21 @@ public class EnemyModel extends GameModel {
     public static final int WIDTH = 40;
     public static final int HEIGHT = 40;
     public int speed;
-
+    public int hp = 1;
     public boolean destroy = false;
 
-    public EnemyModel(int x, int y, int width, int height,int speed) {
+    public EnemyController.EnemyType type;
+    public EnemyModel(int x, int y, int width, int height,int speed,int hp,EnemyController.EnemyType type) {
         super(x, y, width, height);
         this.speed = speed;
+        this.type = type;
     }
 
-    public EnemyModel(int x, int y,int speed) {
+    public EnemyModel(int x, int y,int speed,int hp,EnemyController.EnemyType type) {
         super(x, y, WIDTH, HEIGHT);
         this.speed = speed;
+        this.hp = hp;
+        this.type = type;
     }
 
     public int getHang(){
@@ -76,5 +82,17 @@ public class EnemyModel extends GameModel {
 
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public EnemyController.EnemyType getType() {
+        return type;
     }
 }

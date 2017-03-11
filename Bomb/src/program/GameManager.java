@@ -4,6 +4,7 @@ import controllers.ControllerManager;
 import controllers.EnemyController;
 import controllers.GameController;
 import controllers.PlayerController;
+import models.EnemyModel;
 import models.GameModel;
 import models.PlayerModel;
 import views.AutoLoadPic;
@@ -29,14 +30,21 @@ public class GameManager {
         Vector<GameModel> gameModels = new Vector<>();
 
         //check di chuyen ran dom 4 cái tường (Chỉ để nhìn) XÓA ĐC :v
-        gameModels.add(new GameModel(50,0,100,1));
-        gameModels.add(new GameModel(50,100,100,1));
-        gameModels.add(new GameModel(50,0,1,100));
-        gameModels.add(new GameModel(150,0,1,100));
+
+        for(int i = 0;i < 50;i++){
+            gameModels.add(new GameModel(200,0,1,200));
+        }
         //
+        gameModels.add(new GameModel(100,100,200,1));
+        gameModels.add(new GameModel(100,200,200,1));
+        gameModels.add(new GameModel(100,0,1,200));
+        gameModels.add(new GameModel(200,0,1,200));
 
         PlayerModel playerModel = (PlayerModel) playerController.getModel();
-        controllerManager.add(EnemyController.create(EnemyController.EnemyType.DUCK,50,50,2,playerModel,gameModels));
+        EnemyController enemyController1 = EnemyController.create(EnemyController.EnemyType.SLIM_JELLY_HEAD,110,110,2,playerModel,gameModels,controllerManager);
+            EnemyController enemyController = EnemyController.create(EnemyController.EnemyType.FIRE_HEAD,110,110,2,playerModel,gameModels,controllerManager);
+            controllerManager.add(enemyController);
+
     }
 
     public void run() {
