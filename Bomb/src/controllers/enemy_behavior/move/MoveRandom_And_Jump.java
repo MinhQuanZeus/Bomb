@@ -5,11 +5,9 @@ import models.EnemyModel;
 import models.GameModel;
 import models.PlayerModel;
 import utils.Utils;
-import views.AutoLoadPic;
 import views.EnemyView;
 
 import java.awt.*;
-import java.util.HashMap;
 import java.util.Vector;
 
 /**
@@ -132,21 +130,21 @@ public class MoveRandom_And_Jump extends EnemyMoveBehavior{
 
                 if (model.getX() > x1) {
                     lastMove = "trai";
-                    drawMove = "trai";
+                    moveDirection = "trai";
                     model.moveLeft();
                 } else {
                     lastMove = "phai";
-                    drawMove = "phai";
+                    moveDirection = "phai";
                     model.moveRight();
                 }
             } else {
                 if (model.getY() > y1) {
                     lastMove = "len";
-                    drawMove = "len";
+                    moveDirection = "len";
                     model.moveUp();
                 } else {
                     lastMove = "xuong";
-                    drawMove = "xuong";
+                    moveDirection = "xuong";
                     model.moveDown();
                 }
             }

@@ -1,5 +1,7 @@
 package controllers;
 
+import models.GameModel;
+
 import java.awt.*;
 import java.util.Iterator;
 import java.util.Vector;
@@ -11,8 +13,13 @@ public class ControllerManager implements BaseController {
 
     private Vector<GameController> gameControllerVector;
 
+    // TO DO
+    public static Vector<GameModel> vatCanVector;
+
     public ControllerManager() {
         gameControllerVector = new Vector<GameController>();
+
+        vatCanVector = new Vector<>();
     }
 
     public void add(GameController gameController) {

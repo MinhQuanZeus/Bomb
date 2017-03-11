@@ -1,6 +1,7 @@
 package controllers.enemy_behavior.move;
 
 import controllers.EnemyController;
+import controllers.enemy_behavior.attack.AttackShootABullet;
 import models.EnemyModel;
 import models.GameModel;
 import models.PlayerModel;
@@ -16,6 +17,8 @@ import java.util.Vector;
 public class MoveRandomStupid extends EnemyMoveBehavior {
     // hướng đi trước
     private String lastMove = "";
+
+
 
     @Override
     public void move(EnemyModel model, EnemyView view, PlayerModel playerModel, Vector<GameModel> gameModels, EnemyController.EnemyType type,EnemyController enemyController) {
@@ -77,25 +80,35 @@ public class MoveRandomStupid extends EnemyMoveBehavior {
 
             if (model.getX() > x1) {
                 lastMove = "trai";
-                drawMove = "trai";
+                moveDirection = "trai";
                 model.moveLeft();
             } else {
                 lastMove = "phai";
-                drawMove = "phai";
+                moveDirection = "phai";
                 model.moveRight();
             }
         } else {
             if (model.getY() > y1) {
                 lastMove = "len";
-                drawMove = "len";
+                moveDirection = "len";
                 model.moveUp();
             } else {
                 lastMove = "xuong";
-                drawMove = "xuong";
+                moveDirection = "xuong";
                 model.moveDown();
             }
         }
 
         setImage();
+
+        switch (type){
+            case FIRE_HEAD:{
+                delayToChangeMove = 2000;
+                if(System.currentTimeMillis() - timeStartThisMove >= delayToChangeMove){
+                    enemyController.setEnemyAttackBehavior(new AttackShootABullet());
+                    enemyController.setEnemyMoveBehavior(new Stop());
+                }
+            }
+        }
     }
 }

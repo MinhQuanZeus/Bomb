@@ -1,5 +1,7 @@
 package controllers;
 
+import controllers.enemy_behavior.attack.AttackNothing;
+import controllers.enemy_behavior.attack.EnemyAttackBehavior;
 import controllers.enemy_behavior.destroy.DestroyNormal;
 import controllers.enemy_behavior.destroy.EnemyBeingDestroyBehavior;
 import controllers.enemy_behavior.move.EnemyMoveBehavior;
@@ -27,6 +29,7 @@ public class EnemyController extends GameController {
 
     protected EnemyMoveBehavior enemyMoveBehavior;
     protected EnemyBeingDestroyBehavior enemyBeingDestroyBehavior;
+    protected EnemyAttackBehavior enemyAttackBehavior;
 
     // cần enum type để vẽ trong movebehavior, cần managerController để thêm việc tấn công, quái bắn lửa
     public EnemyController(int x, int y, int speed,int hp,EnemyView enemyView, PlayerModel playerModel, Vector<GameModel>gameModels,EnemyType type,ControllerManager controllerManager){
@@ -52,16 +55,19 @@ public class EnemyController extends GameController {
                 if(model.isAlive()){
                     enemyBeingDestroyBehavior.destroy((EnemyModel) model,(EnemyView)view,controllerManager);
                 }else{
+
                 }
             }else{
                 enemyMoveBehavior.move((EnemyModel) model,(EnemyView) view,playerModel,gameModels,type,this);
+                enemyAttackBehavior.attack((EnemyModel) model,(EnemyView) view,playerModel,gameModels,type,this,controllerManager);
             }
         }
     }
 
     static public enum EnemyType{
         DUCK,
-        SLIM_JELLY_HEAD
+        SLIM_JELLY_HEAD,
+        FIRE_HEAD
     }
 
     //=========CREATE ENEMY
@@ -71,15 +77,25 @@ public class EnemyController extends GameController {
         // type để có thể thực hiện việc vẽ hình di chuyển setImage trong MoveBehavior
         switch (type){
             case DUCK:{
-                enemyController = new EnemyController(x,y,speed,1,new EnemyView(AutoLoadPic.enemy_Duck_Image_Hashmap.get("xuong0")),playerModel,gameModels,type,controllerManager);
+                enemyController = new EnemyController(x,y,speed,1,new EnemyView(AutoLoadPic.enemy_Duck_Image_ImageMap.get("xuong0")),playerModel,gameModels,type,controllerManager);
                 enemyController.setEnemyMoveBehavior(new MoveRandomStupid());
                 enemyController.setEnemyBeingDestroyBehavior(new DestroyNormal());
+                enemyController.setEnemyAttackBehavior(new AttackNothing());
                 break;
             }
             case SLIM_JELLY_HEAD:{
                 enemyController = new EnemyController(x,y,speed,1,new EnemyView(AutoLoadPic.enemy_SlimJellyHead_ImageMap.get("xuong0")),playerModel,gameModels,type,controllerManager);
                 enemyController.setEnemyMoveBehavior(new MoveRandom_And_Jump());
                 enemyController.setEnemyBeingDestroyBehavior(new DestroyNormal());
+                enemyController.setEnemyAttackBehavior(new AttackNothing());
+                break;
+            }
+            case FIRE_HEAD:{
+                enemyController = new EnemyController(x,y,speed,1,new EnemyView(AutoLoadPic.enemy_fireHead_ImageMap.get("xuong0")),playerModel,gameModels,type,controllerManager);
+                enemyController.setEnemyMoveBehavior(new MoveRandomStupid());
+                enemyController.setEnemyBeingDestroyBehavior(new DestroyNormal());
+                enemyController.setEnemyAttackBehavior(new AttackNothing());
+                break;
             }
         }
 
@@ -94,12 +110,25 @@ public class EnemyController extends GameController {
         this.enemyBeingDestroyBehavior = enemyBeingDestroyBehavior;
     }
 
+    public void setEnemyAttackBehavior(EnemyAttackBehavior enemyAttackBehavior) {
+        this.enemyAttackBehavior = enemyAttackBehavior;
+    }
+
+    public EnemyMoveBehavior getEnemyMoveBehavior() {
+        return enemyMoveBehavior;
+    }
+
+    public EnemyBeingDestroyBehavior getEnemyBeingDestroyBehavior() {
+        return enemyBeingDestroyBehavior;
+    }
+
+    public EnemyAttackBehavior getEnemyAttackBehavior() {
+        return enemyAttackBehavior;
+    }
+
     @Override
     public GameModel getModel() {
         return (EnemyModel)model;
     }
 
-    public EnemyModel getEnemyModel(){
-        return (EnemyModel)model;
-    }
 }
