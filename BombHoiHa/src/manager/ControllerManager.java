@@ -1,6 +1,8 @@
 package manager;
 
+import controllers.EnemyController;
 import controllers.GameController;
+import controllers.enemy_behavior.move.Stop;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,6 +21,16 @@ public class ControllerManager {
 
     public void add(GameController gameController) {
         this.gameControllers.add(0, gameController);
+    }
+    public void freeze(){
+        for (int i = 0; i < gameControllers.size(); i++) {
+            GameController gameController = gameControllers.get(i);
+            if (gameController.getModel().isAlive()) {
+                if(gameController instanceof EnemyController){
+                    ((EnemyController) gameController).setEnemyState(EnemyController.EnemyState.FREEZE);
+                }
+            }
+        }
     }
 
     public void draw(Graphics g) {

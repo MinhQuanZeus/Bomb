@@ -5,6 +5,7 @@ import controllers.enemy_behavior.attack.EnemyAttackBehavior;
 import controllers.enemy_behavior.destroy.DestroyNormal;
 import controllers.enemy_behavior.destroy.EnemyBeingDestroyBehavior;
 import controllers.enemy_behavior.move.EnemyMoveBehavior;
+import controllers.enemy_behavior.move.FreezeBehavior;
 import controllers.enemy_behavior.move.MoveRandomStupid;
 import controllers.enemy_behavior.move.MoveRandom_And_Jump;
 import manager.ControllerManager;
@@ -31,49 +32,74 @@ public class EnemyController extends GameController implements Collision {
     protected PlayerModel playerModel;
     protected EnemyType type;
     protected ControllerManager controllerManager;
+    private EnemyState enemyState;
+    private FreezeBehavior freezeBehavior;
 
     protected EnemyMoveBehavior enemyMoveBehavior;
     protected EnemyBeingDestroyBehavior enemyBeingDestroyBehavior;
     protected EnemyAttackBehavior enemyAttackBehavior;
 
     // cần enum type để vẽ trong movebehavior, cần managerController để thêm việc tấn công, quái bắn lửa
-    public EnemyController(int x, int y, int speed, int hp, EnemyView enemyView, PlayerModel playerModel, List<GameController> gameControllers, EnemyType type, ControllerManager controllerManager) {
-        this(new EnemyModel(x, y, speed, hp, type), enemyView, playerModel, gameControllers, type, controllerManager);
+    public EnemyController(int x, int y, int speed, int hp, EnemyView enemyView, PlayerModel playerModel,FreezeBehavior freezeBehavior, List<GameController> gameControllers, EnemyType type, ControllerManager controllerManager) {
+        this(new EnemyModel(x, y, speed, hp, type), enemyView, playerModel,freezeBehavior, gameControllers, type, controllerManager);
+        enemyState = EnemyState.NORMAL;
     }
 
 
-    public EnemyController(GameModel model, GameView view, PlayerModel playerModel, List<GameController> gameControllers, EnemyType type, ControllerManager controllerManager) {
+    public EnemyController(GameModel model, GameView view, PlayerModel playerModel,FreezeBehavior freezeBehavior, List<GameController> gameControllers, EnemyType type, ControllerManager controllerManager) {
         super(model, view);
         this.playerModel = playerModel;
         this.gameControllers = gameControllers;
         this.type = type;
+        this.freezeBehavior = freezeBehavior;
         this.controllerManager = controllerManager;
         GameManager.collisionManager.add(this);
     }
 
     @Override
     public void run() {
-        if (model instanceof EnemyModel) {
-            if (((EnemyModel) model).getHp() == 0) {
-                ((EnemyModel) model).setDestroy(true);
-            }
-            if (((EnemyModel) model).isDestroy()) {
-                if (model.isAlive()) {
-                    enemyBeingDestroyBehavior.destroy((EnemyModel) model, (EnemyView) view, controllerManager);
-                } else {
+        switch (this.enemyState) {
+            case NORMAL:
+                if (model instanceof EnemyModel) {
+                    if (((EnemyModel) model).getHp() == 0) {
+                        ((EnemyModel) model).setDestroy(true);
+                    }
+                    if (((EnemyModel) model).isDestroy()) {
+                        if (model.isAlive()) {
+                            enemyBeingDestroyBehavior.destroy((EnemyModel) model, (EnemyView) view, controllerManager);
+                        } else {
 
+                        }
+                    } else {
+                        enemyMoveBehavior.move((EnemyModel) model, (EnemyView) view, playerModel, gameControllers, type, this);
+                        enemyAttackBehavior.attack((EnemyModel) model, (EnemyView) view, playerModel, gameControllers, type, this, controllerManager);
+                    }
                 }
-            } else {
-                enemyMoveBehavior.move((EnemyModel) model, (EnemyView) view, playerModel, gameControllers, type, this);
-                enemyAttackBehavior.attack((EnemyModel) model, (EnemyView) view, playerModel, gameControllers, type, this, controllerManager);
-            }
+                break;
+            case FREEZE:
+                break;
         }
+        if (freezeBehavior != null) {
+            freezeBehavior.run(this);
+        }
+
     }
 
     public enum EnemyType {
         DUCK,
         SLIM_JELLY_HEAD,
         FIRE_HEAD
+    }
+    public static enum EnemyState{
+        NORMAL,
+        FREEZE
+    }
+    public EnemyState getEnemyState() {
+        return enemyState;
+    }
+
+    public void setEnemyState(EnemyState enemyState) {
+        this.enemyState = enemyState;
     }
 
     //=========CREATE ENEMY
@@ -83,21 +109,21 @@ public class EnemyController extends GameController implements Collision {
         // type để có thể thực hiện việc vẽ hình di chuyển setImage trong MoveBehavior
         switch (type) {
             case DUCK: {
-                enemyController = new EnemyController(x, y, speed, 1, new EnemyView(AutoLoadPic.enemy_Duck_Image_ImageMap.get("xuong0")), playerModel, gameControllers, type, controllerManager);
+                enemyController = new EnemyController(x, y, speed, 1, new EnemyView(AutoLoadPic.enemy_Duck_Image_ImageMap.get("xuong0")), playerModel,new FreezeBehavior(200), gameControllers, type, controllerManager);
                 enemyController.setEnemyMoveBehavior(new MoveRandomStupid());
                 enemyController.setEnemyBeingDestroyBehavior(new DestroyNormal());
                 enemyController.setEnemyAttackBehavior(new AttackNothing());
                 break;
             }
             case SLIM_JELLY_HEAD: {
-                enemyController = new EnemyController(x, y, speed, 1, new EnemyView(AutoLoadPic.enemy_SlimJellyHead_ImageMap.get("xuong0")), playerModel, gameControllers, type, controllerManager);
+                enemyController = new EnemyController(x, y, speed, 1, new EnemyView(AutoLoadPic.enemy_SlimJellyHead_ImageMap.get("xuong0")), playerModel, new FreezeBehavior(200), gameControllers, type, controllerManager);
                 enemyController.setEnemyMoveBehavior(new MoveRandom_And_Jump());
                 enemyController.setEnemyBeingDestroyBehavior(new DestroyNormal());
                 enemyController.setEnemyAttackBehavior(new AttackNothing());
                 break;
             }
             case FIRE_HEAD: {
-                enemyController = new EnemyController(x, y, speed, 1, new EnemyView(AutoLoadPic.enemy_fireHead_ImageMap.get("xuong0")), playerModel, gameControllers, type, controllerManager);
+                enemyController = new EnemyController(x, y, speed, 1, new EnemyView(AutoLoadPic.enemy_fireHead_ImageMap.get("xuong0")), playerModel,new FreezeBehavior(200), gameControllers, type, controllerManager);
                 enemyController.setEnemyMoveBehavior(new MoveRandomStupid());
                 enemyController.setEnemyBeingDestroyBehavior(new DestroyNormal());
                 enemyController.setEnemyAttackBehavior(new AttackNothing());
