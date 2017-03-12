@@ -52,6 +52,9 @@ public class BombController extends GameController {
                 for (int j = 1; j <= explosionSize; j++) {
                     int indexSize = j * ItemMapModel.SIZE_TILED;
                     if (i == 0) { // tren
+                        if (rowBombMatrix - j < 0) {
+                            break;
+                        }
                         int valueMatrix = MapManager.map[rowBombMatrix - j][colBombMatrix];
                         if (valueMatrix == 0) {
                             System.out.println(rowBombMatrix + " " + colBombMatrix);
@@ -68,6 +71,9 @@ public class BombController extends GameController {
                             break;
                         }
                     } else if (i == 1) { // xuong
+                        if (rowBombMatrix + j > 13) {
+                            break;
+                        }
                         int valueMatrix = MapManager.map[rowBombMatrix + j][colBombMatrix];
                         if (valueMatrix == 0) {
                             if (j != explosionSize) {
@@ -83,6 +89,9 @@ public class BombController extends GameController {
                             break;
                         }
                     } else if (i == 2) { //trai
+                        if (colBombMatrix - j < 0) {
+                            break;
+                        }
                         int valueMatrix = MapManager.map[rowBombMatrix][colBombMatrix - j];
                         if (valueMatrix == 0) {
                             if (j != explosionSize) {
@@ -98,6 +107,9 @@ public class BombController extends GameController {
                             break;
                         }
                     } else if (i == 3) { // phai
+                        if (colBombMatrix + j > 13) {
+                            break;
+                        }
                         int valueMatrix = MapManager.map[rowBombMatrix][colBombMatrix + j];
                         if (valueMatrix == 0) {
                             if (j != explosionSize) {
