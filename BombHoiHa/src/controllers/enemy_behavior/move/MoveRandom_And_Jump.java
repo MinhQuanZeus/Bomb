@@ -110,7 +110,7 @@ public class MoveRandom_And_Jump extends EnemyMoveBehavior {
                             }
                             case ("xuong"): {
                                 xOfModelJumpTo = x1;
-                                yOfModelJumpTo = y1 + g.getHeight() + model.getHeight();
+                                yOfModelJumpTo = y1 + g.getHeight() + model.getHeight() - model.getHeight()/2;
                                 break;
                             }
                             case ("trai"): {
@@ -124,10 +124,11 @@ public class MoveRandom_And_Jump extends EnemyMoveBehavior {
                                 break;
                             }
                         }
-                        if (x1 < 0  || x1 > GameFrame.WIDTH - ItemMapModel.SIZE_TILED || y1 < 0 + ItemMapModel.SIZE_TILED || y1 > GameFrame.HEIGHT - ItemMapModel.SIZE_TILED) {
+                        if (xOfModelJumpTo < 0  || xOfModelJumpTo > GameFrame.WIDTH - ItemMapModel.SIZE_TILED || yOfModelJumpTo < 0 + ItemMapModel.SIZE_TILED || yOfModelJumpTo > GameFrame.HEIGHT - ItemMapModel.SIZE_TILED) {
                             lastMove = "";
                             x1 = model.getX();
                             y1 = model.getY();
+                            jump = false;
                         }else{
                             for (int j = 0; j < gameControllers.size(); j++) {
                                 if (gameControllers.get(j).getModel().getRect().intersects(new Rectangle(xOfModelJumpTo + 5, yOfModelJumpTo + model.getHeight() - ItemMapModel.SIZE_TILED / 2, ItemMapModel.SIZE_TILED - 10, ItemMapModel.SIZE_TILED / 2))) {

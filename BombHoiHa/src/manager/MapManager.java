@@ -19,13 +19,18 @@ import java.util.List;
  * Created by KhoaBeo on 3/10/2017.
  */
 public class MapManager extends ControllerManager {
+    public static int[][] map;
 
     public static int mapLevel;
 
     public MapManager() {
         super();
         mapLevel = 1;
+        map = new int[14][14];
+
         readMap(mapLevel);
+
+
     }
 
     public void readMap(int mapLevel) {
@@ -37,9 +42,10 @@ public class MapManager extends ControllerManager {
             for (int j = 0; j < row.length; j++) {
                 int bit = Integer.parseInt(row[j] + "");
                 int bitTerrain = Integer.parseInt(rowTerrain[j] + "");
+                map[i][j] = bitTerrain;
                 int x = j * ItemMapModel.SIZE_TILED;
                 int y = i * ItemMapModel.SIZE_TILED;
-
+                System.out.print(map[i][j]+",");
                 GameController itemMapController;
                 ItemController itemController = null;
                 Terrain terrain;
@@ -60,6 +66,7 @@ public class MapManager extends ControllerManager {
                     GameManager.arrBlocks.add(itemMapController);
                 }
             }
+            System.out.println();
         }
     }
 
