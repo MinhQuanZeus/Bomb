@@ -90,4 +90,8 @@ public class GameModel {
     public Rectangle getBottomRect(int x, int y) {
         return new Rectangle(x + 5, y + height - ItemMapModel.SIZE_TILED / 2, width - 10, ItemMapModel.SIZE_TILED / 2);
     }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
 }

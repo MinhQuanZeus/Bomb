@@ -10,10 +10,7 @@ import controllers.enemy_behavior.move.MoveRandomStupid;
 import controllers.enemy_behavior.move.MoveRandom_And_Jump;
 import manager.ControllerManager;
 import manager.GameManager;
-import models.Collision;
-import models.EnemyModel;
-import models.GameModel;
-import models.PlayerModel;
+import models.*;
 import views.AutoLoadPic;
 import views.EnemyView;
 import views.GameView;
@@ -117,6 +114,9 @@ public class EnemyController extends GameController implements Collision {
             }
             case SLIM_JELLY_HEAD: {
                 enemyController = new EnemyController(x, y, speed, 1, new EnemyView(AutoLoadPic.enemy_SlimJellyHead_ImageMap.get("xuong0")), playerModel, new FreezeBehavior(200), gameControllers, type, controllerManager);
+                enemyController.getModel().setHeight(ItemMapModel.SIZE_TILED);
+                enemyController.getModel().setWidth(ItemMapModel.SIZE_TILED);
+
                 enemyController.setEnemyMoveBehavior(new MoveRandom_And_Jump());
                 enemyController.setEnemyBeingDestroyBehavior(new DestroyNormal());
                 enemyController.setEnemyAttackBehavior(new AttackNothing());
