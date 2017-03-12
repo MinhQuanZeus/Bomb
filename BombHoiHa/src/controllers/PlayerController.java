@@ -114,6 +114,9 @@ public class PlayerController extends GameController implements KeyListener, Col
             if(((ItemController) other).getType()==ItemType.EXPAND_BOMB){
                 ((PlayerModel)model).expandMaxBomb();
             }
+            if(((ItemController) other).getType()==ItemType.FREEZE){
+                GameManager.controllerManager.freeze();
+            }
         }
     }
 }
