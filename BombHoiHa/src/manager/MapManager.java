@@ -25,7 +25,7 @@ public class MapManager extends ControllerManager {
 
     public MapManager() {
         super();
-        mapLevel = 2;
+        mapLevel = 1;
         map = new int[14][14];
 
         readMap(mapLevel);

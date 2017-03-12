@@ -6,9 +6,11 @@ import models.GameModel;
 import models.ItemMapModel;
 import models.PlayerModel;
 import manager.GameManager;
+import utils.Utils;
 import views.BombView;
 import views.GameView;
 import views.PlayerView;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -60,16 +62,16 @@ public class PlayerController extends GameController implements KeyListener, Col
         PlayerView view = (PlayerView) this.view;
         if (bitSet.get(KeyEvent.VK_DOWN)) {
             view.setImage(PlayerView.MOVE_DOWN);
-            this.vector.dy = ((PlayerModel)model).getSpeed();
+            this.vector.dy = ((PlayerModel) model).getSpeed();
         } else if (bitSet.get(KeyEvent.VK_UP)) {
             view.setImage(PlayerView.MOVE_UP);
-            this.vector.dy = -((PlayerModel)model).getSpeed();;
+            this.vector.dy = -((PlayerModel) model).getSpeed();
         } else if (bitSet.get(KeyEvent.VK_LEFT)) {
             view.setImage(PlayerView.MOVE_LEFT);
-            this.vector.dx = -((PlayerModel)model).getSpeed();;
+            this.vector.dx = -((PlayerModel) model).getSpeed();
         } else if (bitSet.get(KeyEvent.VK_RIGHT)) {
             view.setImage(PlayerView.MOVE_RIGHT);
-            this.vector.dx = ((PlayerModel)model).getSpeed();;
+            this.vector.dx = ((PlayerModel) model).getSpeed();
         } else {
             view.setImageHold();
         }
@@ -84,8 +86,8 @@ public class PlayerController extends GameController implements KeyListener, Col
         if (model.checkMaxBomb()) {
             int bombX = ((model.getX() + model.getHeight() / 2) / ItemMapModel.SIZE_TILED) * ItemMapModel.SIZE_TILED;
             int bombY = (model.getY() / ItemMapModel.SIZE_TILED + 1) * ItemMapModel.SIZE_TILED;
-            int rowBombMatrix = bombY / ItemMapModel.SIZE_TILED;
-            int colBombMatrix = bombX / ItemMapModel.SIZE_TILED;
+            int rowBombMatrix = Utils.getRowMatrix(bombY);
+            int colBombMatrix = Utils.getColMatrix(bombX);
             if (MapManager.map[rowBombMatrix][colBombMatrix] == 9)
                 return;
             new BombController(
@@ -100,17 +102,17 @@ public class PlayerController extends GameController implements KeyListener, Col
 
     @Override
     public void onContact(Collision other) {
-        if(other instanceof ItemController){
-            if(((ItemController) other).getType()==ItemType.SPEED_UP){
-                ((PlayerModel)model).speedUp();
+        if (other instanceof ItemController) {
+            if (((ItemController) other).getType() == ItemType.SPEED_UP) {
+                ((PlayerModel) model).speedUp();
             }
-            if(((ItemController) other).getType()==ItemType.EXPAND_EXPLOSIVE){
-                ((PlayerModel)model).expandExplosionSize();
+            if (((ItemController) other).getType() == ItemType.EXPAND_EXPLOSIVE) {
+                ((PlayerModel) model).expandExplosionSize();
             }
-            if(((ItemController) other).getType()==ItemType.EXPAND_BOMB){
-                ((PlayerModel)model).expandMaxBomb();
+            if (((ItemController) other).getType() == ItemType.EXPAND_BOMB) {
+                ((PlayerModel) model).expandMaxBomb();
             }
-            if(((ItemController) other).getType()==ItemType.FREEZE){
+            if (((ItemController) other).getType() == ItemType.FREEZE) {
                 GameManager.controllerManager.freeze();
             }
         }

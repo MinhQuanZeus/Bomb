@@ -27,7 +27,6 @@ public class ItemController extends GameController implements Collision {
     @Override
     public void onContact(Collision other) {
         if(other instanceof PlayerController){
-           // System.out.println("zzzzz");
             model.setAlive(false);
         }
     }

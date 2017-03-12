@@ -6,6 +6,7 @@ import models.GameModel;
 import models.ItemMapModel;
 import models.PlayerModel;
 import manager.GameManager;
+import utils.Utils;
 import views.GameView;
 
 import java.util.Map;
@@ -51,8 +52,8 @@ public class BombController extends GameController implements Collision {
         int explosionSize = playerModel.getExplosionSize();
         new ExplosionController(model.getX(), model.getY(), "Explosions/explosion0");
 
-        int rowBombMatrix = model.getY() / ItemMapModel.SIZE_TILED;
-        int colBombMatrix = model.getX() / ItemMapModel.SIZE_TILED;
+        int rowBombMatrix = Utils.getRowMatrix(model.getY());
+        int colBombMatrix = Utils.getColMatrix(model.getX());
 
         for (int i = 0; i < 4; i++) {
             for (int j = 1; j <= explosionSize; j++) {

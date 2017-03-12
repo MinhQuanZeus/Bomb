@@ -1,5 +1,7 @@
 package models;
 
+import java.awt.*;
+
 /**
  * Created by QuanT on 3/9/2017.
  */
@@ -55,7 +57,8 @@ public class PlayerModel extends GameModel {
         return speed;
     }
 
-    public int getCountBomb() {
-        return countBomb;
+    @Override
+    public Rectangle getRect() {
+        return super.getBottomRect(x, y);
     }
 }

@@ -31,7 +31,7 @@ public class EnemyModel extends GameModel implements Collision{
 
     @Override
     public Rectangle getRect() {
-        return new Rectangle(x, y + height - ItemMapModel.SIZE_TILED, ItemMapModel.SIZE_TILED - 10, ItemMapModel.SIZE_TILED - 10);
+        return super.getBottomRect(x, y);
     }
 
     public void moveCorrectly(int x1, int y1){
@@ -78,10 +78,6 @@ public class EnemyModel extends GameModel implements Collision{
 
     public int getSpeed() {
         return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
     }
 
     public int getHp() {

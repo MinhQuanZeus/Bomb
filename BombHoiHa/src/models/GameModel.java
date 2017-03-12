@@ -1,10 +1,14 @@
 package models;
 
 import controllers.GameController;
+import controllers.PlayerController;
 import gui.GameFrame;
+import manager.MapManager;
+import utils.Utils;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by QuanT on 3/9/2017.
@@ -49,13 +53,30 @@ public class GameModel {
         int dx = this.x + gameVector.dx;
         int dy = this.y + gameVector.dy;
 
-        if ((dx < 0 || dx > GameFrame.WIDTH - width) || (dy < -10 || dy > GameFrame.HEIGHT -height-30)) {
-
+        if ((dx < 0 || dx > GameFrame.WIDTH - width) || (dy < -10 || dy > GameFrame.HEIGHT - height - 30)) {
             return;
         }
 
-        for (GameController gameController : arrBlocks) {
-            if (gameController.getModel().getRect().intersects(getBottomRect(dx, dy))) {
+        for (int i = 0; i < arrBlocks.size(); i++) {
+            GameController gameController = arrBlocks.get(i);
+            Rectangle intersectionRect = gameController.getModel().getRect().intersection(getBottomRect(dx, dy));
+
+            if (!intersectionRect.isEmpty() && intersectionRect.getHeight() < 20 && intersectionRect.getWidth() < 20) {
+                if (gameVector.dy != 0) {
+                    if (dx > gameController.getModel().getX()) {
+                        dx += intersectionRect.getWidth();
+                    } else if (dx < gameController.getModel().getX()) {
+                        dx -= intersectionRect.getWidth();
+                    }
+                } else if (gameVector.dx != 0) {
+                    if (dy > gameController.getModel().getY()) {
+                        dy += intersectionRect.getWidth();
+
+                    } else if (dy < gameController.getModel().getX()) {
+                        dy -= intersectionRect.getWidth();
+                    }
+                }
+            } else if (!intersectionRect.isEmpty()) {
                 return;
             }
         }
@@ -88,6 +109,10 @@ public class GameModel {
     }
 
     public Rectangle getBottomRect(int x, int y) {
-        return new Rectangle(x + 5, y + height - ItemMapModel.SIZE_TILED / 2, width - 10, ItemMapModel.SIZE_TILED / 2);
+        return new Rectangle(x + 5, y + height - ItemMapModel.SIZE_TILED + 10, width - 10, ItemMapModel.SIZE_TILED - 10);
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
     }
 }

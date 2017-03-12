@@ -1,6 +1,7 @@
 package utils;
 
 import controllers.ItemType;
+import models.ItemMapModel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -30,5 +31,11 @@ public class Utils {
         return a;
     }
 
+    public static int getRowMatrix(int y) {
+        return y / ItemMapModel.SIZE_TILED;
+    }
 
+    public static int getColMatrix(int x) {
+        return x / ItemMapModel.SIZE_TILED;
+    }
 }
