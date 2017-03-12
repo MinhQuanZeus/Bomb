@@ -50,6 +50,7 @@ public class GameModel {
         int dy = this.y + gameVector.dy;
 
         if ((dx < 0 || dx > GameFrame.WIDTH - width) || (dy < -10 || dy > GameFrame.HEIGHT -height-30)) {
+
             return;
         }
 

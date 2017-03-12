@@ -9,7 +9,6 @@ import manager.GameManager;
 import views.BombView;
 import views.GameView;
 import views.PlayerView;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -105,9 +104,6 @@ public class PlayerController extends GameController implements KeyListener, Col
             if(((ItemController) other).getType()==ItemType.SPEED_UP){
                 ((PlayerModel)model).speedUp();
             }
-//            if(((ItemController) other).getType()==ItemType.THROUGH_WALL){
-//                arrBlocks.clear();
-//            }
             if(((ItemController) other).getType()==ItemType.EXPAND_EXPLOSIVE){
                 ((PlayerModel)model).expandExplosionSize();
             }

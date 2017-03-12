@@ -4,10 +4,11 @@ package models;
  * Created by QuanT on 3/9/2017.
  */
 public class PlayerModel extends GameModel {
-    public static final int MAXSPEED = 5;
+
+    public static final int MAX_SPEED = 4;
     private int speed = 2;
-    public static final int WIDTH = 50;
-    public static final int HEIGHT = 70;
+    public static final int WIDTH = 40;
+    public static final int HEIGHT = 56;
 
     private int maxBomb;
     private int countBomb;
@@ -16,7 +17,7 @@ public class PlayerModel extends GameModel {
     public PlayerModel(int x, int y) {
         super(x, y, WIDTH, HEIGHT);
         maxBomb = 1;
-        explosionSize = 2;
+        explosionSize = 1;
     }
 
     public void increaseCountBomb() {
@@ -28,7 +29,6 @@ public class PlayerModel extends GameModel {
     }
 
     public boolean checkMaxBomb() {
-     //   System.out.println("max bomb: "+maxBomb);
         if (countBomb < maxBomb) {
             return true;
         }
@@ -39,16 +39,15 @@ public class PlayerModel extends GameModel {
         return explosionSize;
     }
     public void expandExplosionSize(){
-        explosionSize+=2;
+        explosionSize++;
     }
 
     public void expandMaxBomb(){
         maxBomb++;
-        System.out.println("max bomb: "+maxBomb);
     }
 
     public void speedUp() {
-        if(speed<=MAXSPEED)
+        if(speed<= MAX_SPEED)
         speed+=1;
     }
 

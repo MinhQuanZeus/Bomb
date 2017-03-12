@@ -7,8 +7,8 @@ import javax.swing.*;
  */
 public class GameFrame extends JFrame {
 
-    public static final int WIDTH = 700;
-    public static final int HEIGHT = 729;
+    public static final int WIDTH = 565;
+    public static final int HEIGHT = 585;
     public static MainPanel mainPanel;
 
     public GameFrame() {

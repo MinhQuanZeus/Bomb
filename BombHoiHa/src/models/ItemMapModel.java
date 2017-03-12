@@ -5,7 +5,7 @@ package models;
  */
 public class ItemMapModel extends GameModel {
 
-    public static final int SIZE_TILED = 50;
+    public static final int SIZE_TILED = 40;
 
     private Terrain terrain;
 
