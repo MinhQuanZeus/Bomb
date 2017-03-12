@@ -49,7 +49,7 @@ public class GameModel {
         int dx = this.x + gameVector.dx;
         int dy = this.y + gameVector.dy;
 
-        if ((dx < 0 || dx > GameFrame.WIDTH - width) || (dy < -10 || dy - height > GameFrame.HEIGHT - 29)) {
+        if ((dx < 0 || dx > GameFrame.WIDTH - width) || (dy < -10 || dy > GameFrame.HEIGHT - height - 29)) {
             return;
         }
 

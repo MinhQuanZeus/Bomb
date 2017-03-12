@@ -1,5 +1,6 @@
 package controllers;
 
+import manager.MapManager;
 import models.GameModel;
 import models.ItemMapModel;
 import models.PlayerModel;
@@ -88,6 +89,7 @@ public class PlayerController extends GameController implements KeyListener {
                     new BombView("Bombs & Explosions/normalbomb"),
                     (PlayerModel) this.getModel()
             );
+            //MapManager.map[bombY / ItemMapModel.SIZE_TILED][bombX / ItemMapModel.SIZE_TILED] = 9;
         }
     }
 }
