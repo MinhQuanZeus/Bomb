@@ -4,7 +4,8 @@ package models;
  * Created by QuanT on 3/9/2017.
  */
 public class PlayerModel extends GameModel {
-
+    public static final int MAXSPEED = 5;
+    private int speed = 2;
     public static final int WIDTH = 50;
     public static final int HEIGHT = 70;
 
@@ -35,5 +36,14 @@ public class PlayerModel extends GameModel {
 
     public int getExplosionSize() {
         return explosionSize;
+    }
+
+    public void speedUp() {
+        if(speed<=MAXSPEED)
+        speed+=1;
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 }

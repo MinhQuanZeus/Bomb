@@ -40,7 +40,7 @@ public class ItemMapController extends GameController implements Collision {
         if (other instanceof ExplosionController) {
             if (((ItemMapModel) model).getTerrain() == Terrain.BREAK) {
                 if(Utils.getRandom(3)==0){
-                    ItemController.create(model.getX(),model.getY(),ItemType.SPEED_UP);
+                    ItemController.create(model.getX(),model.getY(),ItemType.getRandomItemType());
                 }
                 ((TerrainBreakView) view).setFire(true);
                 GameManager.collisionManager.remove(this);

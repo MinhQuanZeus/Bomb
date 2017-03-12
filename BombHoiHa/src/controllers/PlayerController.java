@@ -20,7 +20,6 @@ import java.util.List;
  */
 public class PlayerController extends GameController implements KeyListener, Collision {
 
-    public static int speed = 2;
     private BitSet bitSet;
     private List<GameController> arrBlocks;
 
@@ -61,16 +60,16 @@ public class PlayerController extends GameController implements KeyListener, Col
         PlayerView view = (PlayerView) this.view;
         if (bitSet.get(KeyEvent.VK_DOWN)) {
             view.setImage(PlayerView.MOVE_DOWN);
-            this.vector.dy = speed;
+            this.vector.dy = ((PlayerModel)model).getSpeed();
         } else if (bitSet.get(KeyEvent.VK_UP)) {
             view.setImage(PlayerView.MOVE_UP);
-            this.vector.dy = -speed;
+            this.vector.dy = -((PlayerModel)model).getSpeed();;
         } else if (bitSet.get(KeyEvent.VK_LEFT)) {
             view.setImage(PlayerView.MOVE_LEFT);
-            this.vector.dx = -speed;
+            this.vector.dx = -((PlayerModel)model).getSpeed();;
         } else if (bitSet.get(KeyEvent.VK_RIGHT)) {
             view.setImage(PlayerView.MOVE_RIGHT);
-            this.vector.dx = speed;
+            this.vector.dx = ((PlayerModel)model).getSpeed();;
         } else {
             view.setImageHold();
         }
@@ -97,7 +96,7 @@ public class PlayerController extends GameController implements KeyListener, Col
     public void onContact(Collision other) {
         if(other instanceof ItemController){
             if(((ItemController) other).getType()==ItemType.SPEED_UP){
-                speed +=1;
+                ((PlayerModel)model).speedUp();
             }
         }
     }
