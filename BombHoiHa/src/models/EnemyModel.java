@@ -3,6 +3,8 @@ package models;
 import controllers.EnemyController;
 import manager.GameManager;
 
+import java.awt.*;
+
 /**
  * Created by QuanT on 3/9/2017.
  */
@@ -27,15 +29,12 @@ public class EnemyModel extends GameModel implements Collision{
         this.type = type;
     }
 
-    public int getHang(){
-        return y / HEIGHT;
+    @Override
+    public Rectangle getRect() {
+        return new Rectangle(x, y + height - ItemMapModel.SIZE_TILED, ItemMapModel.SIZE_TILED - 10, ItemMapModel.SIZE_TILED - 10);
     }
 
-    public int getCot(){
-        return x / WIDTH;
-    }
-
-    public void moveCorrectly(int x1,int y1){
+    public void moveCorrectly(int x1, int y1){
         double dis = Math.sqrt((x-x1)*(x-x1) + (y-y1)*(y-y1));
         int vx = (int) ((x1 - x) * speed/dis);
         int vy = (int) ((y1 - y) * speed/dis);
