@@ -42,9 +42,6 @@ public class ItemMapController extends GameController implements Collision {
                 ((TerrainBreakView) view).setFire(true);
                 GameManager.collisionManager.remove(this);
                 GameManager.arrBlocks.remove(this);
-                if (Utils.getRandom(3) == 0) {
-                    ItemController.create(model.getX(), model.getY(), ItemType.getRandomItemType());
-                }
             }
         }
     }
