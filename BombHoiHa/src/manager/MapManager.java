@@ -1,7 +1,9 @@
 package manager;
 
 import controllers.GameController;
+import controllers.ItemController;
 import controllers.ItemMapController;
+import controllers.ItemType;
 import manager.ControllerManager;
 import models.ItemMapModel;
 import models.Terrain;
@@ -39,6 +41,7 @@ public class MapManager extends ControllerManager {
                 int y = i * ItemMapModel.SIZE_TILED;
 
                 GameController itemMapController;
+                ItemController itemController = null;
                 Terrain terrain;
                 String url = "Map/map-" + mapLevel + "/";
                 if (bitTerrain == 0) {
@@ -50,8 +53,8 @@ public class MapManager extends ControllerManager {
                 } else {
                     terrain = Terrain.BREAK;
                     itemMapController = new ItemMapController(x, y,url + bit, url + "expl");
-                }
 
+                }
                 add(itemMapController);
                 if (terrain == Terrain.BLOCK || terrain == Terrain.BREAK) {
                     GameManager.arrBlocks.add(itemMapController);

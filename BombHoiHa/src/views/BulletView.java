@@ -13,4 +13,10 @@ public class BulletView extends GameView {
     public BulletView(String url) {
         super(url);
     }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+
 }

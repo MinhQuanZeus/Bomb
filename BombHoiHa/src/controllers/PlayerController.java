@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Collision;
 import models.GameModel;
 import models.ItemMapModel;
 import models.PlayerModel;
@@ -17,15 +18,16 @@ import java.util.List;
 /**
  * Created by QuanT on 3/9/2017.
  */
-public class PlayerController extends GameController implements KeyListener {
+public class PlayerController extends GameController implements KeyListener, Collision {
 
-    public static final int SPEED = 2;
+    public static int speed = 2;
     private BitSet bitSet;
     private List<GameController> arrBlocks;
 
     public PlayerController(PlayerModel model, GameView view, List<GameController> arrBlocks) {
         super(model, view);
         GameManager.controllerManager.add(this);
+        GameManager.collisionManager.add(this);
         bitSet = new BitSet(256);
         this.arrBlocks = arrBlocks;
     }
@@ -59,16 +61,16 @@ public class PlayerController extends GameController implements KeyListener {
         PlayerView view = (PlayerView) this.view;
         if (bitSet.get(KeyEvent.VK_DOWN)) {
             view.setImage(PlayerView.MOVE_DOWN);
-            this.vector.dy = SPEED;
+            this.vector.dy = speed;
         } else if (bitSet.get(KeyEvent.VK_UP)) {
             view.setImage(PlayerView.MOVE_UP);
-            this.vector.dy = -SPEED;
+            this.vector.dy = -speed;
         } else if (bitSet.get(KeyEvent.VK_LEFT)) {
             view.setImage(PlayerView.MOVE_LEFT);
-            this.vector.dx = -SPEED;
+            this.vector.dx = -speed;
         } else if (bitSet.get(KeyEvent.VK_RIGHT)) {
             view.setImage(PlayerView.MOVE_RIGHT);
-            this.vector.dx = SPEED;
+            this.vector.dx = speed;
         } else {
             view.setImageHold();
         }
@@ -88,6 +90,15 @@ public class PlayerController extends GameController implements KeyListener {
                     new BombView("Bombs & Explosions/normalbomb"),
                     (PlayerModel) this.getModel()
             );
+        }
+    }
+
+    @Override
+    public void onContact(Collision other) {
+        if(other instanceof ItemController){
+            if(((ItemController) other).getType()==ItemType.SPEED_UP){
+                speed +=1;
+            }
         }
     }
 }

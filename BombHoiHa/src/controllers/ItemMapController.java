@@ -6,6 +6,7 @@ import models.Collision;
 import models.ItemMapModel;
 import models.Terrain;
 import manager.GameManager;
+import utils.Utils;
 import views.GameView;
 import views.TerrainBreakView;
 
@@ -38,6 +39,9 @@ public class ItemMapController extends GameController implements Collision {
     public void onContact(Collision other) {
         if (other instanceof ExplosionController) {
             if (((ItemMapModel) model).getTerrain() == Terrain.BREAK) {
+                if(Utils.getRandom(3)==0){
+                    ItemController.create(model.getX(),model.getY(),ItemType.SPEED_UP);
+                }
                 ((TerrainBreakView) view).setFire(true);
                 GameManager.collisionManager.remove(this);
                 GameManager.arrBlocks.remove(this);

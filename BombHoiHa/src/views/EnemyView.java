@@ -13,4 +13,8 @@ public class EnemyView extends GameView {
     public EnemyView(String url) {
         super(url);
     }
+
+    public void setImage(Image image){
+        this.image = image;
+    }
 }

@@ -1,9 +1,12 @@
 package manager;
 
+import controllers.GameController;
+import controllers.ItemController;
 import models.Collision;
 import models.GameModel;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -26,14 +29,10 @@ public class CollisionManager {
     }
 
     public void run() {
+        remove();
         for (int i = 0; i < collisionList.size() - 1; i++) {
             Collision collisionI = collisionList.get(i);
             GameModel modelI = collisionI.getModel();
-            if (!modelI.isAlive()) {
-                collisionList.remove(i);
-                i--;
-                continue;
-            }
             for (int j = i + 1; j < collisionList.size(); j++) {
                 Collision collisionJ = collisionList.get(j);
                 GameModel modelJ = collisionJ.getModel();
@@ -43,6 +42,14 @@ public class CollisionManager {
                     collisionI.onContact(collisionJ);
                 }
             }
+        }
+    }
+
+    private void remove(){
+        Iterator<Collision> gameControllerIterator = collisionList.iterator();
+        while (gameControllerIterator.hasNext()){
+            if(!gameControllerIterator.next().getModel().isAlive())
+                gameControllerIterator.remove();
         }
     }
 }

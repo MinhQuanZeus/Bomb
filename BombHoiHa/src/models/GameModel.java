@@ -41,6 +41,14 @@ public class GameModel {
         return height;
     }
 
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
     public void move(GameVector gameVector, List<GameController> arrBlocks) {
         int dx = this.x + gameVector.dx;
         int dy = this.y + gameVector.dy;
@@ -49,7 +57,7 @@ public class GameModel {
             return;
         }
 
-        for (GameController gameController: arrBlocks) {
+        for (GameController gameController : arrBlocks) {
             if (gameController.getModel().getRect().intersects(getBottomRect(dx, dy))) {
                 return;
             }
@@ -57,6 +65,11 @@ public class GameModel {
 
         this.x = dx;
         this.y = dy;
+    }
+
+    public void moveJustUseVector(GameVector gameVector) {
+        this.x += gameVector.dx;
+        this.y += gameVector.dy;
     }
 
     public boolean isAlive() {
