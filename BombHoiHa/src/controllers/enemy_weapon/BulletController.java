@@ -95,8 +95,6 @@ public class BulletController extends GameController implements Collision{
                     model.setAlive(false);
                 }
             }
-
-            System.out.println();
 //            setImage();
         }
     }

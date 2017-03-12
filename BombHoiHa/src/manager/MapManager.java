@@ -17,8 +17,8 @@ import java.util.List;
  * Created by KhoaBeo on 3/10/2017.
  */
 public class MapManager extends ControllerManager {
-    public static int[][] map;
 
+    public static int[][] map;
     public static int mapLevel;
 
     public MapManager() {
@@ -43,7 +43,6 @@ public class MapManager extends ControllerManager {
                 map[i][j] = bitTerrain;
                 int x = j * ItemMapModel.SIZE_TILED;
                 int y = i * ItemMapModel.SIZE_TILED;
-                System.out.print(map[i][j]+",");
                 GameController itemMapController;
                 Terrain terrain;
                 String url = "Map/map-" + mapLevel + "/";
@@ -63,7 +62,6 @@ public class MapManager extends ControllerManager {
                     GameManager.arrBlocks.add(itemMapController);
                 }
             }
-            System.out.println();
         }
     }
 

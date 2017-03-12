@@ -8,6 +8,8 @@ import controllers.enemy_behavior.move.EnemyMoveBehavior;
 import controllers.enemy_behavior.move.MoveRandomStupid;
 import controllers.enemy_behavior.move.MoveRandom_And_Jump;
 import manager.ControllerManager;
+import manager.GameManager;
+import models.Collision;
 import models.EnemyModel;
 import models.GameModel;
 import models.PlayerModel;
@@ -24,7 +26,7 @@ import java.util.Vector;
  */
 
 // dùng hàm create trong enemycontroller: cần vị trí x,y, tốc độ   tuy nhiên máu là mặc định
-public class EnemyController extends GameController {
+public class EnemyController extends GameController implements Collision {
     protected List<GameController> gameControllers;
     protected PlayerModel playerModel;
     protected EnemyType type;
@@ -46,6 +48,7 @@ public class EnemyController extends GameController {
         this.gameControllers = gameControllers;
         this.type = type;
         this.controllerManager = controllerManager;
+        GameManager.collisionManager.add(this);
     }
 
     @Override
@@ -67,7 +70,7 @@ public class EnemyController extends GameController {
         }
     }
 
-    static public enum EnemyType {
+    public enum EnemyType {
         DUCK,
         SLIM_JELLY_HEAD,
         FIRE_HEAD
@@ -132,6 +135,13 @@ public class EnemyController extends GameController {
     @Override
     public GameModel getModel() {
         return (EnemyModel) model;
+    }
+
+    @Override
+    public void onContact(Collision other) {
+        if (other instanceof EnemyController || other instanceof PlayerController) {
+            //if ()
+        }
     }
 
 }

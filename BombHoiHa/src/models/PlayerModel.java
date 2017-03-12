@@ -15,7 +15,7 @@ public class PlayerModel extends GameModel {
     public PlayerModel(int x, int y) {
         super(x, y, WIDTH, HEIGHT);
         maxBomb = 1;
-        explosionSize = 1;
+        explosionSize = 2;
     }
 
     public void increaseCountBomb() {

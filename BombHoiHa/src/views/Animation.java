@@ -12,17 +12,22 @@ public class Animation {
     private long lastTime;
     private int index;
     private int delay;
+    private int size;
     private Image image;
     private String url;
 
-    public Animation(int delay, String url) {
+    public Animation(int delay, int size, String url) {
         this.delay = delay;
         this.url = url;
+        this.size = size;
     }
 
     public Image getImage() {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastTime > delay) {
+            if (index >= size) {
+                return null;
+            }
             image = Utils.loadImageFromRes(url + "-" + index++);
             lastTime = currentTime;
         }
@@ -30,9 +35,7 @@ public class Animation {
     }
 
     public void reload() {
-        if (image == null) {
-            index = 0;
-        }
+        index = 0;
     }
 
     public void setUrl(String url) {

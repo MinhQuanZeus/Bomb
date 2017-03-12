@@ -15,7 +15,7 @@ public class Utils {
             Image image = ImageIO.read(new File("resources/" + url + ".png"));
             return image;
         } catch (IOException e) {
-            System.out.println("Error! LoadImage");
+            e.printStackTrace();
             return null;
         }
 

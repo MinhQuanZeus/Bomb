@@ -13,7 +13,7 @@ public class ExplosionView extends GameView {
 
     public ExplosionView(String url) {
         super(url + "-0");
-        animation = new Animation(100, url);
+        animation = new Animation(100, 5, url);
     }
 
     @Override
