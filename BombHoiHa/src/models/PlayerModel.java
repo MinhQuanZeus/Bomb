@@ -5,8 +5,10 @@ package models;
  */
 public class PlayerModel extends GameModel {
 
-    public static final int WIDTH = 50;
-    public static final int HEIGHT = 70;
+    public static final int MAX_SPEED = 4;
+    private int speed = 2;
+    public static final int WIDTH = 40;
+    public static final int HEIGHT = 56;
 
     private int maxBomb;
     private int countBomb;
@@ -15,7 +17,7 @@ public class PlayerModel extends GameModel {
     public PlayerModel(int x, int y) {
         super(x, y, WIDTH, HEIGHT);
         maxBomb = 1;
-        explosionSize = 2;
+        explosionSize = 1;
     }
 
     public void increaseCountBomb() {
@@ -35,5 +37,25 @@ public class PlayerModel extends GameModel {
 
     public int getExplosionSize() {
         return explosionSize;
+    }
+    public void expandExplosionSize(){
+        explosionSize++;
+    }
+
+    public void expandMaxBomb(){
+        maxBomb++;
+    }
+
+    public void speedUp() {
+        if(speed<= MAX_SPEED)
+        speed+=1;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public int getCountBomb() {
+        return countBomb;
     }
 }

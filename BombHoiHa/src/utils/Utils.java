@@ -1,5 +1,7 @@
 package utils;
 
+import controllers.ItemType;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
@@ -27,5 +29,6 @@ public class Utils {
         a = random.nextInt(max);
         return a;
     }
+
 
 }

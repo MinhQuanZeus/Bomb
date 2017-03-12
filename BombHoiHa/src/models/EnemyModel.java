@@ -7,8 +7,8 @@ import manager.GameManager;
  * Created by QuanT on 3/9/2017.
  */
 public class EnemyModel extends GameModel implements Collision{
-    public static final int WIDTH = ItemMapModel.SIZE_TILED;
-    public static final int HEIGHT = ItemMapModel.SIZE_TILED;
+    public static final int WIDTH = PlayerModel.WIDTH;
+    public static final int HEIGHT = PlayerModel.HEIGHT;
     public int speed;
     public int hp = 1;
     public boolean destroy = false;
