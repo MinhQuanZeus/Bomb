@@ -139,6 +139,9 @@ public class EnemyController extends GameController implements Collision {
 
     @Override
     public void onContact(Collision other) {
+        if (other instanceof ExplosionController) {
+            ((EnemyModel) model).setHp(0);
+        }
     }
 
 }
