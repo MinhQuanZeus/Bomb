@@ -28,7 +28,7 @@ public class AutoLoadPic {
         for (int i = 0; i < 11; i++) {
             if (i >= 0 && i < 3) {
                 enemy_Duck_Image_ImageMap.put("xuong" + c, Utils.loadImageFromRes("Enemies/" + i));
-                System.out.println(Utils.loadImageFromRes("Enemies/" + i));
+             //   System.out.println(Utils.loadImageFromRes("Enemies/" + i));
             } else if (i >= 3 && i < 6) {
                 enemy_Duck_Image_ImageMap.put("len" + c, Utils.loadImageFromRes("Enemies/" + i));
             } else if (i >= 6 && i < 8) {

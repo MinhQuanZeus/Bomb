@@ -13,7 +13,7 @@ public class BombView extends GameView {
 
     public BombView(String url) {
         super(url + "-0");
-        animation = new Animation(170, url);
+        animation = new Animation(170, 4, url);
     }
 
     public void setImage() {

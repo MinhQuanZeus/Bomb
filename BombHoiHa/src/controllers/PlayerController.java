@@ -1,5 +1,6 @@
 package controllers;
 
+import manager.MapManager;
 import models.Collision;
 import models.GameModel;
 import models.ItemMapModel;
@@ -84,11 +85,17 @@ public class PlayerController extends GameController implements KeyListener, Col
         if (model.checkMaxBomb()) {
             int bombX = ((model.getX() + model.getHeight() / 2) / ItemMapModel.SIZE_TILED) * ItemMapModel.SIZE_TILED;
             int bombY = (model.getY() / ItemMapModel.SIZE_TILED + 1) * ItemMapModel.SIZE_TILED;
+            int rowBombMatrix = bombY / ItemMapModel.SIZE_TILED;
+            int colBombMatrix = bombX / ItemMapModel.SIZE_TILED;
+            if (MapManager.map[rowBombMatrix][colBombMatrix] == 9)
+                return;
             new BombController(
                     new GameModel(bombX, bombY, ItemMapModel.SIZE_TILED, ItemMapModel.SIZE_TILED),
                     new BombView("Bombs & Explosions/normalbomb"),
                     (PlayerModel) this.getModel()
             );
+
+            MapManager.map[rowBombMatrix][colBombMatrix] = 9;
         }
     }
 
@@ -97,6 +104,15 @@ public class PlayerController extends GameController implements KeyListener, Col
         if(other instanceof ItemController){
             if(((ItemController) other).getType()==ItemType.SPEED_UP){
                 ((PlayerModel)model).speedUp();
+            }
+//            if(((ItemController) other).getType()==ItemType.THROUGH_WALL){
+//                arrBlocks.clear();
+//            }
+            if(((ItemController) other).getType()==ItemType.EXPAND_EXPLOSIVE){
+                ((PlayerModel)model).expandExplosionSize();
+            }
+            if(((ItemController) other).getType()==ItemType.EXPAND_BOMB){
+                ((PlayerModel)model).expandMaxBomb();
             }
         }
     }

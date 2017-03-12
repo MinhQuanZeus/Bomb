@@ -16,7 +16,7 @@ public class PlayerModel extends GameModel {
     public PlayerModel(int x, int y) {
         super(x, y, WIDTH, HEIGHT);
         maxBomb = 1;
-        explosionSize = 1;
+        explosionSize = 2;
     }
 
     public void increaseCountBomb() {
@@ -28,6 +28,7 @@ public class PlayerModel extends GameModel {
     }
 
     public boolean checkMaxBomb() {
+     //   System.out.println("max bomb: "+maxBomb);
         if (countBomb < maxBomb) {
             return true;
         }
@@ -37,6 +38,14 @@ public class PlayerModel extends GameModel {
     public int getExplosionSize() {
         return explosionSize;
     }
+    public void expandExplosionSize(){
+        explosionSize+=2;
+    }
+
+    public void expandMaxBomb(){
+        maxBomb++;
+        System.out.println("max bomb: "+maxBomb);
+    }
 
     public void speedUp() {
         if(speed<=MAXSPEED)
@@ -45,5 +54,9 @@ public class PlayerModel extends GameModel {
 
     public int getSpeed() {
         return speed;
+    }
+
+    public int getCountBomb() {
+        return countBomb;
     }
 }

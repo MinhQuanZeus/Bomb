@@ -16,7 +16,7 @@ public class PlayerView extends GameView {
 
     public PlayerView() {
         super(MOVE_DOWN + "-0");
-        animation = new Animation(150, MOVE_DOWN);
+        animation = new Animation(150, 4, MOVE_DOWN);
     }
 
     public void setImage(String url) {

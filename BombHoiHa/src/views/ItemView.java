@@ -15,7 +15,7 @@ public class ItemView extends GameView {
 
     public ItemView(String url) {
         super(url + "-0");
-        animation = new Animation(100, url);
+        animation = new Animation(100,2, url);
     }
 
     public void setImage() {

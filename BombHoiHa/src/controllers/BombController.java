@@ -57,7 +57,6 @@ public class BombController extends GameController {
                         }
                         int valueMatrix = MapManager.map[rowBombMatrix - j][colBombMatrix];
                         if (valueMatrix == 0) {
-                            System.out.println(rowBombMatrix + " " + colBombMatrix);
                             if (j != explosionSize) {
                                 new ExplosionController(model.getX(), model.getY() - indexSize, "Explosions/explosion1");
                             } else {
@@ -127,9 +126,11 @@ public class BombController extends GameController {
                     }
                 }
             }
+            System.out.println("");
 
             playerModel.reduceCountBomb();
             GameManager.arrBlocks.remove(this);
+            MapManager.map[rowBombMatrix][colBombMatrix] = 0;
             model.setAlive(false);
         }
     }

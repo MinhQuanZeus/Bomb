@@ -18,7 +18,7 @@ public class TerrainBreakView extends GameView {
 
     public TerrainBreakView(String url, String epxlUrl) {
         super(url);
-        explosion = new Animation(100, epxlUrl);
+        explosion = new Animation(100, 6, epxlUrl);
     }
 
     public void explode(GameModel model) {

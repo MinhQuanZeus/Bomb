@@ -8,9 +8,10 @@ import java.util.Random;
 public enum ItemType {
     SPEED_UP,
     EXPAND_EXPLOSIVE,
-    FREEZE,
-    THROUGH_WALL,
-    POWERUP_BOMB;
+    EXPAND_BOMB,
+    FREEZE;
+  //  THROUGH_WALL,
+   // POWERUP_BOMB;
 
     private static final ItemType[] VALUES = values();
     private static final int SIZE = VALUES.length;
