@@ -60,22 +60,28 @@ public class GameModel {
         for (int i = 0; i < arrBlocks.size(); i++) {
             GameController gameController = arrBlocks.get(i);
             Rectangle intersectionRect = gameController.getModel().getRect().intersection(getBottomRect(dx, dy));
+            int rowBlockMatrix = Utils.getRowMatrix(gameController.getModel().getY());
+            int colBlockMatrix = Utils.getColMatrix(gameController.getModel().getX());
 
-            if (!intersectionRect.isEmpty() && intersectionRect.getHeight() < 20 && intersectionRect.getWidth() < 20) {
+            if (!intersectionRect.isEmpty() && intersectionRect.getHeight() < 25 && intersectionRect.getWidth() < 25) {
                 if (gameVector.dy != 0) {
-                    if (dx > gameController.getModel().getX()) {
+                    if (dx > gameController.getModel().getX() && MapManager.map[rowBlockMatrix][colBlockMatrix + 1] == 0) {
                         dx += intersectionRect.getWidth();
-                    } else if (dx < gameController.getModel().getX()) {
+                    } else if (dx < gameController.getModel().getX() && MapManager.map[rowBlockMatrix][colBlockMatrix - 1] == 0) {
                         dx -= intersectionRect.getWidth();
+                    } else {
+                        return;
                     }
                 } else if (gameVector.dx != 0) {
-                    if (dy > gameController.getModel().getY()) {
-                        dy += intersectionRect.getWidth();
-
-                    } else if (dy < gameController.getModel().getX()) {
-                        dy -= intersectionRect.getWidth();
+                    if (dy > gameController.getModel().getY() && MapManager.map[rowBlockMatrix + 1][colBlockMatrix] == 0) {
+                        dy += intersectionRect.getHeight();
+                    } else if (dy < gameController.getModel().getY() && MapManager.map[rowBlockMatrix - 1][colBlockMatrix] == 0) {
+                        dy -= intersectionRect.getHeight();
+                    } else {
+                        return;
                     }
                 }
+                break;
             } else if (!intersectionRect.isEmpty()) {
                 return;
             }
@@ -109,7 +115,7 @@ public class GameModel {
     }
 
     public Rectangle getBottomRect(int x, int y) {
-        return new Rectangle(x + 5, y + height - ItemMapModel.SIZE_TILED + 10, width - 10, ItemMapModel.SIZE_TILED - 10);
+        return new Rectangle(x + 5, y + height - ItemMapModel.SIZE_TILED + 5, width - 10, ItemMapModel.SIZE_TILED - 10);
     }
 
     public void setWidth(int width) {
