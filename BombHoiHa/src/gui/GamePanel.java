@@ -38,6 +38,11 @@ public class GamePanel extends JPanel implements Runnable {
         while (running) {
             repaint();
             gameManager.run();
+            if (!gameManager.getPlayerController().getModel().isAlive()) {
+                GameFrame.mainPanel.showPanel(MainPanel.TAG_GAME_OVER);
+                running = false;
+            }
+
 
             try {
                 thread.sleep(17);

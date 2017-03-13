@@ -1,5 +1,7 @@
 package controllers;
 
+import gui.GameFrame;
+import gui.MainPanel;
 import manager.MapManager;
 import models.Collision;
 import models.GameModel;
@@ -115,6 +117,10 @@ public class PlayerController extends GameController implements KeyListener, Col
             if (((ItemController) other).getType() == ItemType.FREEZE) {
                 GameManager.controllerManager.freeze();
             }
+        }
+
+        if (other instanceof ExplosionController) {
+            model.setAlive(false);
         }
     }
 }
