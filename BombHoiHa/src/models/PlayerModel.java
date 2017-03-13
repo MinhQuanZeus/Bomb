@@ -8,7 +8,6 @@ import java.awt.*;
 public class PlayerModel extends GameModel {
 
     public static final int MAX_SPEED = 4;
-    private int speed = 2;
     public static final int WIDTH = 40;
     public static final int HEIGHT = 56;
 
@@ -20,6 +19,7 @@ public class PlayerModel extends GameModel {
         super(x, y, WIDTH, HEIGHT);
         maxBomb = 1;
         explosionSize = 1;
+        speed = 2;
     }
 
     public void increaseCountBomb() {

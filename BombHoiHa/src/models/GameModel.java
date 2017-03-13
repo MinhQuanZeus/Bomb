@@ -19,6 +19,7 @@ public class GameModel {
     protected int width;
     protected int height;
     protected boolean isAlive;
+    protected int speed;
 
     public GameModel(int x, int y, int width, int height) {
         this.x = x;
@@ -53,7 +54,7 @@ public class GameModel {
         int dx = this.x + gameVector.dx;
         int dy = this.y + gameVector.dy;
 
-        if ((dx < 0 || dx > GameFrame.WIDTH - width) || (dy < -10 || dy > GameFrame.HEIGHT - height - 30)) {
+        if ((dx < 0 || dx > GameFrame.WIDTH - width) || (dy < -10 || dy > GameFrame.HEIGHT - height - 25)) {
             return;
         }
 
@@ -66,17 +67,17 @@ public class GameModel {
             if (!intersectionRect.isEmpty() && intersectionRect.getHeight() < 25 && intersectionRect.getWidth() < 25) {
                 if (gameVector.dy != 0) {
                     if (dx > gameController.getModel().getX() && MapManager.map[rowBlockMatrix][colBlockMatrix + 1] == 0) {
-                        dx += intersectionRect.getWidth();
+                        dx += speed;
                     } else if (dx < gameController.getModel().getX() && MapManager.map[rowBlockMatrix][colBlockMatrix - 1] == 0) {
-                        dx -= intersectionRect.getWidth();
+                        dx -= speed;
                     } else {
                         return;
                     }
                 } else if (gameVector.dx != 0) {
                     if (dy > gameController.getModel().getY() && MapManager.map[rowBlockMatrix + 1][colBlockMatrix] == 0) {
-                        dy += intersectionRect.getHeight();
+                        dy += speed;
                     } else if (dy < gameController.getModel().getY() && MapManager.map[rowBlockMatrix - 1][colBlockMatrix] == 0) {
-                        dy -= intersectionRect.getHeight();
+                        dy -= speed;
                     } else {
                         return;
                     }

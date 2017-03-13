@@ -11,9 +11,8 @@ import java.awt.*;
 public class EnemyModel extends GameModel implements Collision{
     public static final int WIDTH = PlayerModel.WIDTH;
     public static final int HEIGHT = PlayerModel.HEIGHT;
-    public int speed;
-    public int hp = 1;
-    public boolean destroy = false;
+    private int hp = 1;
+    private boolean destroy = false;
 
     public EnemyController.EnemyType type;
     public EnemyModel(int x, int y, int width, int height, int speed, int hp, EnemyController.EnemyType type) {
