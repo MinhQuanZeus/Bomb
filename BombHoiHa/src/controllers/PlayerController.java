@@ -57,29 +57,32 @@ public class PlayerController extends GameController implements KeyListener, Col
 
     @Override
     public void run() {
-        model.move(vector, arrBlocks);
-        this.vector.dx = 0;
-        this.vector.dy = 0;
-
         PlayerView view = (PlayerView) this.view;
-        if (bitSet.get(KeyEvent.VK_DOWN)) {
-            view.setImage(PlayerView.MOVE_DOWN);
-            this.vector.dy = ((PlayerModel) model).getSpeed();
-        } else if (bitSet.get(KeyEvent.VK_UP)) {
-            view.setImage(PlayerView.MOVE_UP);
-            this.vector.dy = -((PlayerModel) model).getSpeed();
-        } else if (bitSet.get(KeyEvent.VK_LEFT)) {
-            view.setImage(PlayerView.MOVE_LEFT);
-            this.vector.dx = -((PlayerModel) model).getSpeed();
-        } else if (bitSet.get(KeyEvent.VK_RIGHT)) {
-            view.setImage(PlayerView.MOVE_RIGHT);
-            this.vector.dx = ((PlayerModel) model).getSpeed();
-        } else {
-            view.setImageHold();
-        }
+        if (!((PlayerModel) model).isExplode()) {
+            model.move(vector, arrBlocks);
+            this.vector.dx = 0;
+            this.vector.dy = 0;
 
-        if (bitSet.get(KeyEvent.VK_SPACE)) {
-            bombard();
+            if (bitSet.get(KeyEvent.VK_DOWN)) {
+                view.setImage(PlayerView.MOVE_DOWN);
+                this.vector.dy = ((PlayerModel) model).getSpeed();
+            } else if (bitSet.get(KeyEvent.VK_UP)) {
+                view.setImage(PlayerView.MOVE_UP);
+                this.vector.dy = -((PlayerModel) model).getSpeed();
+            } else if (bitSet.get(KeyEvent.VK_LEFT)) {
+                view.setImage(PlayerView.MOVE_LEFT);
+                this.vector.dx = -((PlayerModel) model).getSpeed();
+            } else if (bitSet.get(KeyEvent.VK_RIGHT)) {
+                view.setImage(PlayerView.MOVE_RIGHT);
+                this.vector.dx = ((PlayerModel) model).getSpeed();
+            } else {
+                view.setImageHold();
+            }
+            if (bitSet.get(KeyEvent.VK_SPACE)) {
+                bombard();
+            }
+        } else {
+            view.explode(model);
         }
     }
 
@@ -120,7 +123,7 @@ public class PlayerController extends GameController implements KeyListener, Col
         }
 
         if (other instanceof ExplosionController) {
-            model.setAlive(false);
+            ((PlayerModel) model).setExplode(true);
         }
     }
 }

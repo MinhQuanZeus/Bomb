@@ -45,4 +45,12 @@ public class Animation {
     public String getUrl() {
         return url;
     }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
 }

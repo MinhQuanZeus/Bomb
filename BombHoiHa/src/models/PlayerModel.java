@@ -14,12 +14,14 @@ public class PlayerModel extends GameModel {
     private int maxBomb;
     private int countBomb;
     private int explosionSize;
+    private boolean explode;
 
     public PlayerModel(int x, int y) {
         super(x, y, WIDTH, HEIGHT);
-        maxBomb = 1;
+        maxBomb = 2;
         explosionSize = 1;
         speed = 2;
+        explode = false;
     }
 
     public void increaseCountBomb() {
@@ -60,5 +62,13 @@ public class PlayerModel extends GameModel {
     @Override
     public Rectangle getRect() {
         return super.getBottomRect(x, y);
+    }
+
+    public boolean isExplode() {
+        return explode;
+    }
+
+    public void setExplode(boolean explode) {
+        this.explode = explode;
     }
 }

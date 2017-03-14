@@ -82,7 +82,6 @@ public class GameModel {
                         return;
                     }
                 }
-                break;
             } else if (!intersectionRect.isEmpty()) {
                 return;
             }

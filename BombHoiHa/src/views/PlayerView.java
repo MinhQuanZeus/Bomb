@@ -1,5 +1,6 @@
 package views;
 
+import models.GameModel;
 import utils.Utils;
 
 /**
@@ -29,6 +30,21 @@ public class PlayerView extends GameView {
             image = animation.getImage();
         } else {
             animation.reload();
+        }
+    }
+
+    public void explode(GameModel model) {
+        if (!animation.getUrl().equals("Bomberman/explosion")) {
+            animation.setUrl("Bomberman/explosion");
+            animation.setSize(2);
+            animation.reload();
+            animation.setDelay(500);
+        }
+
+        if (animation.getImage() != null) {
+            image = animation.getImage();
+        } else {
+            model.setAlive(false);
         }
     }
 
