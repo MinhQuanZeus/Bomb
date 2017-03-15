@@ -51,6 +51,6 @@ public class MenuPanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics graphics) {
-        graphics.drawImage(Utils.loadImageFromRes("System/menu-buttonless"), 0, 0, GameFrame.WIDTH, GameFrame.HEIGHT, null);
+        graphics.drawImage(Utils.loadImageFromRes("System/game-menu"), 0, 0, GameFrame.WIDTH, GameFrame.HEIGHT, null);
     }
 }

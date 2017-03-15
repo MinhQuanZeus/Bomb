@@ -63,25 +63,28 @@ public class GameModel {
             Rectangle intersectionRect = gameController.getModel().getRect().intersection(getBottomRect(dx, dy));
             int rowBlockMatrix = Utils.getRowMatrix(gameController.getModel().getY());
             int colBlockMatrix = Utils.getColMatrix(gameController.getModel().getX());
+            int xRect = dx + 5;
+            int yRect = dy + height - ItemMapModel.SIZE_TILED + 5;
 
             if (!intersectionRect.isEmpty() && intersectionRect.getHeight() < 25 && intersectionRect.getWidth() < 25) {
                 if (gameVector.dy != 0) {
-                    if (dx > gameController.getModel().getX() && MapManager.map[rowBlockMatrix][colBlockMatrix + 1] == 0) {
+                    if (xRect > gameController.getModel().getX() && MapManager.map[rowBlockMatrix][colBlockMatrix + 1] == 0) {
                         dx += speed;
-                    } else if (dx < gameController.getModel().getX() && MapManager.map[rowBlockMatrix][colBlockMatrix - 1] == 0) {
+                    } else if (xRect < gameController.getModel().getX() && MapManager.map[rowBlockMatrix][colBlockMatrix - 1] == 0) {
                         dx -= speed;
                     } else {
                         return;
                     }
                 } else if (gameVector.dx != 0) {
-                    if (dy > gameController.getModel().getY() && MapManager.map[rowBlockMatrix + 1][colBlockMatrix] == 0) {
+                    if (yRect > gameController.getModel().getY() && MapManager.map[rowBlockMatrix + 1][colBlockMatrix] == 0) {
                         dy += speed;
-                    } else if (dy < gameController.getModel().getY() && MapManager.map[rowBlockMatrix - 1][colBlockMatrix] == 0) {
+                    } else if (yRect < gameController.getModel().getY() && MapManager.map[rowBlockMatrix - 1][colBlockMatrix] == 0) {
                         dy -= speed;
                     } else {
                         return;
                     }
                 }
+                break;
             } else if (!intersectionRect.isEmpty()) {
                 return;
             }

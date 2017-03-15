@@ -18,7 +18,7 @@ public class PlayerModel extends GameModel {
 
     public PlayerModel(int x, int y) {
         super(x, y, WIDTH, HEIGHT);
-        maxBomb = 2;
+        maxBomb = 1;
         explosionSize = 1;
         speed = 2;
         explode = false;

@@ -40,6 +40,6 @@ public class GameOverPanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics graphics) {
-        graphics.drawImage(Utils.loadImageFromRes("System/gameover-buttonless"), 0, 0, GameFrame.WIDTH, GameFrame.HEIGHT, null);
+        graphics.drawImage(Utils.loadImageFromRes("System/game-over2"), 0, 0, GameFrame.WIDTH, GameFrame.HEIGHT, null);
     }
 }
