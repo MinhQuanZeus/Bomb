@@ -17,6 +17,7 @@ import java.util.Map;
 public class BombController extends GameController implements Collision {
 
     private PlayerModel playerModel;
+    private GameModel collideModel;
     private int exist;
 
     public BombController(GameModel model, GameView view, PlayerModel playerModel) {
@@ -30,15 +31,10 @@ public class BombController extends GameController implements Collision {
 
     @Override
     public void run() {
-        checkPlayer();
-        countDown();
-    }
-
-    private void checkPlayer() {
-        if (!model.getRect().intersects(playerModel.getBottomRect(playerModel.getX(), playerModel.getY()))
-                && !GameManager.arrBlocks.contains(this)) {
+        if (!model.overlap(collideModel) && !GameManager.arrBlocks.contains(this)) {
             GameManager.arrBlocks.add(this);
         }
+        countDown();
     }
 
     private void countDown() {
@@ -143,8 +139,11 @@ public class BombController extends GameController implements Collision {
     @Override
     public void onContact(Collision other) {
         if (other instanceof ExplosionController) {
-            //explode();
             exist = 1;
+        }
+
+        if (other instanceof EnemyController || other instanceof PlayerController) {
+            collideModel = other.getModel();
         }
     }
 }

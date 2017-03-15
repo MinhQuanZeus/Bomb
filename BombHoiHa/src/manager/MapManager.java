@@ -3,12 +3,8 @@ package manager;
 import controllers.GameController;
 import controllers.ItemController;
 import controllers.ItemMapController;
-import controllers.ItemType;
-import manager.ControllerManager;
 import models.ItemMapModel;
 import models.Terrain;
-import manager.GameManager;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -20,6 +16,7 @@ import java.util.List;
  */
 public class MapManager extends ControllerManager {
 
+    public static final int LEVEL_MAX = 2;
     public static int[][] map;
     public static int mapLevel;
 
@@ -27,7 +24,12 @@ public class MapManager extends ControllerManager {
         super();
         mapLevel = 1;
         map = new int[14][14];
+        readMap(mapLevel);
+    }
 
+    public void changeMap(int level) {
+        mapLevel = level;
+        GameManager.arrBlocks.clear();
         readMap(mapLevel);
     }
 
