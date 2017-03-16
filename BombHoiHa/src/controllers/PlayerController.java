@@ -123,7 +123,10 @@ public class PlayerController extends GameController implements KeyListener, Col
         }
 
         if (other instanceof ExplosionController) {
-            ((PlayerModel) model).setExplode(true);
+            Rectangle rectangle = model.getIntersectionRect(((ExplosionController) other).model);
+            if (rectangle.getWidth() > 10 && rectangle.getHeight() > 10) {
+                ((PlayerModel) model).setExplode(true);
+            }
         }
     }
 }

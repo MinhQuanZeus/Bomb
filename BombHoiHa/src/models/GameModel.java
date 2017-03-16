@@ -1,5 +1,6 @@
 package models;
 
+import controllers.BombController;
 import controllers.GameController;
 import controllers.PlayerController;
 import gui.GameFrame;
@@ -66,7 +67,9 @@ public class GameModel {
             int xRect = dx + 5;
             int yRect = dy + height - ItemMapModel.SIZE_TILED + 5;
 
-            if (!intersectionRect.isEmpty() && intersectionRect.getHeight() < 25 && intersectionRect.getWidth() < 25) {
+            if (gameController instanceof BombController && this.overlap(gameController.getModel())) {
+                break;
+            } else if (!intersectionRect.isEmpty() && intersectionRect.getHeight() < 25 && intersectionRect.getWidth() < 25) {
                 if (gameVector.dy != 0) {
                     if (xRect > gameController.getModel().getX() && MapManager.map[rowBlockMatrix][colBlockMatrix + 1] == 0) {
                         dx += speed;
@@ -111,6 +114,10 @@ public class GameModel {
         Rectangle rect1 = this.getRect();
         Rectangle rect2 = gameModel.getRect();
         return rect1.intersects(rect2);
+    }
+
+    public Rectangle getIntersectionRect(GameModel other) {
+        return getRect().intersection(other.getRect());
     }
 
     public Rectangle getRect() {
