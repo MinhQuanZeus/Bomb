@@ -1,5 +1,6 @@
 package gui;
 
+import controllers.GameController;
 import manager.GameManager;
 
 import javax.swing.*;
@@ -11,8 +12,9 @@ import java.awt.event.KeyListener;
  */
 public class GamePanel extends JPanel implements Runnable {
 
+    public static boolean running;
+
     private Thread thread;
-    private boolean running;
     private GameManager gameManager;
 
     public GamePanel() {
@@ -20,7 +22,7 @@ public class GamePanel extends JPanel implements Runnable {
         setFocusable(true);
 
         gameManager = new GameManager();
-        addKeyListener((KeyListener) gameManager.getPlayerController());
+        addKeyListener((KeyListener) GameManager.playerController);
 
         running = true;
         thread = new Thread(this);
@@ -38,11 +40,6 @@ public class GamePanel extends JPanel implements Runnable {
         while (running) {
             repaint();
             gameManager.run();
-            if (!gameManager.getPlayerController().getModel().isAlive()) {
-                GameFrame.mainPanel.showPanel(MainPanel.TAG_GAME_OVER);
-                running = false;
-            }
-
 
             try {
                 thread.sleep(17);

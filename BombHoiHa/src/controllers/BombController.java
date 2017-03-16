@@ -19,10 +19,10 @@ public class BombController extends GameController implements Collision {
     private PlayerModel playerModel;
     private int exist;
 
-    public BombController(GameModel model, GameView view, PlayerModel playerModel) {
+    public BombController(GameModel model, GameView view) {
         super(model, view);
-        exist = 200;
-        this.playerModel = playerModel;
+        exist = 150;
+        this.playerModel = (PlayerModel) GameManager.playerController.getModel();
         playerModel.increaseCountBomb();
         GameManager.collisionManager.add(this);
         GameManager.controllerManager.add(this);

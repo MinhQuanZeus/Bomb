@@ -10,13 +10,19 @@ import java.awt.event.MouseEvent;
 /**
  * Created by KhoaBeo on 3/14/2017.
  */
-public class GameOverPanel extends JPanel {
+public class EndGamePanel extends JPanel {
 
     private JLabel btnBackToMenu;
+    private Image backGround;
 
-    public GameOverPanel() {
+    public EndGamePanel(boolean win) {
         setLayout(null);
         initComp();
+        if (win) {
+            backGround = Utils.loadImageFromRes("System/game-won");
+        } else {
+            backGround = Utils.loadImageFromRes("System/game-over2");
+        }
     }
 
     private void initComp() {
@@ -40,6 +46,6 @@ public class GameOverPanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics graphics) {
-        graphics.drawImage(Utils.loadImageFromRes("System/game-over2"), 0, 0, GameFrame.WIDTH, GameFrame.HEIGHT, null);
+        graphics.drawImage(backGround, 0, 0, GameFrame.WIDTH, GameFrame.HEIGHT, null);
     }
 }

@@ -3,6 +3,7 @@ package manager;
 import controllers.EnemyController;
 import controllers.GameController;
 import controllers.enemy_behavior.move.Stop;
+import models.PlayerModel;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -22,11 +23,12 @@ public class ControllerManager {
     public void add(GameController gameController) {
         this.gameControllers.add(0, gameController);
     }
-    public void freeze(){
+
+    public void freeze() {
         for (int i = 0; i < gameControllers.size(); i++) {
             GameController gameController = gameControllers.get(i);
             if (gameController.getModel().isAlive()) {
-                if(gameController instanceof EnemyController){
+                if (gameController instanceof EnemyController) {
                     ((EnemyController) gameController).setEnemyState(EnemyController.EnemyState.FREEZE);
                 }
             }
@@ -49,11 +51,13 @@ public class ControllerManager {
                 gameController.run();
             } else {
                 gameControllers.remove(i);
+                if (gameController instanceof EnemyController) {
+                    ((PlayerModel) GameManager.playerController.getModel()).increaseScore();
+                }
                 i--;
             }
         }
     }
-
 
 
 }

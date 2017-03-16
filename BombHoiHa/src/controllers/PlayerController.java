@@ -97,8 +97,7 @@ public class PlayerController extends GameController implements KeyListener, Col
                 return;
             new BombController(
                     new GameModel(bombX, bombY, ItemMapModel.SIZE_TILED, ItemMapModel.SIZE_TILED),
-                    new BombView("Bombs & Explosions/normalbomb"),
-                    (PlayerModel) this.getModel()
+                    new BombView("Bombs & Explosions/normalbomb")
             );
 
             MapManager.map[rowBombMatrix][colBombMatrix] = 9;

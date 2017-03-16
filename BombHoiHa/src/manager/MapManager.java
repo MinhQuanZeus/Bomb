@@ -3,8 +3,13 @@ package manager;
 import controllers.GameController;
 import controllers.ItemController;
 import controllers.ItemMapController;
+import gui.GameFrame;
+import gui.GamePanel;
 import models.ItemMapModel;
+import models.PlayerModel;
 import models.Terrain;
+
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -20,20 +25,50 @@ public class MapManager extends ControllerManager {
     public static int[][] map;
     public static int mapLevel;
 
+    private long exist;
+    private long start;
+
     public MapManager() {
         super();
         mapLevel = 1;
         map = new int[14][14];
         readMap(mapLevel);
+        exist = 180000;
+        start = System.currentTimeMillis();
     }
 
     public void changeMap(int level) {
         mapLevel = level;
         GameManager.arrBlocks.clear();
         readMap(mapLevel);
+        start = System.currentTimeMillis();
     }
 
-    public void readMap(int mapLevel) {
+    private String getCurrentTime() {
+        long currentTime = (exist - System.currentTimeMillis() + start) / 1000;
+        long minutes = currentTime / 60;
+        long seconds = currentTime % 60;
+        return minutes + ":" + seconds;
+    }
+
+    @Override
+    public void run() {
+        super.run();
+        if (getCurrentTime().equals("0:0")) {
+            GameFrame.mainPanel.showPanel(false);
+            GamePanel.running = false;
+        }
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        super.draw(g);
+        g.setFont(new Font("Courier New", Font.BOLD, 20));
+        g.setColor(Color.white);
+        g.drawString(getCurrentTime(),20,  20);
+    }
+
+    private void readMap(int mapLevel) {
         List<String> arrRows = readFile("resources/Map/map-" + mapLevel + "/map-" + mapLevel + ".txt");
         List<String> arrRowsTerrains = readFile("resources/Map/map-" + mapLevel + "/terrain-" + mapLevel + ".txt");
         for (int i = 0; i < arrRows.size(); i++) {

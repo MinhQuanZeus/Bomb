@@ -10,12 +10,12 @@ public class MainPanel extends JPanel {
 
     public static final String TAG_GAME = "tag_game";
     public static final String TAG_MENU = "tag_menu";
-    public static final String TAG_GAME_OVER = "tag_game_over";
+    public static final String TAG_GAME_OVER = "tag_end_game";
 
     private CardLayout cardLayout;
     private GamePanel gamePanel;
     private MenuPanel menuPanel;
-    private GameOverPanel gameOverPanel;
+    private EndGamePanel endGamePanel;
 
     public MainPanel() {
         cardLayout = new CardLayout();
@@ -31,12 +31,14 @@ public class MainPanel extends JPanel {
             add(gamePanel, TAG_GAME);
             cardLayout.show(this, tag);
             gamePanel.requestFocusInWindow();
-        } else if (tag.equals(TAG_GAME_OVER)) {
-            gameOverPanel = new GameOverPanel();
-            add(gameOverPanel, TAG_GAME_OVER);
-            cardLayout.show(this, tag);
         } else {
             cardLayout.show(this, tag);
         }
+    }
+
+    public void showPanel(boolean win) {
+        endGamePanel = new EndGamePanel(win);
+        add(endGamePanel, TAG_GAME_OVER);
+        cardLayout.show(this, TAG_GAME_OVER);
     }
 }

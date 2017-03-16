@@ -17,9 +17,9 @@ public class GameManager {
     public static ControllerManager controllerManager;
     public static CollisionManager collisionManager;
     public static List<GameController> arrBlocks;
+    public static GameController playerController;
 
     private ControllerManager mapManager;
-    private GameController playerController;
 
     public GameManager() {
         AutoLoadPic.init();
@@ -52,9 +52,5 @@ public class GameManager {
     public void draw(Graphics graphics) {
         mapManager.draw(graphics);
         controllerManager.draw(graphics);
-    }
-
-    public GameController getPlayerController() {
-        return playerController;
     }
 }

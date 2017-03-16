@@ -15,6 +15,7 @@ public class PlayerModel extends GameModel {
     private int countBomb;
     private int explosionSize;
     private boolean explode;
+    private int score;
 
     public PlayerModel(int x, int y) {
         super(x, y, WIDTH, HEIGHT);
@@ -70,5 +71,13 @@ public class PlayerModel extends GameModel {
 
     public void setExplode(boolean explode) {
         this.explode = explode;
+    }
+
+    public void increaseScore() {
+        score += 100;
+    }
+
+    public int getScore() {
+        return score;
     }
 }
