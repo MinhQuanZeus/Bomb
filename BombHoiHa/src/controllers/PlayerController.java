@@ -1,12 +1,10 @@
 package controllers;
 
+import controllers.enemy_weapon.BulletController;
 import gui.GameFrame;
 import gui.MainPanel;
 import manager.MapManager;
-import models.Collision;
-import models.GameModel;
-import models.ItemMapModel;
-import models.PlayerModel;
+import models.*;
 import manager.GameManager;
 import utils.Utils;
 import views.BombView;
@@ -126,6 +124,19 @@ public class PlayerController extends GameController implements KeyListener, Col
             if (rectangle.getWidth() > 10 && rectangle.getHeight() > 10) {
                 ((PlayerModel) model).setExplode(true);
             }
+        }
+
+        if(other instanceof EnemyController){
+            EnemyModel enemyModel = (EnemyModel) other.getModel();
+            if(enemyModel.getBottomRect(enemyModel.getX(),enemyModel.getY()).intersects(model.getBottomRect(model.getX(),model.getY()))){
+                if(enemyModel.getHp() != 0){
+                    ((PlayerModel)model).setExplode(true);
+                }
+            }
+        }
+
+        if(other instanceof BulletController){
+            ((PlayerModel)model).setExplode(true);
         }
     }
 }

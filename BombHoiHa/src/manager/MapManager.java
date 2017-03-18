@@ -1,5 +1,6 @@
 package manager;
 
+import controllers.EnemyController;
 import controllers.GameController;
 import controllers.ItemController;
 import controllers.ItemMapController;
@@ -71,17 +72,21 @@ public class MapManager extends ControllerManager {
     private void readMap(int mapLevel) {
         List<String> arrRows = readFile("resources/Map/map-" + mapLevel + "/map-" + mapLevel + ".txt");
         List<String> arrRowsTerrains = readFile("resources/Map/map-" + mapLevel + "/terrain-" + mapLevel + ".txt");
+        List<String> arrRowsEnemy = readFile("resources/Map/map-" + mapLevel + "/mapEnemy-" + mapLevel + ".txt");
         for (int i = 0; i < arrRows.size(); i++) {
             String[] row = arrRows.get(i).split(",");
             String[] rowTerrain = arrRowsTerrains.get(i).split(",");
+            String[] rowEnemy = arrRowsEnemy.get(i).split(",");
             for (int j = 0; j < row.length; j++) {
                 int bit = Integer.parseInt(row[j] + "");
                 int bitTerrain = Integer.parseInt(rowTerrain[j] + "");
+                int bitEnemy = Integer.parseInt(rowEnemy[j] + "");
                 map[i][j] = bitTerrain;
                 int x = j * ItemMapModel.SIZE_TILED;
                 int y = i * ItemMapModel.SIZE_TILED;
                 GameController itemMapController;
                 ItemController itemController = null;
+                EnemyController enemyController = null;
                 Terrain terrain;
                 String url = "Map/map-" + mapLevel + "/";
                 if (bitTerrain == 0) {
@@ -96,6 +101,11 @@ public class MapManager extends ControllerManager {
 
                 }
                 add(itemMapController);
+
+                enemyController = EnemyController.createByRow_Colum_Number(bitEnemy,i,j,(PlayerModel)GameManager.playerController.getModel());
+                if(enemyController != null){
+                    add(enemyController);
+                }
                 if (terrain == Terrain.BLOCK || terrain == Terrain.BREAK) {
                     GameManager.arrBlocks.add(itemMapController);
                 }

@@ -26,21 +26,12 @@ public class GameManager {
         controllerManager = new ControllerManager();
         arrBlocks = new ArrayList<>();
         collisionManager = new CollisionManager();
-        mapManager = new MapManager();
-
         playerController = new PlayerController(
                 new PlayerModel(0, 50),
                 new PlayerView(),
                 arrBlocks
         );
-
-
-        EnemyController e = EnemyController.create(EnemyController.EnemyType.SLIM_JELLY_HEAD, 0, 50, 2, (PlayerModel) playerController.getModel(), arrBlocks, controllerManager);
-        EnemyController e2 = EnemyController.create(EnemyController.EnemyType.DUCK, 0, 50, 2, (PlayerModel) playerController.getModel(), arrBlocks, controllerManager);
-        EnemyController e1 = EnemyController.create(EnemyController.EnemyType.FIRE_HEAD, 0, 50, 3, (PlayerModel) playerController.getModel(), arrBlocks, controllerManager);
-        controllerManager.add(e);
-        controllerManager.add(e1);
-        controllerManager.add(e2);
+        mapManager = new MapManager();
     }
 
     public void run() {

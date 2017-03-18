@@ -1,17 +1,17 @@
 package controllers.enemy_behavior.attack;
 
 import controllers.EnemyController;
-import controllers.GameController;
 import controllers.enemy_behavior.move.MoveRandomStupid;
 import controllers.enemy_weapon.BulletController;
 import controllers.enemy_weapon.ShotDirection;
+import gui.GameFrame;
 import manager.ControllerManager;
+import manager.GameManager;
 import models.*;
 import utils.Utils;
 import views.EnemyView;
 
 import java.awt.*;
-import java.util.List;
 import java.util.Vector;
 
 /**
@@ -24,7 +24,7 @@ public class AttackShootABullet extends EnemyAttackBehavior {
     TO DO: thay băng đạn thật
     */
     private Vector<String> bullets;
-    private int delayShoot = 2000;
+    private int delayShoot = 1000;
     private long lastTimeShoot = System.currentTimeMillis();
     // số phát bắn
     private int shootNumber = 2;
@@ -35,8 +35,8 @@ public class AttackShootABullet extends EnemyAttackBehavior {
     private int enemyTryingToShootLimit = 4;
 
     @Override
-    public void attack(EnemyModel model, EnemyView view, PlayerModel playerModel, List<GameController> gameControllers, EnemyController.EnemyType type, EnemyController enemyController, ControllerManager controllerManager) {
-        super.attack(model, view, playerModel, gameControllers, type, enemyController, controllerManager);
+    public void attack(EnemyModel model, EnemyView view, PlayerModel playerModel, EnemyController.EnemyType type, EnemyController enemyController) {
+        super.attack(model, view, playerModel,type, enemyController);
 
         int widthBullet = BulletModel.WIDTH;
         int heightBullet = BulletModel.HEIGHT;
@@ -52,7 +52,7 @@ public class AttackShootABullet extends EnemyAttackBehavior {
             switch (Utils.getRandom(4)) {
                 case (0): { // len
                     xBullet = model.getX() + model.getWidth() / 2 - widthBullet / 2;
-                    yBullet = model.getY() + model.getHeight() - ItemMapModel.SIZE_TILED / 2 + heightBullet/2;
+                    yBullet = model.getY() + 5;
                     moveDirection = "len";
                     switch (type) {
                         case FIRE_HEAD: {
@@ -65,7 +65,7 @@ public class AttackShootABullet extends EnemyAttackBehavior {
 
                 case (1): { // xuong
                     xBullet = model.getX() + model.getWidth() / 2 - widthBullet / 2;
-                    yBullet = model.getY() + model.getHeight();
+                    yBullet = model.getY() + model.getHeight() - 5;
                     moveDirection = "xuong";
 
                     switch (type) {
@@ -77,8 +77,8 @@ public class AttackShootABullet extends EnemyAttackBehavior {
                     break;
                 }
                 case (2): { // trai
-                    xBullet = model.getX() + 5 - widthBullet;
-                    yBullet = model.getY() + model.getHeight() - ItemMapModel.SIZE_TILED / 2 / 2 - heightBullet / 2;
+                    xBullet = model.getX() + 5;
+                    yBullet = model.getY() + model.getHeight() - model.getHeight()/3 - heightBullet/2;
                     moveDirection = "trai";
 
                     switch (type) {
@@ -90,8 +90,8 @@ public class AttackShootABullet extends EnemyAttackBehavior {
                     break;
                 }
                 case (3): { // phai
-                    xBullet = model.getX() + model.getWidth() - 5 + widthBullet;
-                    yBullet = model.getY() + model.getHeight() - ItemMapModel.SIZE_TILED / 2 / 2 - heightBullet / 2;
+                    xBullet = model.getX() + model.getWidth() - 5;
+                    yBullet = model.getY() + model.getHeight() - model.getHeight()/3 - heightBullet/2;
                     moveDirection = "phai";
 
                     switch (type) {
@@ -104,21 +104,28 @@ public class AttackShootABullet extends EnemyAttackBehavior {
                 }
             }
 
-            Rectangle r = new Rectangle(xBullet, yBullet, BulletModel.WIDTH, BulletModel.HEIGHT);
+            Rectangle r = new Rectangle(xBullet + 5, yBullet + 10, BulletModel.WIDTH - 10, BulletModel.HEIGHT / 2);
 
-            for (int i = 0; i < gameControllers.size(); i++) {
-                if (gameControllers.get(i).getModel().getRect().intersects(r)) {
+            if(xBullet < 0  || xBullet > GameFrame.WIDTH - model.getWidth() || yBullet < 0  || yBullet > GameFrame.HEIGHT - model.getHeight() - 30){
+                shoot = false;
+                countEnemyTryingToShoot++;
+            }else{
+                for (int i = 0; i < GameManager.arrBlocks.size(); i++) {
+                    if (GameManager.arrBlocks.get(i).getModel().getRect().intersects(r)) {
 
-                    shoot = false;
-                    countEnemyTryingToShoot++;
-                    break;
+                        shoot = false;
+                        countEnemyTryingToShoot++;
+                        break;
+                    }
                 }
             }
 
             if (shoot) {
                 lastTimeShoot = currentTime;
                 shootedNumber++;
-                controllerManager.add(BulletController.create(xBullet, yBullet, typeShoot));
+                BulletController bulletController = BulletController.create(xBullet, yBullet, typeShoot);
+                GameManager.controllerManager.add(bulletController);
+                GameManager.collisionManager.add(bulletController);
             }
 
             if (shootNumber == shootedNumber || countEnemyTryingToShoot == enemyTryingToShootLimit) {

@@ -1,5 +1,6 @@
 package controllers.enemy_behavior.destroy;
 
+import controllers.EnemyController;
 import manager.ControllerManager;
 import models.EnemyModel;
 import views.AutoLoadPic;
@@ -11,8 +12,8 @@ import views.EnemyView;
 public class DestroyNormal extends EnemyBeingDestroyBehavior {
 
     @Override
-    public void destroy(EnemyModel model, EnemyView view, ControllerManager controllerManager) {
-        super.destroy(model, view, controllerManager);
+    public void destroy(EnemyModel model, EnemyView view, EnemyController.EnemyType type) {
+        super.destroy(model, view,type);
         setImage(AutoLoadPic.explosionImageMap);
     }
 }

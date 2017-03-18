@@ -1,7 +1,6 @@
 package controllers.enemy_behavior.attack;
 
 import controllers.EnemyController;
-import controllers.GameController;
 import manager.ControllerManager;
 import models.EnemyModel;
 import models.PlayerModel;
@@ -9,7 +8,6 @@ import views.AutoLoadPic;
 import views.EnemyView;
 
 import java.awt.*;
-import java.util.List;
 import java.util.HashMap;
 
 /**
@@ -25,7 +23,7 @@ public class EnemyAttackBehavior {
     protected int drawCount = 0;
     protected int howManyPicOnAttack = 3;
 
-    public void attack(EnemyModel model, EnemyView view, PlayerModel playerModel, List<GameController> gameControllers, EnemyController.EnemyType type, EnemyController enemyController, ControllerManager controllerManager) {
+    public void attack(EnemyModel model, EnemyView view, PlayerModel playerModel, EnemyController.EnemyType type, EnemyController enemyController) {
         this.view = view;
         this.type = type;
 
