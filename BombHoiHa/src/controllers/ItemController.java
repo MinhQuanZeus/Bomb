@@ -1,11 +1,9 @@
 package controllers;
 
-import manager.CollisionManager;
 import manager.GameManager;
 import models.Collision;
 import models.GameModel;
 import models.ItemMapModel;
-import models.PlayerModel;
 import utils.Utils;
 import views.ItemView;
 
@@ -27,6 +25,7 @@ public class ItemController extends GameController implements Collision {
     @Override
     public void onContact(Collision other) {
         if(other instanceof PlayerController){
+            Utils.playSound("item-get.wav",false);
             model.setAlive(false);
         }
     }

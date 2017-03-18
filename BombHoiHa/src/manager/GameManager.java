@@ -22,6 +22,7 @@ public class GameManager {
     private ControllerManager mapManager;
 
     public GameManager() {
+
         AutoLoadPic.init();
         controllerManager = new ControllerManager();
         arrBlocks = new ArrayList<>();

@@ -1,7 +1,10 @@
 package gui;
 
+import utils.SoundPlayer;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 /**
  * Created by KhoaBeo on 3/9/2017.
@@ -17,12 +20,15 @@ public class MainPanel extends JPanel {
     private MenuPanel menuPanel;
     private EndGamePanel endGamePanel;
 
+    private SoundPlayer bgm;
+
     public MainPanel() {
         cardLayout = new CardLayout();
         setLayout(cardLayout);
 
         menuPanel = new MenuPanel();
         add(menuPanel, TAG_MENU);
+        setBGM(TAG_MENU);
     }
 
     public void showPanel(String tag) {
@@ -34,11 +40,30 @@ public class MainPanel extends JPanel {
         } else {
             cardLayout.show(this, tag);
         }
+        setBGM(tag);
+    }
+
+    public void setBGM(String tag){
+        if (bgm != null)
+            bgm.stop();
+        switch (tag){
+            case "tag_menu":{
+                bgm = new SoundPlayer(new File("resources/Sounds/intro.wav"));
+            }break;
+            case "tag_game":{
+                bgm = new SoundPlayer(new File("resources/Sounds/game.wav"));
+            }break;
+            case "tag_end_game":{
+                bgm = new SoundPlayer(new File("resources/Sounds/end.wav"));
+            }break;
+        }
+        bgm.play();
     }
 
     public void showPanel(boolean win) {
         endGamePanel = new EndGamePanel(win);
         add(endGamePanel, TAG_GAME_OVER);
+        setBGM(TAG_GAME_OVER);
         cardLayout.show(this, TAG_GAME_OVER);
     }
 }

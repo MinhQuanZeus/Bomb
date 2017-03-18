@@ -1,15 +1,13 @@
 package controllers;
 
+import manager.GameManager;
 import manager.MapManager;
 import models.Collision;
 import models.GameModel;
 import models.ItemMapModel;
 import models.PlayerModel;
-import manager.GameManager;
 import utils.Utils;
 import views.GameView;
-
-import java.util.Map;
 
 /**
  * Created by KhoaBeo on 3/11/2017.
@@ -43,6 +41,15 @@ public class BombController extends GameController implements Collision {
 
     private void explode() {
         int explosionSize = playerModel.getExplosionSize();
+
+        if (explosionSize < 2){
+            Utils.playSound("explosion-small.wav",false);
+        }
+        else if (explosionSize < 4){
+            Utils.playSound("explosion-medium.wav",false);
+        }
+        else Utils.playSound("explosion-large.wav",false);
+
         new ExplosionController(model.getX(), model.getY(), "Explosions/explosion0");
 
         int rowBombMatrix = Utils.getRowMatrix(model.getY());

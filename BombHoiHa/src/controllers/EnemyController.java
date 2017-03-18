@@ -8,13 +8,12 @@ import controllers.enemy_behavior.move.*;
 import manager.ControllerManager;
 import manager.GameManager;
 import models.*;
+import utils.Utils;
 import views.AutoLoadPic;
 import views.EnemyView;
 import views.GameView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Created by QuanT on 3/9/2017.
@@ -195,7 +194,10 @@ public class EnemyController extends GameController implements Collision {
     @Override
     public void onContact(Collision other) {
         if (other instanceof ExplosionController) {
-            ((EnemyModel) model).setHp(0);
+            if (((EnemyModel) model).getHp()!=0) {
+                ((EnemyModel) model).setHp(0);
+                Utils.playSound("enemy-out.wav", false);
+            }
         }
     }
 

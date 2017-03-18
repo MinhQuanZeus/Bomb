@@ -1,9 +1,9 @@
 package utils;
 
-import controllers.ItemType;
 import models.ItemMapModel;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -37,5 +37,33 @@ public class Utils {
 
     public static int getColMatrix(int x) {
         return x / ItemMapModel.SIZE_TILED;
+    }
+
+    public static void playSound(String audioUrl, boolean repeat){
+        File soundFile = new File("resources/Sounds/"+audioUrl);
+        try{
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+            AudioFormat baseFormat = audioIn.getFormat();
+            AudioFormat decodeFormat = new AudioFormat(
+                    AudioFormat.Encoding.PCM_SIGNED,
+                    baseFormat.getSampleRate(),
+                    16,
+                    baseFormat.getChannels(),
+                    baseFormat.getChannels()*2,
+                    baseFormat.getSampleRate(),
+                    false
+            );
+            AudioInputStream decodedAudioIn = AudioSystem.getAudioInputStream(decodeFormat, audioIn);
+            Clip clip = AudioSystem.getClip();
+            clip.open(decodedAudioIn);
+            clip.start();
+            if(repeat){
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+            }
+            else clip .loop(0);
+        }
+        catch(UnsupportedAudioFileException | IOException | LineUnavailableException e){
+            e.printStackTrace();
+        }
     }
 }
