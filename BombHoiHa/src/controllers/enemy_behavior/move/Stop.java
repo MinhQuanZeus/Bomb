@@ -1,14 +1,9 @@
 package controllers.enemy_behavior.move;
 
 import controllers.EnemyController;
-import controllers.GameController;
 import models.EnemyModel;
-import models.GameModel;
 import models.PlayerModel;
 import views.EnemyView;
-
-import java.util.List;
-import java.util.Vector;
 
 /**
  * Created by l on 3/11/2017.
@@ -16,8 +11,17 @@ import java.util.Vector;
 public class Stop extends EnemyMoveBehavior{
 
     @Override
-    public void move(EnemyModel model, EnemyView view, PlayerModel playerModel, List<GameController> gameControllers, EnemyController.EnemyType type, EnemyController enemyController) {
-        super.move(model, view, playerModel, gameControllers, type, enemyController);
+    public void move(EnemyModel model, EnemyView view, PlayerModel playerModel, EnemyController.EnemyType type, EnemyController enemyController) {
+        super.move(model, view, playerModel,type, enemyController);
         //không di chuyển gì cả
+       switch (type){
+           case SMART_MAN:{
+               delayToChangeMove = 100;
+               if(System.currentTimeMillis() - timeStartThisMove >= delayToChangeMove){
+                   enemyController.setEnemyMoveBehavior(new MoveFindPlayer());
+               }
+               break;
+           }
+       }
     }
 }

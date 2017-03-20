@@ -1,8 +1,8 @@
 package controllers.enemy_behavior.move;
 
 import controllers.EnemyController;
-import controllers.GameController;
 import gui.GameFrame;
+import manager.GameManager;
 import models.EnemyModel;
 import models.GameModel;
 import models.ItemMapModel;
@@ -11,7 +11,6 @@ import utils.Utils;
 import views.EnemyView;
 
 import java.awt.*;
-import java.util.List;
 
 /**
  * Created by l on 3/11/2017.
@@ -29,8 +28,8 @@ public class MoveRandom_And_Jump extends EnemyMoveBehavior {
     private int modelHeight;
 
     @Override
-    public void move(EnemyModel model, EnemyView view, PlayerModel playerModel, List<GameController> gameControllers, EnemyController.EnemyType type, EnemyController enemyController) {
-        super.move(model, view, playerModel, gameControllers, type, enemyController);
+    public void move(EnemyModel model, EnemyView view, PlayerModel playerModel, EnemyController.EnemyType type, EnemyController enemyController) {
+        super.move(model, view, playerModel, type, enemyController);
         if (beginState) {
             beginState = false;
             modelHeight = model.getHeight();
@@ -89,49 +88,61 @@ public class MoveRandom_And_Jump extends EnemyMoveBehavior {
                 }
             }
 
-            Rectangle r = new Rectangle(x1 + 5, y1 + ItemMapModel.SIZE_TILED - ItemMapModel.SIZE_TILED / 2, ItemMapModel.SIZE_TILED - 10, ItemMapModel.SIZE_TILED / 2);
+            Rectangle r = model.getBottomRect(x1,y1);
 
-            if (x1 < 0 || x1 > GameFrame.WIDTH - ItemMapModel.SIZE_TILED || y1 < 0 + ItemMapModel.SIZE_TILED || y1 > GameFrame.HEIGHT - ItemMapModel.SIZE_TILED * 2) {
+            if (x1 < 0|| x1 > GameFrame.WIDTH - model.getWidth() || y1 < 0  || y1 > GameFrame.HEIGHT - model.getHeight() - 25) {
                 lastMove = "";
                 x1 = model.getX();
                 y1 = model.getY();
             } else {
-                for (int i = 0; i < gameControllers.size(); i++) {
-                    if (gameControllers.get(i).getModel().getRect().intersects(r)) {
+                for (int i = 0; i < GameManager.arrBlocks.size(); i++) {
+                    if (GameManager.arrBlocks.get(i).getModel().getRect().intersects(r)) {
                         setImage();
                         jump = true;
-                        GameModel g = gameControllers.get(i).getModel();
+                        GameModel g = GameManager.arrBlocks.get(i).getModel();
 
                         switch (lastMove) {
                             case ("len"): {
-                                xOfModelJumpTo = x1;
-                                yOfModelJumpTo = y1 - g.getHeight() - model.getHeight();
+//                                xOfModelJumpTo = model.getX();
+//                                yOfModelJumpTo = (model.getY()+model.getHeight()) - g.getHeight() - model.getHeight();
+
+                                xOfModelJumpTo = g.getX() + g.getWidth()/2 - model.getWidth()/2;
+                                if(xOfModelJumpTo < 0 || xOfModelJumpTo >= GameFrame.WIDTH - ItemMapModel.SIZE_TILED){
+                                    xOfModelJumpTo = g.getX();
+                                }
+                                yOfModelJumpTo = g.getY() - model.getHeight();
                                 break;
                             }
                             case ("xuong"): {
-                                xOfModelJumpTo = x1;
-                                yOfModelJumpTo = y1 + g.getHeight() + model.getHeight() - model.getHeight()/2;
+//                                xOfModelJumpTo = model.getX();
+//                                yOfModelJumpTo = (model.getY()) + g.getHeight()- model.getHeight()/2;
+
+                                xOfModelJumpTo = g.getX() + g.getWidth()/2 - model.getWidth()/2;
+                                if(xOfModelJumpTo <= 0 || xOfModelJumpTo >= GameFrame.WIDTH - ItemMapModel.SIZE_TILED){
+                                    xOfModelJumpTo = g.getX();
+                                }
+                                yOfModelJumpTo = g.getY() + g.getHeight() - (model.getHeight() - (ItemMapModel.SIZE_TILED - 5));
                                 break;
                             }
                             case ("trai"): {
-                                xOfModelJumpTo =x1 - g.getWidth() - (ItemMapModel.SIZE_TILED - 10);
-                                yOfModelJumpTo = y1;
+                                xOfModelJumpTo =g.getX() - model.getWidth() + 5;
+                                yOfModelJumpTo = g.getY() + g.getHeight() - model.getHeight();
                                 break;
                             }
                             case ("phai"): {
-                                xOfModelJumpTo = x1 + model.getWidth() + g.getWidth() - 10;
-                                yOfModelJumpTo = y1;
+                                xOfModelJumpTo = g.getX()+g.getWidth() - 5;
+                                yOfModelJumpTo = g.getY() + g.getHeight() - model.getHeight();
                                 break;
                             }
                         }
-                        if (xOfModelJumpTo < 0  || xOfModelJumpTo > GameFrame.WIDTH - ItemMapModel.SIZE_TILED || yOfModelJumpTo < 0 + ItemMapModel.SIZE_TILED || yOfModelJumpTo > GameFrame.HEIGHT - ItemMapModel.SIZE_TILED) {
+                        if (xOfModelJumpTo < 0  || xOfModelJumpTo > GameFrame.WIDTH - model.getWidth() || yOfModelJumpTo < 0  || yOfModelJumpTo > GameFrame.HEIGHT - model.getHeight() - 25) {
                             lastMove = "";
                             x1 = model.getX();
                             y1 = model.getY();
                             jump = false;
                         }else{
-                            for (int j = 0; j < gameControllers.size(); j++) {
-                                if (gameControllers.get(j).getModel().getRect().intersects(new Rectangle(xOfModelJumpTo + 5, yOfModelJumpTo + model.getHeight() - ItemMapModel.SIZE_TILED / 2, ItemMapModel.SIZE_TILED - 10, ItemMapModel.SIZE_TILED / 2))) {
+                            for (int j = 0; j < GameManager.arrBlocks.size(); j++) {
+                                if (GameManager.arrBlocks.get(j).getModel().getRect().intersects(model.getBottomRect(xOfModelJumpTo,yOfModelJumpTo))) {
                                     jump = false;
 
                                 }

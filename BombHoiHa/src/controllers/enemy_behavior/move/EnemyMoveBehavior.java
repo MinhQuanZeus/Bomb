@@ -1,7 +1,6 @@
 package controllers.enemy_behavior.move;
 
 import controllers.EnemyController;
-import controllers.GameController;
 import models.EnemyModel;
 import models.PlayerModel;
 import views.AutoLoadPic;
@@ -9,7 +8,6 @@ import views.EnemyView;
 
 import java.awt.*;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by l on 3/10/2017.
@@ -41,7 +39,7 @@ public class EnemyMoveBehavior {
         this.howManyPicOnAMove = howManyPicOnAMove;
     }
 
-    public void move(EnemyModel model, EnemyView view, PlayerModel playerModel, List<GameController> gameControllers, EnemyController.EnemyType type, EnemyController enemyController) {
+    public void move(EnemyModel model, EnemyView view, PlayerModel playerModel, EnemyController.EnemyType type, EnemyController enemyController) {
         this.view = view;
         this.type = type;
         this.enemyController = enemyController;

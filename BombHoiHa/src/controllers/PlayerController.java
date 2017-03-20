@@ -1,13 +1,9 @@
 package controllers;
 
-import gui.GameFrame;
-import gui.MainPanel;
-import manager.MapManager;
-import models.Collision;
-import models.GameModel;
-import models.ItemMapModel;
-import models.PlayerModel;
+import controllers.enemy_weapon.BulletController;
 import manager.GameManager;
+import manager.MapManager;
+import models.*;
 import utils.Utils;
 import views.BombView;
 import views.GameView;
@@ -99,7 +95,7 @@ public class PlayerController extends GameController implements KeyListener, Col
                     new GameModel(bombX, bombY, ItemMapModel.SIZE_TILED, ItemMapModel.SIZE_TILED),
                     new BombView("Bombs & Explosions/normalbomb")
             );
-
+            Utils.playSound("bomb-set.wav",false);
             MapManager.map[rowBombMatrix][colBombMatrix] = 9;
         }
     }
@@ -124,8 +120,25 @@ public class PlayerController extends GameController implements KeyListener, Col
         if (other instanceof ExplosionController) {
             Rectangle rectangle = model.getIntersectionRect(((ExplosionController) other).model);
             if (rectangle.getWidth() > 10 && rectangle.getHeight() > 10) {
-                ((PlayerModel) model).setExplode(true);
+                if (!((PlayerModel) model).isExplode())
+                    Utils.playSound("player-out.wav",false);
+                    ((PlayerModel) model).setExplode(true);
             }
+        }
+
+        if(other instanceof EnemyController){
+            EnemyModel enemyModel = (EnemyModel) other.getModel();
+            if(enemyModel.getBottomRect(enemyModel.getX(),enemyModel.getY()).intersects(model.getBottomRect(model.getX(),model.getY()))){
+                if(enemyModel.getHp() != 0){
+                    if (!((PlayerModel) model).isExplode())
+                        Utils.playSound("player-out.wav",false);
+                    ((PlayerModel) model).setExplode(true);
+                }
+            }
+        }
+
+        if(other instanceof BulletController){
+            ((PlayerModel)model).setExplode(true);
         }
     }
 }

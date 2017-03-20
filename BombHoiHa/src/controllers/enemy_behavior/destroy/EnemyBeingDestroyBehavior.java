@@ -1,7 +1,9 @@
 package controllers.enemy_behavior.destroy;
 
+import controllers.EnemyController;
 import manager.ControllerManager;
 import models.EnemyModel;
+import views.AutoLoadPic;
 import views.EnemyView;
 
 import java.awt.*;
@@ -16,22 +18,28 @@ public class EnemyBeingDestroyBehavior {
     protected int drawCount = 0;
 
     protected long lastTime = System.currentTimeMillis();
-    protected long delay = 170;
-    protected int howManyPicOnADestroy = 9;
+    protected long delay = 800;
+    protected int howManyPicOnADestroy = 3;
 
+    protected EnemyController.EnemyType type;
     public void destroy(
             EnemyModel model,
             EnemyView view,
-            ControllerManager controllerManager) {
+            EnemyController.EnemyType type) {
         this.view = view;
         this.model = model;
+        this.type = type;
     }
 
 
     public void setImage(HashMap<String, Image> destroyImagesMap) {
-        view.setImage(destroyImagesMap.get("explosion" + drawCount));
+        HashMap<String,Image> imageMap = AutoLoadPic.imageEnemyHashMapFactory(type);
+        view.setImage(imageMap.get("chet" + drawCount));
         long currentTime = System.currentTimeMillis();
+
         if (currentTime - lastTime > delay) {
+            model.setHeight(model.getHeight() - 5);
+            model.setWidth(model.getWidth() - 5);
             lastTime = currentTime;
             drawCount++;
             if (drawCount >= howManyPicOnADestroy) {

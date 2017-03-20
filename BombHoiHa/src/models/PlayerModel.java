@@ -80,4 +80,5 @@ public class PlayerModel extends GameModel {
     public int getScore() {
         return score;
     }
+
 }

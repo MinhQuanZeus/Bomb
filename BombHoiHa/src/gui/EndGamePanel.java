@@ -30,13 +30,30 @@ public class EndGamePanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
                 super.mouseClicked(mouseEvent);
+                Utils.playSound("select.wav",false);
                 if (mouseEvent.getSource().equals(btnBackToMenu)) {
                     GameFrame.mainPanel.showPanel(MainPanel.TAG_MENU);
                 }
             }
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                if(e.getSource().equals(btnBackToMenu)){
+                    ImageIcon imageIcon = new ImageIcon("resources/System/back-1.png");
+                    btnBackToMenu.setIcon(imageIcon);
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                if(e.getSource().equals(btnBackToMenu)){
+                    ImageIcon imageIcon = new ImageIcon("resources/System/back-0.png");
+                    btnBackToMenu.setIcon(imageIcon);
+                }
+            }
         };
 
-        ImageIcon imageIcon = new ImageIcon("resources/System/button_back-to-game-menu.png");
+        ImageIcon imageIcon = new ImageIcon("resources/System/back-0.png");
         btnBackToMenu = new JLabel(imageIcon);
         btnBackToMenu.setBounds((GameFrame.WIDTH - imageIcon.getIconWidth()) / 2 , 500, imageIcon.getIconWidth(), imageIcon.getIconHeight());
         btnBackToMenu.setFocusable(false);
