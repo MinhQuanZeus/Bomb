@@ -7,6 +7,7 @@ import controllers.ItemMapController;
 import gui.GameFrame;
 import gui.GamePanel;
 import models.ItemMapModel;
+import models.PlayerModel;
 import models.Terrain;
 
 import java.awt.*;
