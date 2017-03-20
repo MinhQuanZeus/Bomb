@@ -51,9 +51,7 @@ public class PlayerView extends GameView {
     public void explode(GameModel model) {
         if (!animation.getUrl().equals("Bomberman/explosion")) {
             animation.setUrl("Bomberman/explosion");
-            animation.setSize(2);
             animation.reload();
-            animation.setDelay(500);
         }
 
         if (animation.getImage() != null) {
