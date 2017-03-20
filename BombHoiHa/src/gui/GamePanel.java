@@ -20,7 +20,6 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel() {
         setLayout(null);
         setFocusable(true);
-
         gameManager = new GameManager();
         addKeyListener((KeyListener) GameManager.playerController);
 

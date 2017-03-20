@@ -1,5 +1,6 @@
 package gui;
 
+import manager.MapManager;
 import utils.SoundPlayer;
 
 import javax.swing.*;
@@ -48,13 +49,18 @@ public class MainPanel extends JPanel {
             bgm.stop();
         switch (tag){
             case "tag_menu":{
-                bgm = new SoundPlayer(new File("resources/Sounds/intro.wav"));
+                bgm = new SoundPlayer(new File("resources/Sounds/game-menu.wav"));
             }break;
             case "tag_game":{
-                bgm = new SoundPlayer(new File("resources/Sounds/game.wav"));
+                if (MapManager.mapLevel==1)
+                    bgm = new SoundPlayer(new File("resources/Sounds/game-stage-1.wav"));
+                if (MapManager.mapLevel==2)
+                    bgm = new SoundPlayer(new File("resources/Sounds/game-stage-2.wav"));
+                if (MapManager.mapLevel==3)
+                    bgm = new SoundPlayer(new File("resources/Sounds/game-stage-3.wav"));
             }break;
             case "tag_end_game":{
-                bgm = new SoundPlayer(new File("resources/Sounds/end.wav"));
+                bgm = new SoundPlayer(new File("resources/Sounds/game-over.wav"));
             }break;
         }
         bgm.play();
