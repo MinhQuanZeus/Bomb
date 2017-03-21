@@ -1,9 +1,6 @@
 package utils;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
 import java.io.File;
 
 /**
@@ -29,6 +26,8 @@ public class SoundPlayer {
             AudioInputStream dais = AudioSystem.getAudioInputStream(decodeFormat, ais);
             clip = AudioSystem.getClip();
             clip.open(dais);
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(-10.0f);
         }catch(Exception e){}
     }
     public void play(){

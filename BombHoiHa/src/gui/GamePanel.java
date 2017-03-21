@@ -2,6 +2,7 @@ package gui;
 
 import controllers.GameController;
 import manager.GameManager;
+import manager.MapManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +13,7 @@ import java.awt.event.KeyListener;
  */
 public class GamePanel extends JPanel implements Runnable {
 
-    public static boolean running;
+    private boolean running;
 
     private Thread thread;
     private GameManager gameManager;
@@ -20,7 +21,6 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel() {
         setLayout(null);
         setFocusable(true);
-
         gameManager = new GameManager();
         addKeyListener((KeyListener) GameManager.playerController);
 
@@ -47,5 +47,9 @@ public class GamePanel extends JPanel implements Runnable {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
     }
 }

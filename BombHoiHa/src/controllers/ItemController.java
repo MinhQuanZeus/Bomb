@@ -28,6 +28,9 @@ public class ItemController extends GameController implements Collision {
             Utils.playSound("item-get.wav",false);
             model.setAlive(false);
         }
+        if(other instanceof ExplosionController){
+            model.setAlive(false);
+        }
     }
 
     public static void create(int x, int y, ItemType type) {

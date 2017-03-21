@@ -1,9 +1,6 @@
 package views;
 
 import gui.GameFrame;
-import gui.GamePanel;
-import gui.MainPanel;
-import manager.GameManager;
 import models.GameModel;
 import models.PlayerModel;
 import utils.Utils;
@@ -58,8 +55,7 @@ public class PlayerView extends GameView {
             image = animation.getImage();
         } else {
             model.setAlive(false);
-            GameFrame.mainPanel.showPanel(false);
-            GamePanel.running = false;
+            GameFrame.mainPanel.showEndPanel(false);
         }
     }
 

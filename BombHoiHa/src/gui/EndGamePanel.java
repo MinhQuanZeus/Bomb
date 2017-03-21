@@ -35,6 +35,7 @@ public class EndGamePanel extends JPanel {
                     GameFrame.mainPanel.showPanel(MainPanel.TAG_MENU);
                 }
             }
+            @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
                 if(e.getSource().equals(btnBackToMenu)){
@@ -42,7 +43,6 @@ public class EndGamePanel extends JPanel {
                     btnBackToMenu.setIcon(imageIcon);
                 }
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);

@@ -32,7 +32,7 @@ public class MenuPanel extends JPanel {
                     System.exit(0);
                 }
                 if (mouseEvent.getSource().equals(btnStart)) {
-                    GameFrame.mainPanel.showPanel(MainPanel.TAG_GAME);
+                    GameFrame.mainPanel.showGamePanel();
                 }
             }
 

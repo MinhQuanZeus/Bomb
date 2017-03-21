@@ -5,7 +5,6 @@ import controllers.GameController;
 import controllers.ItemController;
 import controllers.ItemMapController;
 import gui.GameFrame;
-import gui.GamePanel;
 import models.ItemMapModel;
 import models.PlayerModel;
 import models.Terrain;
@@ -31,7 +30,7 @@ public class MapManager extends ControllerManager {
 
     public MapManager() {
         super();
-        mapLevel = 1;
+        mapLevel = 3;
         map = new int[14][14];
         readMap(mapLevel);
         exist = 180000;
@@ -41,8 +40,9 @@ public class MapManager extends ControllerManager {
     public void changeMap(int level) {
         mapLevel = level;
         GameManager.arrBlocks.clear();
+        gameControllers.clear();
         readMap(mapLevel);
-        start = System.currentTimeMillis();
+        start = exist + start ;
     }
 
     private String getCurrentTime() {
@@ -56,8 +56,7 @@ public class MapManager extends ControllerManager {
     public void run() {
         super.run();
         if (getCurrentTime().equals("0:0")) {
-            GameFrame.mainPanel.showPanel(false);
-            GamePanel.running = false;
+            GameFrame.mainPanel.showEndPanel(false);
         }
     }
 
