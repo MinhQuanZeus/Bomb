@@ -131,4 +131,12 @@ public class GameModel {
     public void setWidth(int width) {
         this.width = width;
     }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 }

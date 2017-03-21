@@ -35,6 +35,7 @@ public class MainPanel extends JPanel {
 
     public void showPanel(String tag) {
         cardLayout.show(this, tag);
+        setBGM(tag);
     }
 
     public void showGamePanel() {
@@ -48,6 +49,13 @@ public class MainPanel extends JPanel {
         setBGM(TAG_GAME);
     }
 
+    public void showEndPanel(boolean win) {
+        endGamePanel = new EndGamePanel(win);
+        add(endGamePanel, TAG_END_GAME);
+        setBGM(TAG_END_GAME);
+        cardLayout.show(this, TAG_END_GAME);
+    }
+
     public void setBGM(String tag) {
         if (bgm != null)
             bgm.stop();
@@ -57,12 +65,7 @@ public class MainPanel extends JPanel {
             }
             break;
             case "tag_game": {
-                if (MapManager.mapLevel == 1)
-                    bgm = new SoundPlayer(new File("resources/Sounds/game-stage-1.wav"));
-                if (MapManager.mapLevel == 2)
-                    bgm = new SoundPlayer(new File("resources/Sounds/game-stage-2.wav"));
-                if (MapManager.mapLevel == 3)
-                    bgm = new SoundPlayer(new File("resources/Sounds/game-stage-3.wav"));
+                bgm = new SoundPlayer(new File("resources/Sounds/game-stage-" + MapManager.mapLevel + ".wav"));
             }
             break;
             case "tag_end_game": {
@@ -71,12 +74,5 @@ public class MainPanel extends JPanel {
             break;
         }
         bgm.play();
-    }
-
-    public void showEndPanel(boolean win) {
-        endGamePanel = new EndGamePanel(win);
-        add(endGamePanel, TAG_END_GAME);
-        setBGM(TAG_END_GAME);
-        cardLayout.show(this, TAG_END_GAME);
     }
 }
