@@ -11,6 +11,7 @@ public class PlayerModel extends GameModel {
     public static final int WIDTH = 40;
     public static final int HEIGHT = 56;
 
+    private int life;
     private int maxBomb;
     private int countBomb;
     private int explosionSize;
@@ -23,6 +24,7 @@ public class PlayerModel extends GameModel {
         explosionSize = 1;
         speed = 2;
         explode = false;
+        life = 3;
     }
 
     public void increaseCountBomb() {
@@ -79,5 +81,13 @@ public class PlayerModel extends GameModel {
 
     public int getScore() {
         return score;
+    }
+
+    public int getLife() {
+        return life;
+    }
+
+    public void reduceLife() {
+        this.life--;
     }
 }

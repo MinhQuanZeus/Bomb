@@ -42,7 +42,7 @@ public class MapManager extends ControllerManager {
         GameManager.arrBlocks.clear();
         gameControllers.clear();
         readMap(mapLevel);
-        start = exist + start ;
+        start = exist + start;
     }
 
     private String getCurrentTime() {
@@ -65,7 +65,7 @@ public class MapManager extends ControllerManager {
         super.draw(g);
         g.setFont(new Font("Courier New", Font.BOLD, 20));
         g.setColor(Color.white);
-        g.drawString(getCurrentTime(),20,  20);
+        g.drawString(getCurrentTime(), 50, 22);
     }
 
     private void readMap(int mapLevel) {
@@ -84,25 +84,24 @@ public class MapManager extends ControllerManager {
                 int x = j * ItemMapModel.SIZE_TILED;
                 int y = i * ItemMapModel.SIZE_TILED;
                 GameController itemMapController;
-                ItemController itemController = null;
                 EnemyController enemyController = null;
                 Terrain terrain;
                 String url = "Map/map-" + mapLevel + "/";
                 if (bitTerrain == 0) {
                     terrain = Terrain.LAND;
                     itemMapController = new ItemMapController(x, y, terrain, url + bit);
-                } else if (bitTerrain == 1){
+                } else if (bitTerrain == 1) {
                     terrain = Terrain.BLOCK;
                     itemMapController = new ItemMapController(x, y, terrain, url + bit);
                 } else {
                     terrain = Terrain.BREAK;
-                    itemMapController = new ItemMapController(x, y,url + bit, url + "expl");
+                    itemMapController = new ItemMapController(x, y, url + bit, url + "expl");
 
                 }
                 add(itemMapController);
 
-                enemyController = EnemyController.createByRow_Colum_Number(bitEnemy,i,j,(PlayerModel)GameManager.playerController.getModel());
-                if(enemyController != null){
+                enemyController = EnemyController.createByRow_Colum_Number(bitEnemy, i, j, (PlayerModel) GameManager.playerController.getModel());
+                if (enemyController != null) {
                     add(enemyController);
                 }
                 if (terrain == Terrain.BLOCK || terrain == Terrain.BREAK) {
