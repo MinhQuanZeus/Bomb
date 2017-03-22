@@ -26,15 +26,16 @@ public class PlayerView extends GameView {
 
     @Override
     public void draw(Graphics graphics, GameModel model) {
-        if (((PlayerModel) model).isImmunity()) {
-            if (System.currentTimeMillis() % 2 == 0) {
-                ((Graphics2D) graphics).setComposite(AlphaComposite.getInstance(
-                        AlphaComposite.SRC_OVER, 0.2f));
-            }
+        if (((PlayerModel) model).isImmunity()
+                && System.currentTimeMillis() % 2 == 0) {
+            ((Graphics2D) graphics).setComposite(AlphaComposite.getInstance(
+                    AlphaComposite.SRC_OVER, 0.2f));
+            super.draw(graphics, model);
+            ((Graphics2D) graphics).setComposite(AlphaComposite.getInstance(
+                    AlphaComposite.SRC_OVER, 1f));
+        } else {
+            super.draw(graphics, model);
         }
-        super.draw(graphics, model);
-        ((Graphics2D) graphics).setComposite(AlphaComposite.getInstance(
-                AlphaComposite.SRC_OVER, 1f));
         graphics.drawImage(Utils.loadImageFromRes("Bomberman/life"), 0, 0, null);
         graphics.setFont(new Font("Courier New", Font.BOLD, 20));
         graphics.setColor(Color.white);
