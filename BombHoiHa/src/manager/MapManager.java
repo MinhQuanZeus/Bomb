@@ -5,6 +5,7 @@ import controllers.GameController;
 import controllers.ItemController;
 import controllers.ItemMapController;
 import gui.GameFrame;
+import models.Collision;
 import models.ItemMapModel;
 import models.PlayerModel;
 import models.Terrain;
@@ -40,6 +41,9 @@ public class MapManager extends ControllerManager {
     public void changeMap(int level) {
         mapLevel = level;
         GameManager.arrBlocks.clear();
+        for (int i = 0; i < gameControllers.size(); i++) {
+            GameManager.collisionManager.remove((Collision) gameControllers.get(i));
+        }
         gameControllers.clear();
         readMap(mapLevel);
         start = exist + start;
@@ -66,6 +70,7 @@ public class MapManager extends ControllerManager {
         g.setFont(new Font("Courier New", Font.BOLD, 20));
         g.setColor(Color.white);
         g.drawString(getCurrentTime(), 50, 22);
+
     }
 
     private void readMap(int mapLevel) {
@@ -80,11 +85,12 @@ public class MapManager extends ControllerManager {
                 int bit = Integer.parseInt(row[j] + "");
                 int bitTerrain = Integer.parseInt(rowTerrain[j] + "");
                 int bitEnemy = Integer.parseInt(rowEnemy[j] + "");
+
                 map[i][j] = bitTerrain;
+
                 int x = j * ItemMapModel.SIZE_TILED;
                 int y = i * ItemMapModel.SIZE_TILED;
                 GameController itemMapController;
-                EnemyController enemyController = null;
                 Terrain terrain;
                 String url = "Map/map-" + mapLevel + "/";
                 if (bitTerrain == 0) {
@@ -100,10 +106,8 @@ public class MapManager extends ControllerManager {
                 }
                 add(itemMapController);
 
-                enemyController = EnemyController.createByRow_Colum_Number(bitEnemy, i, j, (PlayerModel) GameManager.playerController.getModel());
-                if (enemyController != null) {
-                    add(enemyController);
-                }
+                EnemyController.createByRow_Colum_Number(bitEnemy, i, j, (PlayerModel) GameManager.playerController.getModel());
+
                 if (terrain == Terrain.BLOCK || terrain == Terrain.BREAK) {
                     GameManager.arrBlocks.add(itemMapController);
                 }
