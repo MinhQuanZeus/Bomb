@@ -38,6 +38,7 @@ public class PlayerController extends GameController implements KeyListener, Col
 
     @Override
     public void keyPressed(KeyEvent e) {
+        bitSet.clear();
         bitSet.set(e.getKeyCode());
     }
 
@@ -66,12 +67,12 @@ public class PlayerController extends GameController implements KeyListener, Col
             } else if (bitSet.get(KeyEvent.VK_UP)) {
                 view.setImage(PlayerView.MOVE_UP);
                 this.vector.dy = -((PlayerModel) model).getSpeed();
-            } else if (bitSet.get(KeyEvent.VK_LEFT)) {
-                view.setImage(PlayerView.MOVE_LEFT);
-                this.vector.dx = -((PlayerModel) model).getSpeed();
             } else if (bitSet.get(KeyEvent.VK_RIGHT)) {
                 view.setImage(PlayerView.MOVE_RIGHT);
                 this.vector.dx = ((PlayerModel) model).getSpeed();
+            } else if (bitSet.get(KeyEvent.VK_LEFT)) {
+                view.setImage(PlayerView.MOVE_LEFT);
+                this.vector.dx = -((PlayerModel) model).getSpeed();
             } else {
                 view.setImageHold();
             }
