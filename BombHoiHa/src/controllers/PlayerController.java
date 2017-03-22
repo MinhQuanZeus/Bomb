@@ -55,6 +55,7 @@ public class PlayerController extends GameController implements KeyListener, Col
     public void run() {
         PlayerView view = (PlayerView) this.view;
         if (!((PlayerModel) model).isExplode()) {
+            ((PlayerModel) model).checkImmunity();
             model.move(vector, arrBlocks);
             this.vector.dx = 0;
             this.vector.dy = 0;
@@ -117,28 +118,30 @@ public class PlayerController extends GameController implements KeyListener, Col
             }
         }
 
-        if (other instanceof ExplosionController) {
-            Rectangle rectangle = model.getIntersectionRect(((ExplosionController) other).model);
-            if (rectangle.getWidth() > 10 && rectangle.getHeight() > 10) {
-                if (!((PlayerModel) model).isExplode())
-                    Utils.playSound("player-out.wav",false);
-                    ((PlayerModel) model).setExplode(true);
-            }
-        }
-
-        if(other instanceof EnemyController){
-            EnemyModel enemyModel = (EnemyModel) other.getModel();
-            if(enemyModel.getBottomRect(enemyModel.getX(),enemyModel.getY()).intersects(model.getBottomRect(model.getX(),model.getY()))){
-                if(enemyModel.getHp() != 0){
+        if (!((PlayerModel) model).isImmunity()) {
+            if (other instanceof ExplosionController) {
+                Rectangle rectangle = model.getIntersectionRect(((ExplosionController) other).model);
+                if (rectangle.getWidth() > 10 && rectangle.getHeight() > 10) {
                     if (!((PlayerModel) model).isExplode())
-                        Utils.playSound("player-out.wav",false);
+                        Utils.playSound("player-out.wav", false);
                     ((PlayerModel) model).setExplode(true);
                 }
             }
-        }
 
-        if(other instanceof BulletController){
-            ((PlayerModel)model).setExplode(true);
+            if (other instanceof EnemyController) {
+                EnemyModel enemyModel = (EnemyModel) other.getModel();
+                if (enemyModel.getBottomRect(enemyModel.getX(), enemyModel.getY()).intersects(model.getBottomRect(model.getX(), model.getY()))) {
+                    if (enemyModel.getHp() != 0) {
+                        if (!((PlayerModel) model).isExplode())
+                            Utils.playSound("player-out.wav", false);
+                        ((PlayerModel) model).setExplode(true);
+                    }
+                }
+            }
+
+            if (other instanceof BulletController) {
+                ((PlayerModel) model).setExplode(true);
+            }
         }
     }
 }
