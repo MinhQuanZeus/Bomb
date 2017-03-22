@@ -31,6 +31,8 @@ public class MainPanel extends JPanel {
         setLayout(cardLayout);
         menuPanel = new MenuPanel();
         add(menuPanel, TAG_MENU);
+        instructionPanel = new InstructionPanel();
+        add(instructionPanel, TAG_INSTRUCTION);
         setBGM(TAG_MENU);
         cardLayout.show(this, TAG_MENU);
     }
@@ -56,13 +58,6 @@ public class MainPanel extends JPanel {
         add(endGamePanel, TAG_END_GAME);
         setBGM(TAG_END_GAME);
         cardLayout.show(this, TAG_END_GAME);
-    }
-
-    public void showInstructionPanel() {
-        instructionPanel = new InstructionPanel();
-        add(instructionPanel, TAG_INSTRUCTION);
-        setBGM(TAG_INSTRUCTION);
-        cardLayout.show(this, TAG_INSTRUCTION);
     }
 
     public static void setBGM(String tag) {

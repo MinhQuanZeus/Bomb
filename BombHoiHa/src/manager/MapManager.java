@@ -5,12 +5,9 @@ import controllers.GameController;
 import controllers.ItemController;
 import controllers.ItemMapController;
 import gui.GameFrame;
-<<<<<<< HEAD
 import models.Collision;
-=======
 import gui.MainPanel;
 import gui.MenuPanel;
->>>>>>> 2ff631c53899d5eaee0ba66d9800df919638adf1
 import models.ItemMapModel;
 import models.PlayerModel;
 import models.Terrain;
@@ -76,12 +73,7 @@ public class MapManager extends ControllerManager {
         super.draw(g);
         g.setFont(new Font("Courier New", Font.BOLD, 20));
         g.setColor(Color.white);
-<<<<<<< HEAD
-        g.drawString(getCurrentTime(), 50, 22);
-
-=======
         g.drawString(getCurrentTime(), 80, 22);
->>>>>>> 2ff631c53899d5eaee0ba66d9800df919638adf1
     }
 
     private void readMap(int mapLevel) {
