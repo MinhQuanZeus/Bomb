@@ -5,9 +5,12 @@ import controllers.GameController;
 import controllers.ItemController;
 import controllers.ItemMapController;
 import gui.GameFrame;
+import gui.MainPanel;
+import gui.MenuPanel;
 import models.ItemMapModel;
 import models.PlayerModel;
 import models.Terrain;
+import sun.applet.Main;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -21,7 +24,7 @@ import java.util.List;
  */
 public class MapManager extends ControllerManager {
 
-    public static final int LEVEL_MAX = 2;
+    public static final int LEVEL_MAX = 3;
     public static int[][] map;
     public static int mapLevel;
 
@@ -43,6 +46,7 @@ public class MapManager extends ControllerManager {
         gameControllers.clear();
         readMap(mapLevel);
         start = exist + start;
+        MainPanel.setBGM(MainPanel.TAG_GAME);
     }
 
     private String getCurrentTime() {
@@ -65,7 +69,7 @@ public class MapManager extends ControllerManager {
         super.draw(g);
         g.setFont(new Font("Courier New", Font.BOLD, 20));
         g.setColor(Color.white);
-        g.drawString(getCurrentTime(), 50, 22);
+        g.drawString(getCurrentTime(), 80, 22);
     }
 
     private void readMap(int mapLevel) {

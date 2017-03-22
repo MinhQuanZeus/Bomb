@@ -15,7 +15,7 @@ public class MenuPanel extends JPanel {
 
     private JLabel btnStart;
     private JLabel btnExit;
-    private SoundPlayer bgm;
+    private JLabel btnInstruction;
 
     public MenuPanel() {
         setLayout(null);
@@ -34,6 +34,9 @@ public class MenuPanel extends JPanel {
                 if (mouseEvent.getSource().equals(btnStart)) {
                     GameFrame.mainPanel.showGamePanel();
                 }
+                if (mouseEvent.getSource().equals(btnInstruction)) {
+                    GameFrame.mainPanel.showInstructionPanel();
+                }
             }
 
             @Override
@@ -46,6 +49,10 @@ public class MenuPanel extends JPanel {
                 if(e.getSource().equals(btnExit)){
                     ImageIcon imageIcon = new ImageIcon("resources/System/exit-1.png");
                     btnExit.setIcon(imageIcon);
+                }
+                if(e.getSource().equals(btnInstruction)){
+                    ImageIcon imageIcon = new ImageIcon("resources/System/instruction-1.png");
+                    btnInstruction.setIcon(imageIcon);
                 }
             }
 
@@ -60,6 +67,10 @@ public class MenuPanel extends JPanel {
                     ImageIcon imageIcon = new ImageIcon("resources/System/exit-0.png");
                     btnExit.setIcon(imageIcon);
                 }
+                if(e.getSource().equals(btnInstruction)){
+                    ImageIcon imageIcon = new ImageIcon("resources/System/instruction-0.png");
+                    btnInstruction.setIcon(imageIcon);
+                }
             }
 
         };
@@ -71,9 +82,16 @@ public class MenuPanel extends JPanel {
         add(btnStart);
         btnStart.addMouseListener(mouseAdapter);
 
+        imageIcon = new ImageIcon("resources/System/instruction-0.png");
+        btnInstruction = new JLabel(imageIcon);
+        btnInstruction.setBounds(btnStart.getX(), btnStart.getY() + btnStart.getHeight() + 10, btnStart.getWidth(), btnStart.getHeight());
+        btnInstruction.setFocusable(false);
+        add(btnInstruction);
+        btnInstruction.addMouseListener(mouseAdapter);
+
         imageIcon = new ImageIcon("resources/System/exit-0.png");
         btnExit = new JLabel(imageIcon);
-        btnExit.setBounds(btnStart.getX(), btnStart.getY() + btnStart.getHeight() + 10, btnStart.getWidth(), btnStart.getHeight());
+        btnExit.setBounds(btnStart.getX(), btnStart.getY() + btnStart.getHeight() + 60, btnStart.getWidth(), btnStart.getHeight());
         btnExit.setFocusable(false);
         add(btnExit);
         btnExit.addMouseListener(mouseAdapter);

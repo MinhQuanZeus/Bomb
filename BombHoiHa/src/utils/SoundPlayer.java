@@ -34,6 +34,7 @@ public class SoundPlayer {
         if(clip !=null){
             stop();
             clip.setFramePosition(0);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
             clip.start();
         }
     }
