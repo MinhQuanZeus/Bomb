@@ -96,7 +96,7 @@ public class PlayerController extends GameController implements KeyListener, Col
                     new GameModel(bombX, bombY, ItemMapModel.SIZE_TILED, ItemMapModel.SIZE_TILED),
                     new BombView("Bombs & Explosions/normalbomb")
             );
-            Utils.playSound("bomb-set.wav",false);
+            Utils.playSound("bomb-set.wav", false);
             MapManager.map[rowBombMatrix][colBombMatrix] = 9;
         }
     }
@@ -122,9 +122,10 @@ public class PlayerController extends GameController implements KeyListener, Col
             if (other instanceof ExplosionController) {
                 Rectangle rectangle = model.getIntersectionRect(((ExplosionController) other).model);
                 if (rectangle.getWidth() > 10 && rectangle.getHeight() > 10) {
-                    if (!((PlayerModel) model).isExplode())
+                    if (!((PlayerModel) model).isExplode()) {
                         Utils.playSound("player-out.wav", false);
-                    ((PlayerModel) model).setExplode(true);
+                        ((PlayerModel) model).setExplode(true);
+                    }
                 }
             }
 
@@ -132,15 +133,19 @@ public class PlayerController extends GameController implements KeyListener, Col
                 EnemyModel enemyModel = (EnemyModel) other.getModel();
                 if (enemyModel.getBottomRect(enemyModel.getX(), enemyModel.getY()).intersects(model.getBottomRect(model.getX(), model.getY()))) {
                     if (enemyModel.getHp() != 0) {
-                        if (!((PlayerModel) model).isExplode())
+                        if (!((PlayerModel) model).isExplode()) {
                             Utils.playSound("player-out.wav", false);
-                        ((PlayerModel) model).setExplode(true);
+                            ((PlayerModel) model).setExplode(true);
+                        }
                     }
                 }
             }
 
             if (other instanceof BulletController) {
-                ((PlayerModel) model).setExplode(true);
+                if (!((PlayerModel) model).isExplode()) {
+                    Utils.playSound("player-out.wav", false);
+                    ((PlayerModel) model).setExplode(true);
+                }
             }
         }
     }

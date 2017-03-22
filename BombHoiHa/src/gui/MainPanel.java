@@ -15,22 +15,24 @@ public class MainPanel extends JPanel {
     public static final String TAG_GAME = "tag_game";
     public static final String TAG_MENU = "tag_menu";
     public static final String TAG_END_GAME = "tag_end_game";
+    public static final String TAG_INSTRUCTION = "tag_instruction";
 
     private CardLayout cardLayout;
     private GamePanel gamePanel;
     private MenuPanel menuPanel;
     private EndGamePanel endGamePanel;
+    private InstructionPanel instructionPanel;
 
-    private SoundPlayer bgm;
+    private static SoundPlayer bgm;
+
 
     public MainPanel() {
         cardLayout = new CardLayout();
         setLayout(cardLayout);
-
         menuPanel = new MenuPanel();
         add(menuPanel, TAG_MENU);
-        cardLayout.show(this, TAG_MENU);
         setBGM(TAG_MENU);
+        cardLayout.show(this, TAG_MENU);
     }
 
     public void showPanel(String tag) {
@@ -44,9 +46,9 @@ public class MainPanel extends JPanel {
         }
         gamePanel = new GamePanel();
         add(gamePanel, TAG_GAME);
+        setBGM(TAG_GAME);
         cardLayout.show(this, TAG_GAME);
         gamePanel.requestFocusInWindow();
-        setBGM(TAG_GAME);
     }
 
     public void showEndPanel(boolean win) {
@@ -56,7 +58,14 @@ public class MainPanel extends JPanel {
         cardLayout.show(this, TAG_END_GAME);
     }
 
-    public void setBGM(String tag) {
+    public void showInstructionPanel() {
+        instructionPanel = new InstructionPanel();
+        add(instructionPanel, TAG_INSTRUCTION);
+        setBGM(TAG_INSTRUCTION);
+        cardLayout.show(this, TAG_INSTRUCTION);
+    }
+
+    public static void setBGM(String tag) {
         if (bgm != null)
             bgm.stop();
         switch (tag) {
@@ -70,6 +79,10 @@ public class MainPanel extends JPanel {
             break;
             case "tag_end_game": {
                 bgm = new SoundPlayer(new File("resources/Sounds/game-over.wav"));
+            }
+            break;
+            case "tag_instruction": {
+                bgm = new SoundPlayer(new File("resources/Sounds/game-instruction.wav"));
             }
             break;
         }
