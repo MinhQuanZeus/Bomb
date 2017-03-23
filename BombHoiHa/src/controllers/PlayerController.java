@@ -43,6 +43,10 @@ public class PlayerController extends GameController implements KeyListener, Col
 
     @Override
     public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN
+                || keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_LEFT)
+            bitSet.clear();
         bitSet.set(e.getKeyCode());
     }
 
@@ -61,6 +65,7 @@ public class PlayerController extends GameController implements KeyListener, Col
         PlayerView view = (PlayerView) this.view;
         reloadShuriken++;
         if (!((PlayerModel) model).isExplode()) {
+            ((PlayerModel) model).checkImmunity();
             model.move(vector, arrBlocks);
             this.vector.dx = 0;
             this.vector.dy = 0;
@@ -80,6 +85,9 @@ public class PlayerController extends GameController implements KeyListener, Col
                 shotDirection = ShotDirection.RIGHT;
                 view.setImage(PlayerView.MOVE_RIGHT);
                 this.vector.dx = ((PlayerModel) model).getSpeed();
+            } else if (bitSet.get(KeyEvent.VK_LEFT)) {
+                view.setImage(PlayerView.MOVE_LEFT);
+                this.vector.dx = -((PlayerModel) model).getSpeed();
             } else {
                 view.setImageHold();
             }
@@ -114,7 +122,7 @@ public class PlayerController extends GameController implements KeyListener, Col
                     new GameModel(bombX, bombY, ItemMapModel.SIZE_TILED, ItemMapModel.SIZE_TILED),
                     new BombView("Bombs & Explosions/normalbomb")
             );
-            Utils.playSound("bomb-set.wav",false);
+            Utils.playSound("bomb-set.wav", false);
             MapManager.map[rowBombMatrix][colBombMatrix] = 9;
         }
     }
@@ -145,30 +153,48 @@ public class PlayerController extends GameController implements KeyListener, Col
                     numberShuriken = 6;
                 }
             }
-        }
-
-        if (other instanceof ExplosionController) {
-            Rectangle rectangle = model.getIntersectionRect(((ExplosionController) other).model);
-            if (rectangle.getWidth() > 10 && rectangle.getHeight() > 10) {
-                if (!((PlayerModel) model).isExplode())
-                    Utils.playSound("player-out.wav",false);
-                    ((PlayerModel) model).setExplode(true);
+            if (((ItemController) other).getType() == ItemType.BONUS_LIFE) {
+                ((PlayerModel) model).bonusLife();
             }
         }
 
-        if(other instanceof EnemyController){
-            EnemyModel enemyModel = (EnemyModel) other.getModel();
-            if(enemyModel.getBottomRect(enemyModel.getX(),enemyModel.getY()).intersects(model.getBottomRect(model.getX(),model.getY()))){
-                if(enemyModel.getHp() != 0){
-                    if (!((PlayerModel) model).isExplode())
-                        Utils.playSound("player-out.wav",false);
+        if (other instanceof ItemMapController) {
+            if (((ItemMapModel) other.getModel()).getTerrain() == Terrain.CHANGE_MAP) {
+                ((MapManager) GameManager.mapManager).changeMap(MapManager.mapLevel + 1);
+                model.setX(0);
+                model.setY(50);
+            }
+        }
+
+        if (!((PlayerModel) model).isImmunity()) {
+            if (other instanceof ExplosionController) {
+                Rectangle rectangle = model.getIntersectionRect(((ExplosionController) other).model);
+                if (rectangle.getWidth() > 10 && rectangle.getHeight() > 10) {
+                    if (!((PlayerModel) model).isExplode()) {
+                        Utils.playSound("player-out.wav", false);
+                        ((PlayerModel) model).setExplode(true);
+                    }
+                }
+            }
+
+            if (other instanceof EnemyController) {
+                EnemyModel enemyModel = (EnemyModel) other.getModel();
+                if (enemyModel.getBottomRect(enemyModel.getX(), enemyModel.getY()).intersects(model.getBottomRect(model.getX(), model.getY()))) {
+                    if (enemyModel.getHp() != 0) {
+                        if (!((PlayerModel) model).isExplode()) {
+                            Utils.playSound("player-out.wav", false);
+                            ((PlayerModel) model).setExplode(true);
+                        }
+                    }
+                }
+            }
+
+            if (other instanceof BulletController) {
+                if (!((PlayerModel) model).isExplode()) {
+                    Utils.playSound("player-out.wav", false);
                     ((PlayerModel) model).setExplode(true);
                 }
             }
-        }
-
-        if(other instanceof BulletController){
-            ((PlayerModel)model).setExplode(true);
         }
     }
 }

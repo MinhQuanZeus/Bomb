@@ -1,9 +1,6 @@
 package views;
 
 import gui.GameFrame;
-import gui.GamePanel;
-import gui.MainPanel;
-import manager.GameManager;
 import models.GameModel;
 import models.PlayerModel;
 import utils.Utils;
@@ -29,10 +26,22 @@ public class PlayerView extends GameView {
 
     @Override
     public void draw(Graphics graphics, GameModel model) {
-        super.draw(graphics, model);
+        if (((PlayerModel) model).isImmunity()
+                && System.currentTimeMillis() % 2 == 0) {
+            ((Graphics2D) graphics).setComposite(AlphaComposite.getInstance(
+                    AlphaComposite.SRC_OVER, 0.2f));
+            super.draw(graphics, model);
+            ((Graphics2D) graphics).setComposite(AlphaComposite.getInstance(
+                    AlphaComposite.SRC_OVER, 1f));
+        } else {
+            super.draw(graphics, model);
+        }
+        graphics.drawImage(Utils.loadImageFromRes("Bomberman/life"), 0, 0, null);
+        graphics.drawImage(Utils.loadImageFromRes("Bomberman/clock"), 40, 0, null);
         graphics.setFont(new Font("Courier New", Font.BOLD, 20));
         graphics.setColor(Color.white);
-        graphics.drawString("Score:" + ((PlayerModel) model).getScore(), GameFrame.WIDTH - 200, 20);
+        graphics.drawString("Score:" + ((PlayerModel) model).getScore(), GameFrame.WIDTH - 200, 22);
+        graphics.drawString(((PlayerModel) model).getLife() + "", 9, 20);
     }
 
     public void setImage(String url) {
@@ -57,9 +66,15 @@ public class PlayerView extends GameView {
         if (animation.getImage() != null) {
             image = animation.getImage();
         } else {
-            model.setAlive(false);
-            GameFrame.mainPanel.showPanel(false);
-            GamePanel.running = false;
+            if (((PlayerModel) model).getLife() == 0) {
+                model.setAlive(false);
+                GameFrame.mainPanel.showEndPanel(false);
+            } else {
+                ((PlayerModel) model).setExplode(false);
+                ((PlayerModel) model).reduceLife();
+                animation.setUrl(MOVE_DOWN);
+                ((PlayerModel) model).setImmunity(true);
+            }
         }
     }
 

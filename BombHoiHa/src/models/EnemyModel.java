@@ -11,14 +11,16 @@ import java.awt.*;
 public class EnemyModel extends GameModel implements Collision{
     public static final int WIDTH = PlayerModel.WIDTH;
     public static final int HEIGHT = PlayerModel.HEIGHT;
+    public static int enemyCount;
     private int hp = 1;
     private boolean destroy = false;
 
-    public EnemyController.EnemyType type;
+    private EnemyController.EnemyType type;
     public EnemyModel(int x, int y, int width, int height, int speed, int hp, EnemyController.EnemyType type) {
         super(x, y, width, height);
         this.speed = speed;
         this.type = type;
+        enemyCount++;
     }
 
     public EnemyModel(int x, int y, int speed, int hp, EnemyController.EnemyType type) {
@@ -26,6 +28,7 @@ public class EnemyModel extends GameModel implements Collision{
         this.speed = speed;
         this.hp = hp;
         this.type = type;
+        enemyCount++;
     }
 
     @Override

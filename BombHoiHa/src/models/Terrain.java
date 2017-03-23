@@ -6,5 +6,6 @@ package models;
 public enum Terrain {
     BLOCK,
     LAND,
-    BREAK
+    BREAK,
+    CHANGE_MAP;
 }

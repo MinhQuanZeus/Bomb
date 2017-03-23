@@ -7,6 +7,12 @@ import models.ItemMapModel;
 import models.PlayerModel;
 import models.Terrain;
 import utils.Utils;
+import models.*;
+import gui.MainPanel;
+import gui.MenuPanel;
+import sun.applet.Main;
+import utils.Utils;
+import views.AnimationView;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -20,11 +26,11 @@ import java.util.List;
  */
 public class MapManager extends ControllerManager {
 
-    public static final int LEVEL_MAX = 2;
+    public static final int LEVEL_MAX = 3;
     public static int[][] map;
     public static int mapLevel;
-
     private static long exist;
+    private ItemMapController portalItem;
     private long start;
 
     private static boolean isCountTime = true;
@@ -33,18 +39,48 @@ public class MapManager extends ControllerManager {
 
     public MapManager() {
         super();
-        mapLevel = 3;
+        mapLevel = 1;
         map = new int[14][14];
         readMap(mapLevel);
         exist = 180000;
         start = System.currentTimeMillis();
+        portalItem = new ItemMapController(
+                0,
+                0,
+                Terrain.CHANGE_MAP,
+                new AnimationView("Portal/portal", 4)
+        );
     }
 
     public void changeMap(int level) {
         mapLevel = level;
+        gameControllers.remove(portalItem);
+        GameManager.collisionManager.remove(portalItem);
         GameManager.arrBlocks.clear();
+        GameManager.controllerManager.clear();
+        this.clear();
         readMap(mapLevel);
-        start = System.currentTimeMillis();
+        start = exist + start;
+        MainPanel.setBGM(MainPanel.TAG_GAME);
+    }
+
+    private void checkLevelClear() {
+        if (EnemyModel.enemyCount == 0) {
+            int x;
+            int y;
+
+            do {
+                x = Utils.getRandom(14) * ItemMapModel.SIZE_TILED;
+                y = Utils.getRandom(14) * ItemMapModel.SIZE_TILED;
+            } while (MapManager.map[Utils.getRowMatrix(y)][Utils.getColMatrix(x)] != 0);
+
+            if (!gameControllers.contains(portalItem)) {
+                gameControllers.add(portalItem);
+                GameManager.collisionManager.add(portalItem);
+                portalItem.getModel().setX(x);
+                portalItem.getModel().setY(y);
+            }
+        }
     }
 
     private String getCurrentTime() {
@@ -71,9 +107,9 @@ public class MapManager extends ControllerManager {
     public void run() {
         super.run();
         if (getCurrentTime().equals("0:0")) {
-            GameFrame.mainPanel.showPanel(false);
-            GamePanel.running = false;
+            GameFrame.mainPanel.showEndPanel(false);
         }
+        checkLevelClear();
     }
 
     @Override
@@ -81,10 +117,10 @@ public class MapManager extends ControllerManager {
         super.draw(g);
         g.setFont(new Font("Courier New", Font.BOLD, 20));
         g.setColor(Color.white);
-        g.drawString(getCurrentTime(),20,  20);
         for(int i = 0;i< PlayerController.numberShuriken;i++){
-            g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"),80+20*i,5,20,20,null);
+            g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"),140+20*i,5,20,20,null);
         }
+        g.drawString(getCurrentTime(), 80, 22);
     }
 
     private void readMap(int mapLevel) {
@@ -99,31 +135,29 @@ public class MapManager extends ControllerManager {
                 int bit = Integer.parseInt(row[j] + "");
                 int bitTerrain = Integer.parseInt(rowTerrain[j] + "");
                 int bitEnemy = Integer.parseInt(rowEnemy[j] + "");
+
                 map[i][j] = bitTerrain;
+
                 int x = j * ItemMapModel.SIZE_TILED;
                 int y = i * ItemMapModel.SIZE_TILED;
                 GameController itemMapController;
-                ItemController itemController = null;
-                EnemyController enemyController = null;
                 Terrain terrain;
                 String url = "Map/map-" + mapLevel + "/";
                 if (bitTerrain == 0) {
                     terrain = Terrain.LAND;
                     itemMapController = new ItemMapController(x, y, terrain, url + bit);
-                } else if (bitTerrain == 1){
+                } else if (bitTerrain == 1) {
                     terrain = Terrain.BLOCK;
                     itemMapController = new ItemMapController(x, y, terrain, url + bit);
                 } else {
                     terrain = Terrain.BREAK;
-                    itemMapController = new ItemMapController(x, y,url + bit, url + "expl");
+                    itemMapController = new ItemMapController(x, y, url + bit, url + "expl");
 
                 }
                 add(itemMapController);
 
-                enemyController = EnemyController.createByRow_Colum_Number(bitEnemy,i,j,(PlayerModel)GameManager.playerController.getModel());
-                if(enemyController != null){
-                    add(enemyController);
-                }
+                EnemyController.createByRow_Colum_Number(bitEnemy, i, j, (PlayerModel) GameManager.playerController.getModel());
+
                 if (terrain == Terrain.BLOCK || terrain == Terrain.BREAK) {
                     GameManager.arrBlocks.add(itemMapController);
                 }

@@ -10,12 +10,17 @@ public class PlayerModel extends GameModel {
     public static final int MAX_SPEED = 4;
     public static final int WIDTH = 40;
     public static final int HEIGHT = 56;
+    public static final int MAX_LIFE = 6;
 
+
+    private int life;
     private int maxBomb;
     private int countBomb;
     private int explosionSize;
     private boolean explode;
     private int score;
+    private boolean immunity;
+    private int countDownImmunity;
 
     public PlayerModel(int x, int y) {
         super(x, y, WIDTH, HEIGHT);
@@ -23,6 +28,8 @@ public class PlayerModel extends GameModel {
         explosionSize = 1;
         speed = 2;
         explode = false;
+        life = 3;
+        countDownImmunity = 100;
     }
 
     public void increaseCountBomb() {
@@ -42,6 +49,11 @@ public class PlayerModel extends GameModel {
 
     public int getExplosionSize() {
         return explosionSize;
+    }
+    public void bonusLife(){
+        if(life+1<=MAX_LIFE){
+            life++;
+        }
     }
     public void expandExplosionSize(){
         explosionSize++;
@@ -81,4 +93,29 @@ public class PlayerModel extends GameModel {
         return score;
     }
 
+    public int getLife() {
+        return life;
+    }
+
+    public void reduceLife() {
+        this.life--;
+    }
+
+    public boolean isImmunity() {
+        return immunity;
+    }
+
+    public void setImmunity(boolean immunity) {
+        this.immunity = immunity;
+    }
+
+    public void checkImmunity() {
+        if (immunity) {
+            countDownImmunity--;
+            if (countDownImmunity == 0) {
+                immunity = false;
+                countDownImmunity = 100;
+            }
+        }
+    }
 }

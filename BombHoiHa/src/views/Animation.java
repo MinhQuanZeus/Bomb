@@ -50,7 +50,7 @@ public class Animation {
         this.size = size;
     }
 
-    public void setDelay(int delay) {
-        this.delay = delay;
+    public int getIndex() {
+        return index;
     }
 }

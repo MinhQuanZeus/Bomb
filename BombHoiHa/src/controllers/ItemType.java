@@ -11,8 +11,9 @@ public enum ItemType {
     EXPAND_BOMB,
     BONUS_TIME,
     SHURIKEN,
+    BONUS_LIFE,
     FREEZE;
-  //  THROUGH_WALL,
+  //THROUGH_WALL,
    // POWERUP_BOMB;
 
     private static final ItemType[] VALUES = values();
