@@ -1,14 +1,12 @@
 package manager;
 
-import controllers.EnemyController;
-import controllers.GameController;
-import controllers.ItemController;
-import controllers.ItemMapController;
+import controllers.*;
 import gui.GameFrame;
 import gui.GamePanel;
 import models.ItemMapModel;
 import models.PlayerModel;
 import models.Terrain;
+import utils.Utils;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -26,8 +24,12 @@ public class MapManager extends ControllerManager {
     public static int[][] map;
     public static int mapLevel;
 
-    private long exist;
+    private static long exist;
     private long start;
+
+    private static boolean isCountTime = true;
+    private static final int TIME_BOUNOUS = 15;
+    private long currentTime = 0;
 
     public MapManager() {
         super();
@@ -46,10 +48,23 @@ public class MapManager extends ControllerManager {
     }
 
     private String getCurrentTime() {
-        long currentTime = (exist - System.currentTimeMillis() + start) / 1000;
+
+        if(isCountTime) {
+            currentTime = (exist - System.currentTimeMillis() + start) / 1000;
+        }else{
+            exist+=(exist - System.currentTimeMillis() + start) / (1000*17);
+        }
         long minutes = currentTime / 60;
         long seconds = currentTime % 60;
         return minutes + ":" + seconds;
+    }
+
+    public static void setCountTime(boolean countTime) {
+        isCountTime = countTime;
+    }
+
+    public static void bounousTime(){
+        exist += TIME_BOUNOUS*1000;
     }
 
     @Override
@@ -67,6 +82,9 @@ public class MapManager extends ControllerManager {
         g.setFont(new Font("Courier New", Font.BOLD, 20));
         g.setColor(Color.white);
         g.drawString(getCurrentTime(),20,  20);
+        for(int i = 0;i< PlayerController.numberShuriken;i++){
+            g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"),80+20*i,5,20,20,null);
+        }
     }
 
     private void readMap(int mapLevel) {
