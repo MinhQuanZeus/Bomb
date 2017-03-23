@@ -17,6 +17,4 @@ public class BulletView extends GameView {
     public void setImage(Image image) {
         this.image = image;
     }
-
-
 }

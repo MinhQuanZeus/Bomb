@@ -122,6 +122,14 @@ public class PlayerController extends GameController implements KeyListener, Col
             }
         }
 
+        if (other instanceof ItemMapController) {
+            if (((ItemMapModel) other.getModel()).getTerrain() == Terrain.CHANGE_MAP) {
+                ((MapManager) GameManager.mapManager).changeMap(MapManager.mapLevel + 1);
+                model.setX(0);
+                model.setY(50);
+            }
+        }
+
         if (!((PlayerModel) model).isImmunity()) {
             if (other instanceof ExplosionController) {
                 Rectangle rectangle = model.getIntersectionRect(((ExplosionController) other).model);

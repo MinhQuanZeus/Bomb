@@ -9,7 +9,6 @@ public enum ItemType {
     SPEED_UP,
     EXPAND_EXPLOSIVE,
     EXPAND_BOMB,
-    CHANGE_MAP,
     FREEZE;
   //THROUGH_WALL,
    // POWERUP_BOMB;

@@ -2,6 +2,7 @@ package manager;
 
 import controllers.EnemyController;
 import controllers.GameController;
+import controllers.PlayerController;
 import controllers.enemy_behavior.move.Stop;
 import models.PlayerModel;
 
@@ -22,6 +23,15 @@ public class ControllerManager {
 
     public void add(GameController gameController) {
         this.gameControllers.add(0, gameController);
+    }
+
+    public void clear() {
+        for (int i = 0; i < gameControllers.size(); i++) {
+            GameController gameController = gameControllers.get(i);
+            if (!(gameController instanceof PlayerController)) {
+                gameController.getModel().setAlive(false);
+            }
+        }
     }
 
     public void freeze() {

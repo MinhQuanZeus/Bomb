@@ -26,6 +26,12 @@ public class ItemMapController extends GameController implements Collision {
         GameManager.collisionManager.add(this);
     }
 
+    public ItemMapController(int x, int y, Terrain terrain, GameView gameView) {
+        super(new ItemMapModel(x, y, terrain), gameView);
+        if (terrain != Terrain.CHANGE_MAP)
+            GameManager.collisionManager.add(this);
+    }
+
     @Override
     public void run() {
         if (view instanceof TerrainBreakView) {

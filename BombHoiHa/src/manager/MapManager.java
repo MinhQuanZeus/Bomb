@@ -5,13 +5,12 @@ import controllers.GameController;
 import controllers.ItemController;
 import controllers.ItemMapController;
 import gui.GameFrame;
-import models.Collision;
+import models.*;
 import gui.MainPanel;
 import gui.MenuPanel;
-import models.ItemMapModel;
-import models.PlayerModel;
-import models.Terrain;
 import sun.applet.Main;
+import utils.Utils;
+import views.AnimationView;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -29,6 +28,7 @@ public class MapManager extends ControllerManager {
     public static int[][] map;
     public static int mapLevel;
 
+    private ItemMapController portalItem;
     private long exist;
     private long start;
 
@@ -39,17 +39,43 @@ public class MapManager extends ControllerManager {
         readMap(mapLevel);
         exist = 180000;
         start = System.currentTimeMillis();
+        portalItem = new ItemMapController(
+                0,
+                0,
+                Terrain.CHANGE_MAP,
+                new AnimationView("Portal/portal", 4)
+        );
     }
 
     public void changeMap(int level) {
         mapLevel = level;
+        gameControllers.remove(portalItem);
+        GameManager.collisionManager.remove(portalItem);
         GameManager.arrBlocks.clear();
-        for (int i = 0; i < gameControllers.size(); i++) {
-            gameControllers.get(i).getModel().setAlive(false);
-        }
+        GameManager.controllerManager.clear();
+        this.clear();
         readMap(mapLevel);
         start = exist + start;
         MainPanel.setBGM(MainPanel.TAG_GAME);
+    }
+
+    private void checkLevelClear() {
+        if (EnemyModel.enemyCount == 0) {
+            int x;
+            int y;
+
+            do {
+                x = Utils.getRandom(14) * ItemMapModel.SIZE_TILED;
+                y = Utils.getRandom(14) * ItemMapModel.SIZE_TILED;
+            } while (MapManager.map[Utils.getRowMatrix(y)][Utils.getColMatrix(x)] != 0);
+
+            if (!gameControllers.contains(portalItem)) {
+                gameControllers.add(portalItem);
+                GameManager.collisionManager.add(portalItem);
+                portalItem.getModel().setX(x);
+                portalItem.getModel().setY(y);
+            }
+        }
     }
 
     private String getCurrentTime() {
@@ -65,6 +91,7 @@ public class MapManager extends ControllerManager {
         if (getCurrentTime().equals("0:0")) {
             GameFrame.mainPanel.showEndPanel(false);
         }
+        checkLevelClear();
     }
 
     @Override
