@@ -45,9 +45,8 @@ public class MapManager extends ControllerManager {
         mapLevel = level;
         GameManager.arrBlocks.clear();
         for (int i = 0; i < gameControllers.size(); i++) {
-            GameManager.collisionManager.remove((Collision) gameControllers.get(i));
+            gameControllers.get(i).getModel().setAlive(false);
         }
-        gameControllers.clear();
         readMap(mapLevel);
         start = exist + start;
         MainPanel.setBGM(MainPanel.TAG_GAME);
