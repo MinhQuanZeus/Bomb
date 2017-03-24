@@ -5,6 +5,7 @@ import controllers.GameController;
 import controllers.ItemMapController;
 import controllers.*;
 import gui.GameFrame;
+import models.EnemyModel;
 import models.ItemMapModel;
 import models.PlayerModel;
 import models.Terrain;
@@ -37,7 +38,7 @@ public class MapManager extends ControllerManager {
 
     public MapManager() {
         super();
-        mapLevel = 3;
+        mapLevel = 1;
         map = new int[14][14];
         readMap(mapLevel);
         exist = 120000;
@@ -64,7 +65,7 @@ public class MapManager extends ControllerManager {
     }
 
     private void checkLevelClear() {
-//        if (EnemyModel.enemyCount == 0) {
+        if (EnemyModel.enemyCount == 0) {
             if (mapLevel < LEVEL_MAX) {
                 int x;
                 int y;
@@ -80,23 +81,17 @@ public class MapManager extends ControllerManager {
                     portalItem.getModel().setX(x);
                     portalItem.getModel().setY(y);
                 }
-<<<<<<< HEAD
-            } else {
-                GameFrame.mainPanel.showEndPanel(true);
-//            }
-=======
-            } else if (mapLevel >= LEVEL_MAX){
+            } else if (mapLevel >= LEVEL_MAX) {
                 MainPanel.gamePanel.addTitle(winIcon);
             }
->>>>>>> a756b71ecc18bc5e44d5c442c042556bd4c16226
         }
     }
 
     private String getCurrentTime() {
-        if(isCountTime) {
+        if (isCountTime) {
             currentTime = (exist - System.currentTimeMillis() + start) / 1000;
-        }else{
-            exist+=(exist - System.currentTimeMillis() + start) / (1000*17);
+        } else {
+            exist += (exist - System.currentTimeMillis() + start) / (1000 * 17);
         }
         long minutes = currentTime / 60;
         long seconds = currentTime % 60;
@@ -107,8 +102,8 @@ public class MapManager extends ControllerManager {
         isCountTime = countTime;
     }
 
-    public static void bonusTime(){
-        exist += TIME_BONUS *1000;
+    public static void bonusTime() {
+        exist += TIME_BONUS * 1000;
     }
 
     @Override
@@ -125,8 +120,8 @@ public class MapManager extends ControllerManager {
         super.draw(g);
         g.setFont(new Font("Courier New", Font.BOLD, 20));
         g.setColor(Color.white);
-        for(int i = 0;i< ((PlayerModel)((PlayerController)GameManager.playerController).getModel()).getNumberShuriken();i++){
-            g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"),140+20*i,5,20,20,null);
+        for (int i = 0; i < ((PlayerModel) ((PlayerController) GameManager.playerController).getModel()).getNumberShuriken(); i++) {
+            g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"), 140 + 20 * i, 5, 20, 20, null);
         }
         if ((getCurrentTime().contains("0:0") || getCurrentTime().contains("0:1") || getCurrentTime().contains("0:2"))
                 && System.currentTimeMillis() % 2 == 0)
