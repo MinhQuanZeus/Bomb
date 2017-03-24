@@ -9,8 +9,8 @@ import java.io.File;
 public class SoundPlayer {
     private Clip clip;
 
-    public SoundPlayer(File path){
-        try{
+    public SoundPlayer(File path) {
+        try {
             AudioInputStream ais;
             ais = AudioSystem.getAudioInputStream(path);
             AudioFormat baseFormat = ais.getFormat();
@@ -19,7 +19,7 @@ public class SoundPlayer {
                     baseFormat.getSampleRate(),
                     16,
                     baseFormat.getChannels(),
-                    baseFormat.getChannels()*2,
+                    baseFormat.getChannels() * 2,
                     baseFormat.getSampleRate(),
                     false
             );
@@ -28,21 +28,24 @@ public class SoundPlayer {
             clip.open(dais);
             FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             gainControl.setValue(-10.0f);
-        }catch(Exception e){}
+        } catch (Exception e) {
+        }
     }
-    public void play(){
-        if(clip !=null){
+
+    public void play() {
+        if (clip != null) {
             stop();
             clip.setFramePosition(0);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
             clip.start();
         }
     }
-    public void stop(){
-        if(clip.isRunning()) clip.stop();
+
+    public void stop() {
+        if (clip.isRunning()) clip.stop();
     }
 
-    public void close(){
+    public void close() {
         clip.close();
     }
 }

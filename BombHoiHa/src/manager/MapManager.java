@@ -1,24 +1,19 @@
 package manager;
 
+import controllers.EnemyController;
+import controllers.GameController;
+import controllers.ItemMapController;
 import controllers.*;
 import gui.GameFrame;
-import gui.GamePanel;
+import models.EnemyModel;
 import models.ItemMapModel;
 import models.PlayerModel;
 import models.Terrain;
 import utils.Utils;
-import models.*;
 import gui.MainPanel;
-import gui.MenuPanel;
-import sun.applet.Main;
-import utils.Utils;
 import views.AnimationView;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +29,7 @@ public class MapManager extends ControllerManager {
     private long start;
 
     public static boolean isCountTime = true;
-    private static final int TIME_BOUNOUS = 15;
+    private static final int TIME_BONUS = 15;
     private long currentTime = 0;
 
     public MapManager() {
@@ -42,7 +37,7 @@ public class MapManager extends ControllerManager {
         mapLevel = 1;
         map = new int[14][14];
         readMap(mapLevel);
-        exist = 180000;
+        exist = 120000;
         start = System.currentTimeMillis();
         portalItem = new ItemMapController(
                 0,
@@ -66,19 +61,23 @@ public class MapManager extends ControllerManager {
 
     private void checkLevelClear() {
         if (EnemyModel.enemyCount == 0) {
-            int x;
-            int y;
+            if (mapLevel < LEVEL_MAX) {
+                int x;
+                int y;
 
-            do {
-                x = Utils.getRandom(14) * ItemMapModel.SIZE_TILED;
-                y = Utils.getRandom(14) * ItemMapModel.SIZE_TILED;
-            } while (MapManager.map[Utils.getRowMatrix(y)][Utils.getColMatrix(x)] != 0);
+                do {
+                    x = Utils.getRandom(14) * ItemMapModel.SIZE_TILED;
+                    y = Utils.getRandom(14) * ItemMapModel.SIZE_TILED;
+                } while (MapManager.map[Utils.getRowMatrix(y)][Utils.getColMatrix(x)] != 0);
 
-            if (!gameControllers.contains(portalItem)) {
-                gameControllers.add(portalItem);
-                GameManager.collisionManager.add(portalItem);
-                portalItem.getModel().setX(x);
-                portalItem.getModel().setY(y);
+                if (!gameControllers.contains(portalItem)) {
+                    gameControllers.add(portalItem);
+                    GameManager.collisionManager.add(portalItem);
+                    portalItem.getModel().setX(x);
+                    portalItem.getModel().setY(y);
+                }
+            } else {
+                GameFrame.mainPanel.showEndPanel(true);
             }
         }
     }
@@ -92,21 +91,21 @@ public class MapManager extends ControllerManager {
         }
         long minutes = currentTime / 60;
         long seconds = currentTime % 60;
-        return minutes + ":" + seconds;
+        return minutes + ":" + ((seconds < 10) ? ("0" + seconds) : seconds);
     }
 
     public static void setCountTime(boolean countTime) {
         isCountTime = countTime;
     }
 
-    public static void bounousTime(){
-        exist += TIME_BOUNOUS*1000;
+    public static void bonusTime(){
+        exist += TIME_BONUS *1000;
     }
 
     @Override
     public void run() {
         super.run();
-        if (getCurrentTime().equals("0:0")) {
+        if (getCurrentTime().equals("0:00")) {
             GameFrame.mainPanel.showEndPanel(false);
         }
         checkLevelClear();
@@ -124,9 +123,9 @@ public class MapManager extends ControllerManager {
     }
 
     private void readMap(int mapLevel) {
-        List<String> arrRows = readFile("resources/Map/map-" + mapLevel + "/map-" + mapLevel + ".txt");
-        List<String> arrRowsTerrains = readFile("resources/Map/map-" + mapLevel + "/terrain-" + mapLevel + ".txt");
-        List<String> arrRowsEnemy = readFile("resources/Map/map-" + mapLevel + "/mapEnemy-" + mapLevel + ".txt");
+        List<String> arrRows = Utils.readFileMap("resources/Map/map-" + mapLevel + "/map-" + mapLevel + ".txt");
+        List<String> arrRowsTerrains = Utils.readFileMap("resources/Map/map-" + mapLevel + "/terrain-" + mapLevel + ".txt");
+        List<String> arrRowsEnemy = Utils.readFileMap("resources/Map/map-" + mapLevel + "/mapEnemy-" + mapLevel + ".txt");
         for (int i = 0; i < arrRows.size(); i++) {
             String[] row = arrRows.get(i).split(",");
             String[] rowTerrain = arrRowsTerrains.get(i).split(",");
@@ -165,22 +164,7 @@ public class MapManager extends ControllerManager {
         }
     }
 
-    private List<String> readFile(String url) {
-        try {
-            List<String> arrRows = new ArrayList<>();
-            File file = new File(url);
-            FileReader reader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(reader);
-            String row = bufferedReader.readLine();
-            while (row != null) {
-                arrRows.add(row);
-                row = bufferedReader.readLine();
-            }
-            bufferedReader.close();
-            return arrRows;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public void reloadStart(long offset) {
+        this.start += offset;
     }
 }
