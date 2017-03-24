@@ -89,6 +89,15 @@ public class GamePanel extends JPanel implements Runnable {
             if (titleExist == 0) {
                 remove(title);
                 resume();
+                switch (title.getIcon().toString()) {
+                    case "resources/System/time-up.png":
+                        GameFrame.mainPanel.showEndPanel(false);
+                        break;
+                    case "resources/System/victory.png":
+                        GameFrame.mainPanel.showEndPanel(true);
+                        break;
+                }
+                title = null;
             }
         }
     }

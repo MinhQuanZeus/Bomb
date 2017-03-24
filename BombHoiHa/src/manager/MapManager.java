@@ -35,7 +35,7 @@ public class MapManager extends ControllerManager {
 
     public MapManager() {
         super();
-        mapLevel = 1;
+        mapLevel = 3;
         map = new int[14][14];
         readMap(mapLevel);
         exist = 120000;
@@ -49,6 +49,7 @@ public class MapManager extends ControllerManager {
     }
 
     public void changeMap(int level) {
+        System.out.println("changeMap");
         mapLevel = level;
         gameControllers.remove(portalItem);
         GameManager.arrBlocks.clear();
@@ -77,8 +78,7 @@ public class MapManager extends ControllerManager {
                     portalItem.getModel().setY(y);
                 }
             } else {
-                MainPanel.gamePanel.addTitle(new ImageIcon("resources/System/stage-clear.png"));
-                GameFrame.mainPanel.showEndPanel(true);
+                MainPanel.gamePanel.addTitle(new ImageIcon("resources/System/victory.png"));
             }
         }
     }
@@ -106,7 +106,7 @@ public class MapManager extends ControllerManager {
     public void run() {
         super.run();
         if (getCurrentTime().equals("0:00")) {
-            GameFrame.mainPanel.showEndPanel(false);
+            MainPanel.gamePanel.addTitle(new ImageIcon("resources/System/time-up.png"));
         }
         checkLevelClear();
     }
@@ -119,6 +119,9 @@ public class MapManager extends ControllerManager {
         for(int i = 0;i< ((PlayerModel)((PlayerController)GameManager.playerController).getModel()).getNumberShuriken();i++){
             g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"),140+20*i,5,20,20,null);
         }
+        if ((getCurrentTime().contains("0:0") || getCurrentTime().contains("0:1") || getCurrentTime().contains("0:2"))
+                && System.currentTimeMillis() % 2 == 0)
+            g.setColor(Color.RED);
         g.drawString(getCurrentTime(), 80, 22);
     }
 

@@ -45,6 +45,7 @@ public class EnemyBeingDestroyBehavior {
             if (drawCount >= howManyPicOnADestroy) {
                 drawCount = 0;
                 model.setAlive(false);
+                EnemyModel.enemyCount--;
             }
         }
     }
