@@ -1,21 +1,15 @@
 package manager;
 
-<<<<<<< HEAD
 import controllers.EnemyController;
 import controllers.GameController;
 import controllers.ItemMapController;
-=======
 import controllers.*;
->>>>>>> ee8a36755ee1815ac052c29f10a638906e4869ea
 import gui.GameFrame;
-import gui.GamePanel;
 import models.ItemMapModel;
 import models.PlayerModel;
 import models.Terrain;
 import utils.Utils;
-import models.*;
 import gui.MainPanel;
-import utils.Utils;
 import views.AnimationView;
 
 import java.awt.*;
@@ -33,13 +27,14 @@ public class MapManager extends ControllerManager {
     private ItemMapController portalItem;
     private long start;
 
-    private static boolean isCountTime = true;
-    private static final int TIME_BOUNOUS = 15;
+
+    public static boolean isCountTime = true;
+    private static final int TIME_BONUS = 15;
     private long currentTime = 0;
 
     public MapManager() {
         super();
-        mapLevel = 3;
+        mapLevel = 1;
         map = new int[14][14];
         readMap(mapLevel);
         exist = 120000;
@@ -65,7 +60,7 @@ public class MapManager extends ControllerManager {
     }
 
     private void checkLevelClear() {
-        if (EnemyModel.enemyCount == 0) {
+//        if (EnemyModel.enemyCount == 0) {
             if (mapLevel < LEVEL_MAX) {
                 int x;
                 int y;
@@ -83,7 +78,7 @@ public class MapManager extends ControllerManager {
                 }
             } else {
                 GameFrame.mainPanel.showEndPanel(true);
-            }
+//            }
         }
     }
 
@@ -103,8 +98,8 @@ public class MapManager extends ControllerManager {
         isCountTime = countTime;
     }
 
-    public static void bounousTime(){
-        exist += TIME_BOUNOUS*1000;
+    public static void bonusTime(){
+        exist += TIME_BONUS *1000;
     }
 
     @Override

@@ -1,11 +1,8 @@
 package controllers;
 
 import controllers.enemy_weapon.BulletController;
-<<<<<<< HEAD
 import gui.GamePanel;
-=======
 import controllers.enemy_weapon.ShotDirection;
->>>>>>> ee8a36755ee1815ac052c29f10a638906e4869ea
 import manager.GameManager;
 import manager.MapManager;
 import models.*;
@@ -27,7 +24,7 @@ public class PlayerController extends GameController implements KeyListener, Col
 
     private BitSet bitSet;
     private List<GameController> arrBlocks;
-    public static int numberShuriken=0;
+    public static int numberShuriken = 0;
     public static final int RELOAL_SHURIKEN_SPEED = 50;
     private ShotDirection shotDirection = ShotDirection.RIGHT;
     private int reloadShuriken = 0;
@@ -39,6 +36,8 @@ public class PlayerController extends GameController implements KeyListener, Col
         bitSet = new BitSet(256);
         this.arrBlocks = arrBlocks;
     }
+
+
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -71,6 +70,7 @@ public class PlayerController extends GameController implements KeyListener, Col
     @Override
     public void run() {
         PlayerView view = (PlayerView) this.view;
+
         reloadShuriken++;
         if (!((PlayerModel) model).isExplode()) {
             ((PlayerModel) model).checkImmunity();
@@ -103,8 +103,8 @@ public class PlayerController extends GameController implements KeyListener, Col
                 bombard();
             }
             if (bitSet.get(KeyEvent.VK_CONTROL)) {
-                if(numberShuriken>0&&reloadShuriken>RELOAL_SHURIKEN_SPEED){
-                    ShurikenController shurikenController = ShurikenController.create(model.getX()+model.getWidth()/2 - ShurikenModel.WIDTH/2,model.getY()+model.getHeight()/2,shotDirection);
+                if (numberShuriken > 0 && reloadShuriken > RELOAL_SHURIKEN_SPEED) {
+                    ShurikenController shurikenController = ShurikenController.create(model.getX() + model.getWidth() / 2 - ShurikenModel.WIDTH / 2, model.getY() + model.getHeight() / 2, shotDirection);
                     reloadShuriken = 0;
                     numberShuriken--;
                 }
@@ -112,8 +112,8 @@ public class PlayerController extends GameController implements KeyListener, Col
         } else {
             view.explode(model);
         }
-        if(reloadShuriken==4000){
-            reloadShuriken=0;
+        if (reloadShuriken == 4000) {
+            reloadShuriken = 0;
         }
     }
 
@@ -152,12 +152,12 @@ public class PlayerController extends GameController implements KeyListener, Col
                 MapManager.setCountTime(false);
             }
             if (((ItemController) other).getType() == ItemType.BONUS_TIME) {
-                MapManager.bounousTime();
+                MapManager.bonusTime();
             }
             if (((ItemController) other).getType() == ItemType.SHURIKEN) {
-                if(numberShuriken+3<=6) {
+                if (numberShuriken + 3 <= 6) {
                     numberShuriken += 3;
-                }else if(numberShuriken+3>6){
+                } else if (numberShuriken + 3 > 6) {
                     numberShuriken = 6;
                 }
             }
@@ -168,9 +168,8 @@ public class PlayerController extends GameController implements KeyListener, Col
 
         if (other instanceof ItemMapController) {
             if (((ItemMapModel) other.getModel()).getTerrain() == Terrain.CHANGE_MAP) {
-                ((MapManager) GameManager.mapManager).changeMap(MapManager.mapLevel + 1);
-                model.setX(0);
-                model.setY(50);
+                GameManager.setTransitionStart(true);
+                other.getModel().setAlive(false);
             }
         }
 
