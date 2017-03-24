@@ -1,9 +1,18 @@
 package manager;
 
+<<<<<<< HEAD
 import controllers.EnemyController;
 import controllers.GameController;
 import controllers.ItemMapController;
+=======
+import controllers.*;
+>>>>>>> ee8a36755ee1815ac052c29f10a638906e4869ea
 import gui.GameFrame;
+import gui.GamePanel;
+import models.ItemMapModel;
+import models.PlayerModel;
+import models.Terrain;
+import utils.Utils;
 import models.*;
 import gui.MainPanel;
 import utils.Utils;
@@ -20,10 +29,13 @@ public class MapManager extends ControllerManager {
     public static final int LEVEL_MAX = 3;
     public static int[][] map;
     public static int mapLevel;
-
+    private static long exist;
     private ItemMapController portalItem;
-    private long exist;
     private long start;
+
+    private static boolean isCountTime = true;
+    private static final int TIME_BOUNOUS = 15;
+    private long currentTime = 0;
 
     public MapManager() {
         super();
@@ -76,10 +88,23 @@ public class MapManager extends ControllerManager {
     }
 
     private String getCurrentTime() {
-        long currentTime = (exist - System.currentTimeMillis() + start) / 1000;
+
+        if(isCountTime) {
+            currentTime = (exist - System.currentTimeMillis() + start) / 1000;
+        }else{
+            exist+=(exist - System.currentTimeMillis() + start) / (1000*17);
+        }
         long minutes = currentTime / 60;
         long seconds = currentTime % 60;
         return minutes + ":" + ((seconds < 10) ? ("0" + seconds) : seconds);
+    }
+
+    public static void setCountTime(boolean countTime) {
+        isCountTime = countTime;
+    }
+
+    public static void bounousTime(){
+        exist += TIME_BOUNOUS*1000;
     }
 
     @Override
@@ -96,6 +121,9 @@ public class MapManager extends ControllerManager {
         super.draw(g);
         g.setFont(new Font("Courier New", Font.BOLD, 20));
         g.setColor(Color.white);
+        for(int i = 0;i< PlayerController.numberShuriken;i++){
+            g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"),140+20*i,5,20,20,null);
+        }
         g.drawString(getCurrentTime(), 80, 22);
     }
 

@@ -10,6 +10,8 @@ public class PlayerModel extends GameModel {
     public static final int MAX_SPEED = 4;
     public static final int WIDTH = 40;
     public static final int HEIGHT = 56;
+    public static final int MAX_LIFE = 6;
+
 
     private int life;
     private int maxBomb;
@@ -47,6 +49,11 @@ public class PlayerModel extends GameModel {
 
     public int getExplosionSize() {
         return explosionSize;
+    }
+    public void bonusLife(){
+        if(life+1<=MAX_LIFE){
+            life++;
+        }
     }
     public void expandExplosionSize(){
         explosionSize++;

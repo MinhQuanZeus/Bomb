@@ -39,7 +39,7 @@ public class BombController extends GameController implements Collision {
         }
     }
 
-    private void explode() {
+    public void explode() {
         int explosionSize = playerModel.getExplosionSize();
 
         if (explosionSize < 2){

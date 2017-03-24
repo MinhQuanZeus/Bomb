@@ -1,7 +1,11 @@
 package controllers;
 
 import controllers.enemy_weapon.BulletController;
+<<<<<<< HEAD
 import gui.GamePanel;
+=======
+import controllers.enemy_weapon.ShotDirection;
+>>>>>>> ee8a36755ee1815ac052c29f10a638906e4869ea
 import manager.GameManager;
 import manager.MapManager;
 import models.*;
@@ -23,6 +27,10 @@ public class PlayerController extends GameController implements KeyListener, Col
 
     private BitSet bitSet;
     private List<GameController> arrBlocks;
+    public static int numberShuriken=0;
+    public static final int RELOAL_SHURIKEN_SPEED = 50;
+    private ShotDirection shotDirection = ShotDirection.RIGHT;
+    private int reloadShuriken = 0;
 
     public PlayerController(PlayerModel model, GameView view, List<GameController> arrBlocks) {
         super(model, view);
@@ -63,19 +71,26 @@ public class PlayerController extends GameController implements KeyListener, Col
     @Override
     public void run() {
         PlayerView view = (PlayerView) this.view;
+        reloadShuriken++;
         if (!((PlayerModel) model).isExplode()) {
             ((PlayerModel) model).checkImmunity();
             model.move(vector, arrBlocks);
             this.vector.dx = 0;
             this.vector.dy = 0;
-
             if (bitSet.get(KeyEvent.VK_DOWN)) {
+                shotDirection = ShotDirection.DOWN;
                 view.setImage(PlayerView.MOVE_DOWN);
                 this.vector.dy = ((PlayerModel) model).getSpeed();
             } else if (bitSet.get(KeyEvent.VK_UP)) {
+                shotDirection = ShotDirection.UP;
                 view.setImage(PlayerView.MOVE_UP);
                 this.vector.dy = -((PlayerModel) model).getSpeed();
+            } else if (bitSet.get(KeyEvent.VK_LEFT)) {
+                shotDirection = ShotDirection.LEFT;
+                view.setImage(PlayerView.MOVE_LEFT);
+                this.vector.dx = -((PlayerModel) model).getSpeed();
             } else if (bitSet.get(KeyEvent.VK_RIGHT)) {
+                shotDirection = ShotDirection.RIGHT;
                 view.setImage(PlayerView.MOVE_RIGHT);
                 this.vector.dx = ((PlayerModel) model).getSpeed();
             } else if (bitSet.get(KeyEvent.VK_LEFT)) {
@@ -87,8 +102,18 @@ public class PlayerController extends GameController implements KeyListener, Col
             if (bitSet.get(KeyEvent.VK_SPACE)) {
                 bombard();
             }
+            if (bitSet.get(KeyEvent.VK_CONTROL)) {
+                if(numberShuriken>0&&reloadShuriken>RELOAL_SHURIKEN_SPEED){
+                    ShurikenController shurikenController = ShurikenController.create(model.getX()+model.getWidth()/2 - ShurikenModel.WIDTH/2,model.getY()+model.getHeight()/2,shotDirection);
+                    reloadShuriken = 0;
+                    numberShuriken--;
+                }
+            }
         } else {
             view.explode(model);
+        }
+        if(reloadShuriken==4000){
+            reloadShuriken=0;
         }
     }
 
@@ -124,6 +149,20 @@ public class PlayerController extends GameController implements KeyListener, Col
             }
             if (((ItemController) other).getType() == ItemType.FREEZE) {
                 GameManager.controllerManager.freeze();
+                MapManager.setCountTime(false);
+            }
+            if (((ItemController) other).getType() == ItemType.BONUS_TIME) {
+                MapManager.bounousTime();
+            }
+            if (((ItemController) other).getType() == ItemType.SHURIKEN) {
+                if(numberShuriken+3<=6) {
+                    numberShuriken += 3;
+                }else if(numberShuriken+3>6){
+                    numberShuriken = 6;
+                }
+            }
+            if (((ItemController) other).getType() == ItemType.BONUS_LIFE) {
+                ((PlayerModel) model).bonusLife();
             }
         }
 

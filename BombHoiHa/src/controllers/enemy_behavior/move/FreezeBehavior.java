@@ -1,6 +1,7 @@
 package controllers.enemy_behavior.move;
 
 import controllers.EnemyController;
+import manager.MapManager;
 
 /**
  * Created by QuanT on 3/12/2017.
@@ -23,6 +24,7 @@ public class FreezeBehavior {
                 if(count > frezzePeriod) {
                     count = 0;
                     enemyController.setEnemyState(EnemyController.EnemyState.NORMAL);
+                    MapManager.setCountTime(true);
                 }
                 break;
         }
