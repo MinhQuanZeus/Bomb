@@ -28,6 +28,7 @@ public class MapManager extends ControllerManager {
     private static long exist;
     private ItemMapController portalItem;
     private long start;
+    private ImageIcon winIcon;
 
     public static boolean isCountTime = true;
     private static final int TIME_BONUS = 15;
@@ -46,6 +47,7 @@ public class MapManager extends ControllerManager {
                 Terrain.CHANGE_MAP,
                 new AnimationView("Portal/portal", 4)
         );
+        winIcon = new ImageIcon("resources/System/win.png");
     }
 
     public void changeMap(int level) {
@@ -77,8 +79,8 @@ public class MapManager extends ControllerManager {
                     portalItem.getModel().setX(x);
                     portalItem.getModel().setY(y);
                 }
-            } else {
-                MainPanel.gamePanel.addTitle(new ImageIcon("resources/System/victory.png"));
+            } else if (mapLevel >= LEVEL_MAX){
+                MainPanel.gamePanel.addTitle(winIcon);
             }
         }
     }

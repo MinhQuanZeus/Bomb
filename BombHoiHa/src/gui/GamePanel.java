@@ -34,6 +34,7 @@ public class GamePanel extends JPanel implements Runnable {
         addKeyListener((KeyListener) GameManager.playerController);
         pausedPanel = new PausedPanel(this);
         add(pausedPanel);
+        title = new JLabel();
         addTitle(new ImageIcon("resources/System/stage-1.png"));
 
         running = true;
@@ -78,26 +79,23 @@ public class GamePanel extends JPanel implements Runnable {
     public void addTitle(ImageIcon icon) {
         paused();
         titleExist = 100;
-        title = new JLabel(icon);
+        title.setIcon(icon);
         title.setBounds((GameFrame.WIDTH - icon.getIconWidth()) / 2, (GameFrame.HEIGHT - icon.getIconHeight()) / 2, icon.getIconWidth(), icon.getIconHeight());
         add(title);
+        System.out.println("zzzzzzzzzz");
     }
 
     public void removeTitle() {
-        if (title != null) {
+        if (titleExist > 0) {
             titleExist--;
             if (titleExist == 0) {
                 remove(title);
                 resume();
-                switch (title.getIcon().toString()) {
-                    case "resources/System/time-up.png":
-                        GameFrame.mainPanel.showEndPanel(false);
-                        break;
-                    case "resources/System/victory.png":
-                        GameFrame.mainPanel.showEndPanel(true);
-                        break;
-                }
-                title = null;
+                String titleURL = title.getIcon().toString();
+                if (titleURL.equals("resources/System/time-up.png"))
+                    GameFrame.mainPanel.showEndPanel(false);
+                if (titleURL.equals("resources/System/win.png"))
+                    GameFrame.mainPanel.showEndPanel(true);
             }
         }
     }
