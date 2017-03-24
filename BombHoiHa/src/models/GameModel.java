@@ -51,12 +51,12 @@ public class GameModel {
         this.height = height;
     }
 
-    public void move(GameVector gameVector, List<GameController> arrBlocks) {
+    public boolean move(GameVector gameVector, List<GameController> arrBlocks) {
         int dx = this.x + gameVector.dx;
         int dy = this.y + gameVector.dy;
 
         if ((dx < 0 || dx > GameFrame.WIDTH - width) || (dy < -10 || dy > GameFrame.HEIGHT - height - 25)) {
-            return;
+            return false;
         }
 
         for (int i = 0; i < arrBlocks.size(); i++) {
@@ -76,7 +76,7 @@ public class GameModel {
                     } else if (xRect < gameController.getModel().getX() && MapManager.map[rowBlockMatrix][colBlockMatrix - 1] == 0) {
                         dx -= speed;
                     } else {
-                        return;
+                        return false;
                     }
                 } else if (gameVector.dx != 0) {
                     if (yRect > gameController.getModel().getY() && MapManager.map[rowBlockMatrix + 1][colBlockMatrix] == 0) {
@@ -84,17 +84,18 @@ public class GameModel {
                     } else if (yRect < gameController.getModel().getY() && MapManager.map[rowBlockMatrix - 1][colBlockMatrix] == 0) {
                         dy -= speed;
                     } else {
-                        return;
+                        return false;
                     }
                 }
                 break;
             } else if (!intersectionRect.isEmpty()) {
-                return;
+                return false;
             }
         }
 
         this.x = dx;
         this.y = dy;
+        return true;
     }
 
     public void moveJustUseVector(GameVector gameVector) {

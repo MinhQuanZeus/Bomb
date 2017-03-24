@@ -12,6 +12,10 @@ public enum ItemType {
     BONUS_TIME,
     SHURIKEN,
     BONUS_LIFE,
+    REVERSE_MOVE,
+    DIE,
+    SPIDERWEB,
+    SLIDE,
     FREEZE;
   //THROUGH_WALL,
    // POWERUP_BOMB;

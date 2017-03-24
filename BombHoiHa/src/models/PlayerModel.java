@@ -8,6 +8,7 @@ import java.awt.*;
 public class PlayerModel extends GameModel {
 
     public static final int MAX_SPEED = 4;
+    public static final int MIN_SPEED = 2;
     public static final int WIDTH = 40;
     public static final int HEIGHT = 56;
     public static final int MAX_LIFE = 6;
@@ -21,6 +22,7 @@ public class PlayerModel extends GameModel {
     private int score;
     private boolean immunity;
     private int countDownImmunity;
+    private int numberShuriken=0;
 
     public PlayerModel(int x, int y) {
         super(x, y, WIDTH, HEIGHT);
@@ -68,6 +70,13 @@ public class PlayerModel extends GameModel {
         speed+=1;
     }
 
+    public void speedDown() {
+        if(speed>= MIN_SPEED)
+            speed-=1;
+    }
+
+
+
     public int getSpeed() {
         return speed;
     }
@@ -83,6 +92,7 @@ public class PlayerModel extends GameModel {
 
     public void setExplode(boolean explode) {
         this.explode = explode;
+        numberShuriken = 0;
     }
 
     public void increaseScore() {
@@ -116,6 +126,19 @@ public class PlayerModel extends GameModel {
                 immunity = false;
                 countDownImmunity = 100;
             }
+        }
+    }
+    public int getNumberShuriken() {
+        return numberShuriken;
+    }
+    public void decreaseNumberShuriken(){
+        numberShuriken--;
+    }
+    public void bonusShuriken(){
+        if(numberShuriken+3<=6) {
+            numberShuriken += 3;
+        }else if(numberShuriken+3>6){
+            numberShuriken = 6;
         }
     }
 }

@@ -33,7 +33,7 @@ public class MapManager extends ControllerManager {
     private ItemMapController portalItem;
     private long start;
 
-    private static boolean isCountTime = true;
+    public static boolean isCountTime = true;
     private static final int TIME_BOUNOUS = 15;
     private long currentTime = 0;
 
@@ -117,7 +117,7 @@ public class MapManager extends ControllerManager {
         super.draw(g);
         g.setFont(new Font("Courier New", Font.BOLD, 20));
         g.setColor(Color.white);
-        for(int i = 0;i< PlayerController.numberShuriken;i++){
+        for(int i = 0;i< ((PlayerModel)((PlayerController)GameManager.playerController).getModel()).getNumberShuriken();i++){
             g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"),140+20*i,5,20,20,null);
         }
         g.drawString(getCurrentTime(), 80, 22);

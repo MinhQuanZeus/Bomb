@@ -23,10 +23,13 @@ public class PlayerController extends GameController implements KeyListener, Col
 
     private BitSet bitSet;
     private List<GameController> arrBlocks;
-    public static int numberShuriken=0;
     public static final int RELOAL_SHURIKEN_SPEED = 50;
     private ShotDirection shotDirection = ShotDirection.RIGHT;
     private int reloadShuriken = 0;
+    private boolean isReverse = false;
+    private int reverseCount = 0;
+    private boolean isSlide = false;
+    private final int SLIDE_SPEED = 8;
 
     public PlayerController(PlayerModel model, GameView view, List<GameController> arrBlocks) {
         super(model, view);
@@ -64,41 +67,92 @@ public class PlayerController extends GameController implements KeyListener, Col
     public void run() {
         PlayerView view = (PlayerView) this.view;
         reloadShuriken++;
+        if(isReverse){
+            reverseCount++;
+            if(reverseCount==170){
+                isReverse = false;
+                reverseCount = 0;
+            }
+        }
         if (!((PlayerModel) model).isExplode()) {
             ((PlayerModel) model).checkImmunity();
-            model.move(vector, arrBlocks);
+            boolean check = model.move(vector, arrBlocks);
+            if(!check){
+                isSlide = false;
+            }
+            if(!isSlide) {
             this.vector.dx = 0;
             this.vector.dy = 0;
-            if (bitSet.get(KeyEvent.VK_DOWN)) {
-                shotDirection = ShotDirection.DOWN;
-                view.setImage(PlayerView.MOVE_DOWN);
-                this.vector.dy = ((PlayerModel) model).getSpeed();
-            } else if (bitSet.get(KeyEvent.VK_UP)) {
-                shotDirection = ShotDirection.UP;
-                view.setImage(PlayerView.MOVE_UP);
-                this.vector.dy = -((PlayerModel) model).getSpeed();
-            } else if (bitSet.get(KeyEvent.VK_LEFT)) {
-                shotDirection = ShotDirection.LEFT;
-                view.setImage(PlayerView.MOVE_LEFT);
-                this.vector.dx = -((PlayerModel) model).getSpeed();
-            } else if (bitSet.get(KeyEvent.VK_RIGHT)) {
-                shotDirection = ShotDirection.RIGHT;
-                view.setImage(PlayerView.MOVE_RIGHT);
-                this.vector.dx = ((PlayerModel) model).getSpeed();
-            } else if (bitSet.get(KeyEvent.VK_LEFT)) {
-                view.setImage(PlayerView.MOVE_LEFT);
-                this.vector.dx = -((PlayerModel) model).getSpeed();
-            } else {
-                view.setImageHold();
+                if (bitSet.get(KeyEvent.VK_DOWN)) {
+                    if (isReverse) {
+                        shotDirection = ShotDirection.UP;
+                        view.setImage(PlayerView.MOVE_UP);
+                        this.vector.dy = -((PlayerModel) model).getSpeed();
+                    } else {
+                        shotDirection = ShotDirection.DOWN;
+                        view.setImage(PlayerView.MOVE_DOWN);
+                        this.vector.dy = ((PlayerModel) model).getSpeed();
+                    }
+                } else if (bitSet.get(KeyEvent.VK_UP)) {
+                    if (isReverse) {
+                        shotDirection = ShotDirection.DOWN;
+                        view.setImage(PlayerView.MOVE_DOWN);
+                        this.vector.dy = ((PlayerModel) model).getSpeed();
+                    } else {
+                        shotDirection = ShotDirection.UP;
+                        view.setImage(PlayerView.MOVE_UP);
+                        this.vector.dy = -((PlayerModel) model).getSpeed();
+                    }
+                } else if (bitSet.get(KeyEvent.VK_LEFT)) {
+                    if (isReverse) {
+                        shotDirection = ShotDirection.RIGHT;
+                        view.setImage(PlayerView.MOVE_RIGHT);
+                        this.vector.dx = ((PlayerModel) model).getSpeed();
+                    } else {
+                        shotDirection = ShotDirection.LEFT;
+                        view.setImage(PlayerView.MOVE_LEFT);
+                        this.vector.dx = -((PlayerModel) model).getSpeed();
+                    }
+                } else if (bitSet.get(KeyEvent.VK_RIGHT)) {
+                    if (isReverse) {
+                        shotDirection = ShotDirection.LEFT;
+                        view.setImage(PlayerView.MOVE_LEFT);
+                        this.vector.dx = -((PlayerModel) model).getSpeed();
+                    } else {
+                        shotDirection = ShotDirection.RIGHT;
+                        view.setImage(PlayerView.MOVE_RIGHT);
+                        this.vector.dx = ((PlayerModel) model).getSpeed();
+                    }
+                } else {
+                    view.setImageHold();
+                }
+            }else{
+                if(shotDirection == ShotDirection.DOWN){
+                    view.setImage(PlayerView.MOVE_DOWN);
+                    this.vector.dy = SLIDE_SPEED;
+                }
+                if(shotDirection == ShotDirection.UP){
+                    view.setImage(PlayerView.MOVE_UP);
+                    this.vector.dy = -SLIDE_SPEED;
+                }
+                if(shotDirection == ShotDirection.LEFT){
+                    view.setImage(PlayerView.MOVE_LEFT);
+                    this.vector.dx = -SLIDE_SPEED;
+                }
+                if(shotDirection == ShotDirection.RIGHT){
+                    view.setImage(PlayerView.MOVE_RIGHT);
+                    this.vector.dx = SLIDE_SPEED;
+                }
+
             }
             if (bitSet.get(KeyEvent.VK_SPACE)) {
                 bombard();
             }
             if (bitSet.get(KeyEvent.VK_CONTROL)) {
-                if(numberShuriken>0&&reloadShuriken>RELOAL_SHURIKEN_SPEED){
+                if(((PlayerModel) model).getNumberShuriken()>0&&reloadShuriken>RELOAL_SHURIKEN_SPEED){
                     ShurikenController shurikenController = ShurikenController.create(model.getX()+model.getWidth()/2 - ShurikenModel.WIDTH/2,model.getY()+model.getHeight()/2,shotDirection);
                     reloadShuriken = 0;
-                    numberShuriken--;
+                    ((PlayerModel) model).decreaseNumberShuriken();
                 }
             }
         } else {
@@ -147,14 +201,22 @@ public class PlayerController extends GameController implements KeyListener, Col
                 MapManager.bounousTime();
             }
             if (((ItemController) other).getType() == ItemType.SHURIKEN) {
-                if(numberShuriken+3<=6) {
-                    numberShuriken += 3;
-                }else if(numberShuriken+3>6){
-                    numberShuriken = 6;
-                }
+                ((PlayerModel) model).bonusShuriken();
             }
             if (((ItemController) other).getType() == ItemType.BONUS_LIFE) {
                 ((PlayerModel) model).bonusLife();
+            }
+            if (((ItemController) other).getType() == ItemType.REVERSE_MOVE) {
+                isReverse = true;
+            }
+            if (((ItemController) other).getType() == ItemType.DIE) {
+                ((PlayerModel) model).setExplode(true);
+            }
+            if (((ItemController) other).getType() == ItemType.SPIDERWEB) {
+                ((PlayerModel) model).speedDown();
+            }
+            if (((ItemController) other).getType() == ItemType.SLIDE) {
+                isSlide = true;
             }
         }
 
@@ -197,4 +259,16 @@ public class PlayerController extends GameController implements KeyListener, Col
             }
         }
     }
+    public void stopSlide(){
+        for(int i = 0; i < GameManager.arrBlocks.size(); i++){
+            if(model.getRect().intersects(GameManager.arrBlocks.get(i).getModel().getRect())){
+                System.out.println("Stop");
+                isSlide = false;
+                this.vector.dx = 0;
+                this.vector.dy = 0;
+            }
+        }
+    }
+
+
 }
