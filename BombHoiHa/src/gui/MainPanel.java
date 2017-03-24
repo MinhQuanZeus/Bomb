@@ -18,8 +18,9 @@ public class MainPanel extends JPanel {
     public static final String TAG_END_GAME = "tag_end_game";
     public static final String TAG_INSTRUCTION = "tag_instruction";
 
+
+    public static GamePanel gamePanel;
     private CardLayout cardLayout;
-    private GamePanel gamePanel;
     private MenuPanel menuPanel;
     private EndGamePanel endGamePanel;
     private InstructionPanel instructionPanel;
@@ -39,7 +40,8 @@ public class MainPanel extends JPanel {
     }
 
     public void showPanel(String tag) {
-        gamePanel.setRunning(false);
+        if (gamePanel != null)
+            gamePanel.setRunning(false);
         cardLayout.show(this, tag);
         setBGM(tag);
     }

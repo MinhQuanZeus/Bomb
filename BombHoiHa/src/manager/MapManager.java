@@ -13,6 +13,7 @@ import utils.Utils;
 import gui.MainPanel;
 import views.AnimationView;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
@@ -50,7 +51,6 @@ public class MapManager extends ControllerManager {
     public void changeMap(int level) {
         mapLevel = level;
         gameControllers.remove(portalItem);
-        GameManager.collisionManager.remove(portalItem);
         GameManager.arrBlocks.clear();
         GameManager.controllerManager.clear();
         this.clear();
@@ -77,13 +77,13 @@ public class MapManager extends ControllerManager {
                     portalItem.getModel().setY(y);
                 }
             } else {
+                MainPanel.gamePanel.addTitle(new ImageIcon("resources/System/stage-clear.png"));
                 GameFrame.mainPanel.showEndPanel(true);
             }
         }
     }
 
     private String getCurrentTime() {
-
         if(isCountTime) {
             currentTime = (exist - System.currentTimeMillis() + start) / 1000;
         }else{
@@ -155,13 +155,14 @@ public class MapManager extends ControllerManager {
                 }
                 add(itemMapController);
 
-                EnemyController.createByRow_Colum_Number(bitEnemy, i, j, (PlayerModel) GameManager.playerController.getModel());
+                //EnemyController.createByRow_Colum_Number(bitEnemy, i, j, (PlayerModel) GameManager.playerController.getModel());
 
                 if (terrain == Terrain.BLOCK || terrain == Terrain.BREAK) {
                     GameManager.arrBlocks.add(itemMapController);
                 }
             }
         }
+        EnemyController.createByRow_Colum_Number(20, 5, 5, (PlayerModel) GameManager.playerController.getModel());
     }
 
     public void reloadStart(long offset) {

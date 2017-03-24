@@ -3,6 +3,7 @@ package controllers;
 import controllers.enemy_weapon.BulletController;
 import gui.GamePanel;
 import controllers.enemy_weapon.ShotDirection;
+import gui.MainPanel;
 import manager.GameManager;
 import manager.MapManager;
 import models.*;
@@ -11,6 +12,7 @@ import views.AnimationView;
 import views.GameView;
 import views.PlayerView;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -231,8 +233,9 @@ public class PlayerController extends GameController implements KeyListener, Col
 
         if (other instanceof ItemMapController) {
             if (((ItemMapModel) other.getModel()).getTerrain() == Terrain.CHANGE_MAP) {
+                GameManager.collisionManager.remove(other);
+                MainPanel.gamePanel.addTitle(new ImageIcon("resources/System/stage-clear.png"));
                 GameManager.setTransitionStart(true);
-                other.getModel().setAlive(false);
             }
         }
 
