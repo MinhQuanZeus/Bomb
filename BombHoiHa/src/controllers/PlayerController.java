@@ -1,11 +1,12 @@
 package controllers;
 
 import controllers.enemy_weapon.BulletController;
+import gui.GamePanel;
 import manager.GameManager;
 import manager.MapManager;
 import models.*;
 import utils.Utils;
-import views.BombView;
+import views.AnimationView;
 import views.GameView;
 import views.PlayerView;
 
@@ -42,7 +43,11 @@ public class PlayerController extends GameController implements KeyListener, Col
         if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN
                 || keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_LEFT)
             bitSet.clear();
-        bitSet.set(e.getKeyCode());
+        if (keyCode == KeyEvent.VK_P && GamePanel.paused) {
+            return;
+        } else {
+            bitSet.set(e.getKeyCode());
+        }
     }
 
     @Override
@@ -98,7 +103,7 @@ public class PlayerController extends GameController implements KeyListener, Col
                 return;
             new BombController(
                     new GameModel(bombX, bombY, ItemMapModel.SIZE_TILED, ItemMapModel.SIZE_TILED),
-                    new BombView("Bombs & Explosions/normalbomb")
+                    new AnimationView("Bombs & Explosions/normalbomb", 4)
             );
             Utils.playSound("bomb-set.wav", false);
             MapManager.map[rowBombMatrix][colBombMatrix] = 9;
@@ -160,5 +165,9 @@ public class PlayerController extends GameController implements KeyListener, Col
                 }
             }
         }
+    }
+
+    public BitSet getBitSet() {
+        return bitSet;
     }
 }

@@ -5,14 +5,18 @@ import models.ItemMapModel;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
 import java.awt.*;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.Random;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by QuanT on 3/9/2017.
  */
 public class Utils {
+
     public static Image loadImageFromRes(String url) {
         try {
             Image image = ImageIO.read(new File("resources/" + url + ".png"));
@@ -39,9 +43,9 @@ public class Utils {
         return x / ItemMapModel.SIZE_TILED;
     }
 
-    public static void playSound(String audioUrl, boolean repeat){
-        File soundFile = new File("resources/Sounds/"+audioUrl);
-        try{
+    public static void playSound(String audioUrl, boolean repeat) {
+        File soundFile = new File("resources/Sounds/" + audioUrl);
+        try {
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
             AudioFormat baseFormat = audioIn.getFormat();
             AudioFormat decodeFormat = new AudioFormat(
@@ -49,7 +53,7 @@ public class Utils {
                     baseFormat.getSampleRate(),
                     16,
                     baseFormat.getChannels(),
-                    baseFormat.getChannels()*2,
+                    baseFormat.getChannels() * 2,
                     baseFormat.getSampleRate(),
                     false
             );
@@ -57,13 +61,30 @@ public class Utils {
             Clip clip = AudioSystem.getClip();
             clip.open(decodedAudioIn);
             clip.start();
-            if(repeat){
+            if (repeat) {
                 clip.loop(Clip.LOOP_CONTINUOUSLY);
-            }
-            else clip .loop(0);
-        }
-        catch(UnsupportedAudioFileException | IOException | LineUnavailableException e){
+            } else clip.loop(0);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static List<String> readFileMap(String url) {
+        try {
+            java.util.List<String> arrRows = new ArrayList<>();
+            File file = new File(url);
+            FileReader reader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            String row = bufferedReader.readLine();
+            while (row != null) {
+                arrRows.add(row);
+                row = bufferedReader.readLine();
+            }
+            bufferedReader.close();
+            return arrRows;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

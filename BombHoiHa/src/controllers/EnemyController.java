@@ -195,6 +195,7 @@ public class EnemyController extends GameController implements Collision {
     public void onContact(Collision other) {
         if (other instanceof ExplosionController) {
             if (((EnemyModel) model).getHp()!=0) {
+                System.out.println("enemyCount--" + EnemyModel.enemyCount);
                 EnemyModel.enemyCount--;
                 ((EnemyModel) model).setHp(0);
                 Utils.playSound("enemy-out.wav", false);

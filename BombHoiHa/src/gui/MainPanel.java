@@ -1,6 +1,7 @@
 package gui;
 
 import manager.MapManager;
+import models.EnemyModel;
 import utils.SoundPlayer;
 
 import javax.swing.*;
@@ -38,6 +39,7 @@ public class MainPanel extends JPanel {
     }
 
     public void showPanel(String tag) {
+        gamePanel.setRunning(false);
         cardLayout.show(this, tag);
         setBGM(tag);
     }
@@ -46,6 +48,7 @@ public class MainPanel extends JPanel {
         if (gamePanel != null) {
             gamePanel.setRunning(false);
         }
+        EnemyModel.enemyCount = 0;
         gamePanel = new GamePanel();
         add(gamePanel, TAG_GAME);
         setBGM(TAG_GAME);
@@ -54,6 +57,7 @@ public class MainPanel extends JPanel {
     }
 
     public void showEndPanel(boolean win) {
+        gamePanel.setRunning(false);
         endGamePanel = new EndGamePanel(win);
         add(endGamePanel, TAG_END_GAME);
         setBGM(TAG_END_GAME);
@@ -64,19 +68,19 @@ public class MainPanel extends JPanel {
         if (bgm != null)
             bgm.stop();
         switch (tag) {
-            case "tag_menu": {
+            case TAG_MENU: {
                 bgm = new SoundPlayer(new File("resources/Sounds/game-menu.wav"));
             }
             break;
-            case "tag_game": {
+            case TAG_GAME: {
                 bgm = new SoundPlayer(new File("resources/Sounds/game-stage-" + MapManager.mapLevel + ".wav"));
             }
             break;
-            case "tag_end_game": {
+            case TAG_END_GAME: {
                 bgm = new SoundPlayer(new File("resources/Sounds/game-over.wav"));
             }
             break;
-            case "tag_instruction": {
+            case TAG_INSTRUCTION: {
                 bgm = new SoundPlayer(new File("resources/Sounds/game-instruction.wav"));
             }
             break;

@@ -9,6 +9,7 @@ import views.AutoLoadPic;
 import views.PlayerView;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
