@@ -22,9 +22,9 @@ import java.util.List;
 /**
  * Created by QuanT on 3/9/2017.
  */
-public class PlayerController extends GameController implements KeyListener, Collision {
+public class PlayerController extends GameController implements Collision {
 
-    private BitSet bitSet;
+    public static BitSet bitSet = new BitSet(256);
     private List<GameController> arrBlocks;
     public static int numberShuriken = 0;
     public static final int RELOAL_SHURIKEN_SPEED = 50;
@@ -42,33 +42,7 @@ public class PlayerController extends GameController implements KeyListener, Col
         myModel = model;
         GameManager.controllerManager.add(this);
         GameManager.collisionManager.add(this);
-        bitSet = new BitSet(256);
         this.arrBlocks = arrBlocks;
-    }
-
-
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN
-                || keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_LEFT)
-            bitSet.clear();
-        if (keyCode == KeyEvent.VK_P && GamePanel.paused) {
-            return;
-        } else {
-            bitSet.set(e.getKeyCode());
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        bitSet.clear(e.getKeyCode());
     }
 
     @Override
@@ -241,6 +215,8 @@ public class PlayerController extends GameController implements KeyListener, Col
     public BitSet getBitSet() {
         return bitSet;
     }
+<<<<<<< HEAD
+=======
 
 
     public static void setSlide() {
@@ -258,4 +234,5 @@ public class PlayerController extends GameController implements KeyListener, Col
     public static void speedDown(){
         myModel.speedDown();
     }
+>>>>>>> c6e633d6cbd1031c74c1f4af1c48e6eddec1dbef
 }

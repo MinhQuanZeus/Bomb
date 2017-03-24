@@ -4,6 +4,7 @@ import controllers.GameController;
 import controllers.PlayerController;
 import manager.GameManager;
 import manager.MapManager;
+import utils.GameKey;
 import utils.Utils;
 
 import javax.swing.*;
@@ -31,7 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
         setLayout(null);
         setFocusable(true);
         gameManager = new GameManager();
-        addKeyListener((KeyListener) GameManager.playerController);
+        addKeyListener(GameKey.instance);
         pausedPanel = new PausedPanel(this);
         add(pausedPanel);
         title = new JLabel();
@@ -67,7 +68,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private void checkPaused() {
-        BitSet bitSet = ((PlayerController) GameManager.playerController).getBitSet();
+        BitSet bitSet = PlayerController.bitSet;
         if (bitSet.get(KeyEvent.VK_P)) {
             paused();
             Utils.playSound("select.wav",false);
@@ -82,7 +83,6 @@ public class GamePanel extends JPanel implements Runnable {
         title.setIcon(icon);
         title.setBounds((GameFrame.WIDTH - icon.getIconWidth()) / 2, (GameFrame.HEIGHT - icon.getIconHeight()) / 2, icon.getIconWidth(), icon.getIconHeight());
         add(title);
-        System.out.println("zzzzzzzzzz");
     }
 
     public void removeTitle() {
