@@ -51,6 +51,9 @@ public class GameModel {
         this.height = height;
     }
 
+    public static boolean check = true;
+    public static boolean kick = false;
+
     public boolean move(GameVector gameVector, List<GameController> arrBlocks) {
         int dx = this.x + gameVector.dx;
         int dy = this.y + gameVector.dy;
@@ -66,6 +69,15 @@ public class GameModel {
             int colBlockMatrix = Utils.getColMatrix(gameController.getModel().getX());
             int xRect = dx + 5;
             int yRect = dy + height - ItemMapModel.SIZE_TILED + 5;
+
+            if ((this instanceof PlayerModel) && (gameController instanceof BombController) && !intersectionRect.isEmpty() && !this.overlap(gameController.getModel())) {
+                if (((PlayerModel) this).isKick()) {
+                    int row = Utils.getRowMatrix(gameController.getModel().getY());
+                    int col = Utils.getColMatrix(gameController.getModel().getX());
+                    MapManager.map[row][col] = 0;
+                    ((BombController) gameController).slide(((PlayerModel) this).getShotDirection());
+                }
+            }
 
             if (gameController instanceof BombController && this.overlap(gameController.getModel())) {
                 break;

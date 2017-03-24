@@ -31,7 +31,7 @@ public class TerrainBreakView extends GameView {
             ((ItemMapModel) model).setTerrain(Terrain.LAND);
             fire = false;
             if (Utils.getRandom(3) == 0) {
-                ItemController.create(model.getX(), model.getY(), ItemType.getRandomItemType());
+                ItemController.create(model.getX(), model.getY());
             }
         }
     }
