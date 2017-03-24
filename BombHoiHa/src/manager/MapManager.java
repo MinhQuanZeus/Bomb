@@ -5,7 +5,6 @@ import controllers.GameController;
 import controllers.ItemMapController;
 import controllers.*;
 import gui.GameFrame;
-import models.EnemyModel;
 import models.ItemMapModel;
 import models.PlayerModel;
 import models.Terrain;
@@ -28,8 +27,10 @@ public class MapManager extends ControllerManager {
     private ItemMapController portalItem;
     private long start;
 
+
     public static boolean isCountTime = true;
     private static final int TIME_BONUS = 15;
+
     private long currentTime = 0;
 
     public MapManager() {
@@ -60,7 +61,7 @@ public class MapManager extends ControllerManager {
     }
 
     private void checkLevelClear() {
-        if (EnemyModel.enemyCount == 0) {
+//        if (EnemyModel.enemyCount == 0) {
             if (mapLevel < LEVEL_MAX) {
                 int x;
                 int y;
@@ -78,7 +79,7 @@ public class MapManager extends ControllerManager {
                 }
             } else {
                 GameFrame.mainPanel.showEndPanel(true);
-            }
+//            }
         }
     }
 

@@ -16,9 +16,8 @@ public enum ItemType {
     DIE,
     SPIDERWEB,
     SLIDE,
+    KICK,
     FREEZE;
-  //THROUGH_WALL,
-   // POWERUP_BOMB;
 
     private static final ItemType[] VALUES = values();
     private static final int SIZE = VALUES.length;

@@ -1,5 +1,7 @@
 package models;
 
+import controllers.enemy_weapon.ShotDirection;
+
 import java.awt.*;
 
 /**
@@ -23,6 +25,10 @@ public class PlayerModel extends GameModel {
     private boolean immunity;
     private int countDownImmunity;
     private int numberShuriken=0;
+    private boolean kick = false;
+    private ShotDirection shotDirection = ShotDirection.RIGHT;
+
+
 
     public PlayerModel(int x, int y) {
         super(x, y, WIDTH, HEIGHT);
@@ -93,6 +99,7 @@ public class PlayerModel extends GameModel {
     public void setExplode(boolean explode) {
         this.explode = explode;
         numberShuriken = 0;
+        speed = 2;
     }
 
     public void increaseScore() {
@@ -140,5 +147,20 @@ public class PlayerModel extends GameModel {
         }else if(numberShuriken+3>6){
             numberShuriken = 6;
         }
+    }
+
+    public boolean isKick() {
+        return kick;
+    }
+
+    public void setKick(boolean kick) {
+        this.kick = kick;
+    }
+    public ShotDirection getShotDirection() {
+        return shotDirection;
+    }
+
+    public void setShotDirection(ShotDirection shotDirection) {
+        this.shotDirection = shotDirection;
     }
 }
