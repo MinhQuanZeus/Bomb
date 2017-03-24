@@ -12,6 +12,7 @@ import utils.Utils;
 import gui.MainPanel;
 import views.AnimationView;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class MapManager extends ControllerManager {
     private static long exist;
     private ItemMapController portalItem;
     private long start;
+    private ImageIcon winIcon;
 
 
     public static boolean isCountTime = true;
@@ -35,7 +37,7 @@ public class MapManager extends ControllerManager {
 
     public MapManager() {
         super();
-        mapLevel = 1;
+        mapLevel = 3;
         map = new int[14][14];
         readMap(mapLevel);
         exist = 120000;
@@ -46,12 +48,13 @@ public class MapManager extends ControllerManager {
                 Terrain.CHANGE_MAP,
                 new AnimationView("Portal/portal", 4)
         );
+        winIcon = new ImageIcon("resources/System/win.png");
     }
 
     public void changeMap(int level) {
+        System.out.println("changeMap");
         mapLevel = level;
         gameControllers.remove(portalItem);
-        GameManager.collisionManager.remove(portalItem);
         GameManager.arrBlocks.clear();
         GameManager.controllerManager.clear();
         this.clear();
@@ -77,14 +80,19 @@ public class MapManager extends ControllerManager {
                     portalItem.getModel().setX(x);
                     portalItem.getModel().setY(y);
                 }
+<<<<<<< HEAD
             } else {
                 GameFrame.mainPanel.showEndPanel(true);
 //            }
+=======
+            } else if (mapLevel >= LEVEL_MAX){
+                MainPanel.gamePanel.addTitle(winIcon);
+            }
+>>>>>>> a756b71ecc18bc5e44d5c442c042556bd4c16226
         }
     }
 
     private String getCurrentTime() {
-
         if(isCountTime) {
             currentTime = (exist - System.currentTimeMillis() + start) / 1000;
         }else{
@@ -107,7 +115,7 @@ public class MapManager extends ControllerManager {
     public void run() {
         super.run();
         if (getCurrentTime().equals("0:00")) {
-            GameFrame.mainPanel.showEndPanel(false);
+            MainPanel.gamePanel.addTitle(new ImageIcon("resources/System/time-up.png"));
         }
         checkLevelClear();
     }
@@ -120,6 +128,9 @@ public class MapManager extends ControllerManager {
         for(int i = 0;i< ((PlayerModel)((PlayerController)GameManager.playerController).getModel()).getNumberShuriken();i++){
             g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"),140+20*i,5,20,20,null);
         }
+        if ((getCurrentTime().contains("0:0") || getCurrentTime().contains("0:1") || getCurrentTime().contains("0:2"))
+                && System.currentTimeMillis() % 2 == 0)
+            g.setColor(Color.RED);
         g.drawString(getCurrentTime(), 80, 22);
     }
 
@@ -156,13 +167,14 @@ public class MapManager extends ControllerManager {
                 }
                 add(itemMapController);
 
-                EnemyController.createByRow_Colum_Number(bitEnemy, i, j, (PlayerModel) GameManager.playerController.getModel());
+                //EnemyController.createByRow_Colum_Number(bitEnemy, i, j, (PlayerModel) GameManager.playerController.getModel());
 
                 if (terrain == Terrain.BLOCK || terrain == Terrain.BREAK) {
                     GameManager.arrBlocks.add(itemMapController);
                 }
             }
         }
+        EnemyController.createByRow_Colum_Number(20, 5, 5, (PlayerModel) GameManager.playerController.getModel());
     }
 
     public void reloadStart(long offset) {

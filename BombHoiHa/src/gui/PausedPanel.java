@@ -43,8 +43,7 @@ public class PausedPanel extends JPanel {
                 }
                 if (mouseEvent.getSource().equals(btnResume)) {
                     setVisible(false);
-                    GamePanel.paused = false;
-                    ((MapManager) GameManager.mapManager).reloadStart(System.currentTimeMillis() - gamePanel.getStartPaused());
+                    gamePanel.resume();
                 }
             }
 

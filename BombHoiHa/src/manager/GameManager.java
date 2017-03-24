@@ -2,12 +2,15 @@ package manager;
 
 import controllers.*;
 import gui.GameFrame;
+import gui.MainPanel;
 import models.*;
+import sun.applet.Main;
 import utils.Utils;
 import views.AnimationView;
 import views.AutoLoadPic;
 import views.PlayerView;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -27,7 +30,6 @@ public class GameManager {
 
     private static boolean transitionStart = false;
     private static boolean transitionEnd = false;
-    private static boolean transitionEndDone = false;
     private static boolean flag = true;
     private static int transitionFrameStart = 11;
     private static int transitionFrameEnd = 0;
@@ -61,15 +63,14 @@ public class GameManager {
 
     public void drawTransition(Graphics graphics){
         if (transitionStart) {
-            System.out.println("frame start: "+ transitionFrameStart);
             if (transitionFrameStart < 0) {
                 graphics.drawImage(Utils.loadImageFromRes("System/transition-" + 0), 0, 0, GameFrame.WIDTH, GameFrame.HEIGHT, null);
             } else {
                 graphics.drawImage(Utils.loadImageFromRes("System/transition-" + transitionFrameStart), 0, 0, GameFrame.WIDTH, GameFrame.HEIGHT, null);
             }
-            if (transitionDelay < 3)
+            if (transitionDelay < 1)
                 transitionDelay++;
-            if (transitionDelay == 3) {
+            if (transitionDelay == 1) {
                 transitionFrameStart--;
                 transitionDelay = 0;
             }
@@ -80,19 +81,20 @@ public class GameManager {
         }
 
         if (transitionEnd) {
-            System.out.println("frame end: " + transitionFrameEnd);
             graphics.drawImage(Utils.loadImageFromRes("System/transition-" + transitionFrameEnd), 0, 0, GameFrame.WIDTH, GameFrame.HEIGHT, null);
-            if (transitionDelay < 3)
+            if (transitionDelay < 1)
                 transitionDelay++;
-            if (transitionDelay == 3) {
+            if (transitionDelay == 1) {
                 transitionFrameEnd++;
                 transitionDelay = 0;
             }
             if (transitionFrameEnd > 11) {
                 transitionFrameEnd = 0;
+                transitionFrameStart = 11;
                 transitionDelay = 0;
                 transitionEnd = false;
-                transitionEndDone = true;
+                flag = true;
+                MainPanel.gamePanel.addTitle(new ImageIcon("resources/System/stage-" + MapManager.mapLevel + ".png"));
             }
         }
     }
@@ -103,11 +105,6 @@ public class GameManager {
             playerController.getModel().setX(0);
             playerController.getModel().setY(50);
             flag = false;
-        }
-
-        if (transitionEndDone){
-            transitionEndDone = false;
-            flag = true;
         }
     }
 

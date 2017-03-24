@@ -24,6 +24,8 @@ public class GamePanel extends JPanel implements Runnable {
     private GameManager gameManager;
     private PausedPanel pausedPanel;
     private long startPaused;
+    private JLabel title;
+    private int titleExist;
 
     public GamePanel() {
         setLayout(null);
@@ -32,6 +34,8 @@ public class GamePanel extends JPanel implements Runnable {
         addKeyListener((KeyListener) GameManager.playerController);
         pausedPanel = new PausedPanel(this);
         add(pausedPanel);
+        title = new JLabel();
+        addTitle(new ImageIcon("resources/System/stage-1.png"));
 
         running = true;
         thread = new Thread(this);
@@ -48,6 +52,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {
         while (running) {
             checkPaused();
+            removeTitle();
             if (!paused) {
                 repaint();
                 gameManager.run();
@@ -64,18 +69,48 @@ public class GamePanel extends JPanel implements Runnable {
     private void checkPaused() {
         BitSet bitSet = ((PlayerController) GameManager.playerController).getBitSet();
         if (bitSet.get(KeyEvent.VK_P)) {
+            paused();
             Utils.playSound("select.wav",false);
             bitSet.clear();
-            paused = true;
             pausedPanel.setVisible(true);
-            startPaused = System.currentTimeMillis();
         }
+    }
+
+    public void addTitle(ImageIcon icon) {
+        paused();
+        titleExist = 100;
+        title.setIcon(icon);
+        title.setBounds((GameFrame.WIDTH - icon.getIconWidth()) / 2, (GameFrame.HEIGHT - icon.getIconHeight()) / 2, icon.getIconWidth(), icon.getIconHeight());
+        add(title);
+        System.out.println("zzzzzzzzzz");
+    }
+
+    public void removeTitle() {
+        if (titleExist > 0) {
+            titleExist--;
+            if (titleExist == 0) {
+                remove(title);
+                resume();
+                String titleURL = title.getIcon().toString();
+                if (titleURL.equals("resources/System/time-up.png"))
+                    GameFrame.mainPanel.showEndPanel(false);
+                if (titleURL.equals("resources/System/win.png"))
+                    GameFrame.mainPanel.showEndPanel(true);
+            }
+        }
+    }
+
+    public void paused() {
+        paused = true;
+        startPaused = System.currentTimeMillis();
+    }
+
+    public void resume() {
+        paused = false;
+        ((MapManager) GameManager.mapManager).reloadStart(System.currentTimeMillis() - startPaused);
     }
 
     public void setRunning(boolean running) {
         this.running = running;
-    }
-    public long getStartPaused() {
-        return startPaused;
     }
 }
