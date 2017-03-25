@@ -69,5 +69,11 @@ public class ControllerManager {
         }
     }
 
+    public int size() {
+        return gameControllers.size();
+    }
 
+    public GameController get(int i) {
+        return gameControllers.get(i);
+    }
 }

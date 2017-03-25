@@ -2,8 +2,10 @@ package models;
 
 import controllers.BombController;
 import controllers.GameController;
+import controllers.ItemMapController;
 import controllers.PlayerController;
 import gui.GameFrame;
+import manager.GameManager;
 import manager.MapManager;
 import utils.Utils;
 

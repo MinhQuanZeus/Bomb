@@ -28,7 +28,7 @@ public class BombController extends GameController implements Collision {
         GameManager.controllerManager.add(this);
         GameManager.arrBlocks.add(this);
         this.arrBlocks = arrBlocks;
-        model.setSpeed(4);
+        model.setSpeed(6);
     }
 
 
@@ -176,6 +176,21 @@ public class BombController extends GameController implements Collision {
     public void onContact(Collision other) {
         if (other instanceof ExplosionController) {
             exist = 1;
+        }
+
+        if (other instanceof PlayerController || other instanceof EnemyController) {
+            if (((BombModel) model).isSlide()) {
+                ((BombModel) model).setSlide(false);
+                int x;
+                int y = model.getY() / ItemMapModel.SIZE_TILED * ItemMapModel.SIZE_TILED;
+                if (other.getModel().getX() > this.model.getX()) {
+                    x = model.getX() / ItemMapModel.SIZE_TILED * ItemMapModel.SIZE_TILED;
+                } else {
+                    x = (model.getX() / ItemMapModel.SIZE_TILED + 1) * ItemMapModel.SIZE_TILED;
+                }
+                model.setX(x);
+                model.setY(y);
+            }
         }
     }
 }

@@ -5,10 +5,7 @@ import controllers.GameController;
 import controllers.ItemMapController;
 import controllers.*;
 import gui.GameFrame;
-import models.EnemyModel;
-import models.ItemMapModel;
-import models.PlayerModel;
-import models.Terrain;
+import models.*;
 import utils.Utils;
 import gui.MainPanel;
 import views.AnimationView;
@@ -41,7 +38,7 @@ public class MapManager extends ControllerManager {
         if (GameManager.versus) {
             mapLevel = 0;
         } else {
-            mapLevel = 4;
+            mapLevel = 1;
         }
         map = new int[14][14];
         readMap(mapLevel);
@@ -163,7 +160,6 @@ public class MapManager extends ControllerManager {
                 } else {
                     terrain = Terrain.BREAK;
                     itemMapController = new ItemMapController(x, y, url + bit, url + "expl");
-
                 }
                 add(itemMapController);
 
@@ -179,4 +175,5 @@ public class MapManager extends ControllerManager {
     public void reloadStart(long offset) {
         this.start += offset;
     }
+
 }
