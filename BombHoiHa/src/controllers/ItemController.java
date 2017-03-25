@@ -119,8 +119,6 @@ public class ItemController extends GameController implements Collision {
             type = ItemType.getRandomItemType();
         } while (GameManager.versus && (type == ItemType.BONUS_TIME || type == ItemType.FREEZE || type == ItemType.DIE));
 
-        type = ItemType.KICK;
-
         new ItemController(
                 new GameModel(x, y, WIDTH, HEIGHT),
                 new ItemView("Items/" + type),

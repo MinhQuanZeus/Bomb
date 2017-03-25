@@ -35,8 +35,6 @@ public class PlayerController extends GameController implements Collision, KeyLi
     protected boolean isSlide = false;
     private int countDownKickPlayer = ItemController.MAX_KICK_TIME;
 
-//    public PlayerController(PlayerModel model, GameView view, List<GameController> arrBlocks) {
-//        super(model, view);
     public PlayerController(PlayerModel model, List<GameController> arrBlocks, String urlImage) {
         super(model, new PlayerView(urlImage));
         GameManager.controllerManager.add(this);
@@ -50,7 +48,7 @@ public class PlayerController extends GameController implements Collision, KeyLi
         for (int i = 0; i < ((PlayerModel) model).getNumberShuriken(); i++) {
             g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"), 40 + 20 * i, 5, 20, 20, null);
         }
-        if (MapManager.mapLevel == 0) {
+        if (GameManager.versus) {
             g.drawImage(Utils.loadImageFromRes("Bomberman/life"), 0, 0, null);
             g.drawString(((PlayerModel) model).getLife() + "", 9, 20);
         }
@@ -71,11 +69,11 @@ public class PlayerController extends GameController implements Collision, KeyLi
             reloadShuriken = 0;
         }
 
-        if(((PlayerModel) GameManager.playerController.getModel()).isKick()){
+        if (((PlayerModel) model).isKick()) {
             countDownKickPlayer--;
-            if(countDownKickPlayer==0){
-                ((PlayerModel)GameManager.playerController.getModel()).setKick(false);
-                countDownKickPlayer=ItemController.MAX_KICK_TIME;
+            if (countDownKickPlayer == 0) {
+                ((PlayerModel) model).setKick(false);
+                countDownKickPlayer = ItemController.MAX_KICK_TIME;
             }
         }
     }

@@ -1,9 +1,7 @@
 package controllers;
 
 import controllers.enemy_weapon.ShotDirection;
-import gui.GamePanel;
-import manager.GameManager;
-import manager.MapManager;
+import gui.GameFrame;
 import models.PlayerModel;
 import models.ShurikenModel;
 import utils.Utils;
@@ -17,7 +15,7 @@ import java.util.List;
  * Created by KhoaBeo on 3/25/2017.
  */
 public class PlayerTwoController extends PlayerController {
-    private int countDownKickPlayer = ItemController.MAX_KICK_TIME;
+
     public PlayerTwoController(PlayerModel model, List<GameController> arrBlocks, String urlImage) {
         super(model, arrBlocks, urlImage);
     }
@@ -26,12 +24,10 @@ public class PlayerTwoController extends PlayerController {
     public void draw(Graphics g) {
         view.draw(g, model);
         for (int i = 0; i < ((PlayerModel) model).getNumberShuriken(); i++) {
-            g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"), 400 + 20 * i, 5, 20, 20, null);
+            g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"), GameFrame.WIDTH - 60 - 20 * i, 5, 20, 20, null);
         }
-        if (MapManager.mapLevel == 0) {
-            g.drawImage(Utils.loadImageFromRes("Bomberman/life"), 360, 0, null);
-            g.drawString(((PlayerModel) model).getLife() + "", 369, 20);
-        }
+        g.drawImage(Utils.loadImageFromRes("Bomberman/life"), GameFrame.WIDTH - 35, 0, null);
+        g.drawString(((PlayerModel) model).getLife() + "", GameFrame.WIDTH - 26, 20);
     }
 
     @Override
@@ -50,41 +46,41 @@ public class PlayerTwoController extends PlayerController {
                     if (isReverse) {
                         ((PlayerModel) model).setShotDirection(ShotDirection.UP);
                         view.setImage(PlayerView.MOVE_UP);
-                        this.vector.dy = -((PlayerModel) model).getSpeed();
+                        this.vector.dy = -model.getSpeed();
                     } else {
                         ((PlayerModel) model).setShotDirection(ShotDirection.DOWN);
                         view.setImage(PlayerView.MOVE_DOWN);
-                        this.vector.dy = ((PlayerModel) model).getSpeed();
+                        this.vector.dy = model.getSpeed();
                     }
                 } else if (bitSet.get(KeyEvent.VK_UP)) {
                     if (isReverse) {
                         ((PlayerModel) model).setShotDirection(ShotDirection.DOWN);
                         view.setImage(PlayerView.MOVE_DOWN);
-                        this.vector.dy = ((PlayerModel) model).getSpeed();
+                        this.vector.dy = model.getSpeed();
                     } else {
                         ((PlayerModel) model).setShotDirection(ShotDirection.UP);
                         view.setImage(PlayerView.MOVE_UP);
-                        this.vector.dy = -((PlayerModel) model).getSpeed();
+                        this.vector.dy = -model.getSpeed();
                     }
                 } else if (bitSet.get(KeyEvent.VK_LEFT)) {
                     if (isReverse) {
                         ((PlayerModel) model).setShotDirection(ShotDirection.RIGHT);
                         view.setImage(PlayerView.MOVE_RIGHT);
-                        this.vector.dx = ((PlayerModel) model).getSpeed();
+                        this.vector.dx = model.getSpeed();
                     } else {
                         ((PlayerModel) model).setShotDirection(ShotDirection.LEFT);
                         view.setImage(PlayerView.MOVE_LEFT);
-                        this.vector.dx = -((PlayerModel) model).getSpeed();
+                        this.vector.dx = -model.getSpeed();
                     }
                 } else if (bitSet.get(KeyEvent.VK_RIGHT)) {
                     if (isReverse) {
                         ((PlayerModel) model).setShotDirection(ShotDirection.LEFT);
                         view.setImage(PlayerView.MOVE_LEFT);
-                        this.vector.dx = -((PlayerModel) model).getSpeed();
+                        this.vector.dx = -model.getSpeed();
                     } else {
                         ((PlayerModel) model).setShotDirection(ShotDirection.RIGHT);
                         view.setImage(PlayerView.MOVE_RIGHT);
-                        this.vector.dx = ((PlayerModel) model).getSpeed();
+                        this.vector.dx = model.getSpeed();
                     }
                 } else {
                     view.setImageHold();
@@ -120,18 +116,6 @@ public class PlayerTwoController extends PlayerController {
             }
         } else {
             view.explode(model);
-        }
-    }
-
-    @Override
-    public void run() {
-        super.run();
-        if(((PlayerModel) GameManager.playerTwoController.getModel()).isKick()){
-            countDownKickPlayer--;
-            if(countDownKickPlayer==0){
-                ((PlayerModel)GameManager.playerTwoController.getModel()).setKick(false);
-                countDownKickPlayer=ItemController.MAX_KICK_TIME;
-            }
         }
     }
 
