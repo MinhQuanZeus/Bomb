@@ -25,21 +25,19 @@ import java.util.List;
 public class PlayerController extends GameController implements Collision {
 
     public static BitSet bitSet = new BitSet(256);
-    private List<GameController> arrBlocks;
+    protected List<GameController> arrBlocks;
     public static int numberShuriken = 0;
     public static final int RELOAL_SHURIKEN_SPEED = 50;
-    private final int SLIDE_SPEED = 8;
+    public static final int SLIDE_SPEED = 8;
 
-    private int reloadShuriken = 0;
-    private static boolean isReverse = false;
+    protected int reloadShuriken = 0;
+    protected boolean isReverse = false;
     private int reverseCount = 0;
-    private static boolean isSlide = false;
-    private static PlayerModel myModel;
+    protected boolean isSlide = false;
 
 
     public PlayerController(PlayerModel model, GameView view, List<GameController> arrBlocks) {
         super(model, view);
-        myModel = model;
         GameManager.controllerManager.add(this);
         GameManager.collisionManager.add(this);
         this.arrBlocks = arrBlocks;
@@ -52,26 +50,32 @@ public class PlayerController extends GameController implements Collision {
 
     @Override
     public void run() {
-        PlayerView view = (PlayerView) this.view;
-
         reloadShuriken++;
-        if(isReverse){
+        if (isReverse) {
             reverseCount++;
-            if(reverseCount==170){
+            if (reverseCount == 170) {
                 isReverse = false;
                 reverseCount = 0;
             }
         }
+        checkBitSet();
+        if (reloadShuriken == 4000) {
+            reloadShuriken = 0;
+        }
+    }
+
+    public void checkBitSet() {
+        PlayerView view = (PlayerView) this.view;
         if (!((PlayerModel) model).isExplode()) {
             ((PlayerModel) model).checkImmunity();
             boolean check = model.move(vector, arrBlocks);
-            if(!check){
+            if (!check) {
                 isSlide = false;
             }
-            if(!isSlide) {
-            this.vector.dx = 0;
-            this.vector.dy = 0;
-                if (bitSet.get(KeyEvent.VK_DOWN)) {
+            if (!isSlide) {
+                this.vector.dx = 0;
+                this.vector.dy = 0;
+                if (bitSet.get(KeyEvent.VK_S)) {
                     if (isReverse) {
                         ((PlayerModel) model).setShotDirection(ShotDirection.UP);
                         view.setImage(PlayerView.MOVE_UP);
@@ -81,7 +85,7 @@ public class PlayerController extends GameController implements Collision {
                         view.setImage(PlayerView.MOVE_DOWN);
                         this.vector.dy = ((PlayerModel) model).getSpeed();
                     }
-                } else if (bitSet.get(KeyEvent.VK_UP)) {
+                } else if (bitSet.get(KeyEvent.VK_W)) {
                     if (isReverse) {
                         ((PlayerModel) model).setShotDirection(ShotDirection.DOWN);
                         view.setImage(PlayerView.MOVE_DOWN);
@@ -91,7 +95,7 @@ public class PlayerController extends GameController implements Collision {
                         view.setImage(PlayerView.MOVE_UP);
                         this.vector.dy = -((PlayerModel) model).getSpeed();
                     }
-                } else if (bitSet.get(KeyEvent.VK_LEFT)) {
+                } else if (bitSet.get(KeyEvent.VK_A)) {
                     if (isReverse) {
                         ((PlayerModel) model).setShotDirection(ShotDirection.RIGHT);
                         view.setImage(PlayerView.MOVE_RIGHT);
@@ -101,7 +105,7 @@ public class PlayerController extends GameController implements Collision {
                         view.setImage(PlayerView.MOVE_LEFT);
                         this.vector.dx = -((PlayerModel) model).getSpeed();
                     }
-                } else if (bitSet.get(KeyEvent.VK_RIGHT)) {
+                } else if (bitSet.get(KeyEvent.VK_D)) {
                     if (isReverse) {
                         ((PlayerModel) model).setShotDirection(ShotDirection.LEFT);
                         view.setImage(PlayerView.MOVE_LEFT);
@@ -114,30 +118,32 @@ public class PlayerController extends GameController implements Collision {
                 } else {
                     view.setImageHold();
                 }
-            }else{
-                if(((PlayerModel) model).getShotDirection() == ShotDirection.DOWN){
+            } else {
+                if (((PlayerModel) model).getShotDirection() == ShotDirection.DOWN) {
                     view.setImage(PlayerView.MOVE_DOWN);
                     this.vector.dy = SLIDE_SPEED;
                 }
-                if(((PlayerModel) model).getShotDirection() == ShotDirection.UP){
+                if (((PlayerModel) model).getShotDirection() == ShotDirection.UP) {
                     view.setImage(PlayerView.MOVE_UP);
                     this.vector.dy = -SLIDE_SPEED;
                 }
-                if(((PlayerModel) model).getShotDirection() == ShotDirection.LEFT){
+                if (((PlayerModel) model).getShotDirection() == ShotDirection.LEFT) {
                     view.setImage(PlayerView.MOVE_LEFT);
                     this.vector.dx = -SLIDE_SPEED;
                 }
-                if(((PlayerModel) model).getShotDirection() == ShotDirection.RIGHT){
+                if (((PlayerModel) model).getShotDirection() == ShotDirection.RIGHT) {
                     view.setImage(PlayerView.MOVE_RIGHT);
                     this.vector.dx = SLIDE_SPEED;
                 }
 
             }
-            if (bitSet.get(KeyEvent.VK_SPACE)) {
+            if (bitSet.get(KeyEvent.VK_J)) {
                 bombard();
             }
-            if (bitSet.get(KeyEvent.VK_CONTROL)) {
-                if (numberShuriken > 0 && reloadShuriken > RELOAL_SHURIKEN_SPEED) {
+            if (bitSet.get(KeyEvent.VK_K)) {
+                System.out.println("fire"+numberShuriken);
+                if (((PlayerModel) model).getNumberShuriken() > 0 && reloadShuriken > RELOAL_SHURIKEN_SPEED) {
+                    System.out.println("fire");
                     ShurikenController shurikenController = ShurikenController.create(model.getX() + model.getWidth() / 2 - ShurikenModel.WIDTH / 2, model.getY() + model.getHeight() / 2, ((PlayerModel) model).getShotDirection());
                     reloadShuriken = 0;
                     ((PlayerModel) model).decreaseNumberShuriken();
@@ -146,12 +152,9 @@ public class PlayerController extends GameController implements Collision {
         } else {
             view.explode(model);
         }
-        if (reloadShuriken == 4000) {
-            reloadShuriken = 0;
-        }
     }
 
-    private void bombard() {
+    public void bombard() {
         PlayerModel model = (PlayerModel) this.model;
         if (model.checkMaxBomb()) {
             int bombX = ((model.getX() + model.getHeight() / 2) / ItemMapModel.SIZE_TILED) * ItemMapModel.SIZE_TILED;
@@ -212,24 +215,25 @@ public class PlayerController extends GameController implements Collision {
             }
         }
     }
+
     public BitSet getBitSet() {
         return bitSet;
     }
 
 
-    public static void setSlide() {
+    public void setSlide() {
         isSlide = true;
     }
 
-    public static void reverseMove(){
+    public void reverseMove() {
         isReverse = true;
     }
 
-    public static void die(){
-         myModel.setExplode(true);
+    public void die() {
+        ((PlayerModel) model).setExplode(true);
     }
 
-    public static void speedDown(){
-        myModel.speedDown();
+    public void speedDown() {
+        ((PlayerModel) model).speedDown();
     }
 }

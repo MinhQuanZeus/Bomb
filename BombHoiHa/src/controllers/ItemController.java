@@ -33,7 +33,7 @@ public class ItemController extends GameController implements Collision {
         if (other instanceof PlayerController) {
             Utils.playSound("item-get.wav", false);
             model.setAlive(false);
-            PlayerModel playerModel = (PlayerModel) ((PlayerController) other).getModel();
+            PlayerModel playerModel = (PlayerModel) other.getModel();
             switch (type) {
                 case BONUS_TIME:
                     MapManager.bonusTime();
@@ -57,23 +57,22 @@ public class ItemController extends GameController implements Collision {
                 case BONUS_LIFE:
                     playerModel.bonusLife();
                     break;
-//                case SLIDE:
-//                    PlayerController.setSlide();
-//                    model.setAlive(false);
-//                    break;
-//                case REVERSE_MOVE:
-//                    PlayerController.reverseMove();
-//                    break;
-//                case DIE:
-//                    playerModel.setExplode(true);
-//                    break;
-//                case SPIDERWEB:
-//                    playerModel.speedDown();
-//                    break;
-//                case KICK:
-//                    playerModel.setKick(true);
-//                    break;
-
+                case SLIDE:
+                    ((PlayerController) other).setSlide();
+                    model.setAlive(false);
+                    break;
+                case REVERSE_MOVE:
+                    ((PlayerController) other).reverseMove();
+                    break;
+                case DIE:
+                    playerModel.setExplode(true);
+                    break;
+                case SPIDERWEB:
+                    playerModel.speedDown();
+                    break;
+                case KICK:
+                    playerModel.setKick(true);
+                    break;
             }
         }
         if (other instanceof ExplosionController) {
@@ -82,7 +81,7 @@ public class ItemController extends GameController implements Collision {
     }
 
     public static void create(int x, int y) {
-        ItemType type = ItemType.getRandomItemType();
+        ItemType type = ItemType.SHURIKEN;
         new ItemController(
                 new GameModel(x, y, WIDTH, HEIGHT),
                 new ItemView("Items/" + type),
@@ -99,25 +98,25 @@ public class ItemController extends GameController implements Collision {
             count = 0;
         }
         if (countDown == 0) {
+            PlayerController playerController = (PlayerController) GameManager.playerController;
             switch (type) {
                 case SLIDE:
-                    PlayerController.setSlide();
+                    playerController.setSlide();
                     model.setAlive(false);
                     break;
                 case REVERSE_MOVE:
-                    PlayerController.reverseMove();
+                    playerController.reverseMove();
                     model.setAlive(false);
                     break;
                 case DIE:
-                    PlayerController.die();
+                    playerController.die();
                     model.setAlive(false);
                     break;
                 case SPIDERWEB:
-                    PlayerController.speedDown();
+                    playerController.speedDown();
                     model.setAlive(false);
                     break;
             }
-
         }
     }
 

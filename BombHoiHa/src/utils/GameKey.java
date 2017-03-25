@@ -20,8 +20,8 @@ public class GameKey implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN
-                || keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_LEFT)
+        if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_S
+                || keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_A)
             PlayerController.bitSet.clear();
         if (keyCode == KeyEvent.VK_P && GamePanel.paused) {
             return;
