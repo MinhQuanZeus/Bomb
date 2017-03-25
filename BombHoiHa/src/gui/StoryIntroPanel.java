@@ -28,11 +28,7 @@ public class StoryIntroPanel extends JPanel {
                 super.mouseClicked(mouseEvent);
                 Utils.playSound("select.wav", false);
                 if (part == 5) {
-<<<<<<< HEAD
                     GameFrame.mainPanel.showGamePanel(false);
-=======
-                    GameFrame.mainPanel.showGamePanel(true);
->>>>>>> 0a2a840f9a40065c66c255eaa3b52e843a352b8e
                     part = 0;
                 }
                 if (mouseEvent.getSource().equals(btnNext)) {

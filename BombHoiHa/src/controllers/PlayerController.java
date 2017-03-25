@@ -71,10 +71,10 @@ public class PlayerController extends GameController implements Collision, KeyLi
             reloadShuriken = 0;
         }
 
-        if(((PlayerModel) GameManager.playerTwoController.getModel()).isKick()){
+        if(((PlayerModel) GameManager.playerController.getModel()).isKick()){
             countDownKickPlayer--;
             if(countDownKickPlayer==0){
-                ((PlayerModel)GameManager.playerTwoController.getModel()).setKick(false);
+                ((PlayerModel)GameManager.playerController.getModel()).setKick(false);
                 countDownKickPlayer=ItemController.MAX_KICK_TIME;
             }
         }
@@ -230,10 +230,6 @@ public class PlayerController extends GameController implements Collision, KeyLi
             }
         }
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> 0a2a840f9a40065c66c255eaa3b52e843a352b8e
 
     public void setSlide() {
         isSlide = true;
