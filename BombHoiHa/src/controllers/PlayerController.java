@@ -219,6 +219,9 @@ public class PlayerController extends GameController implements Collision, KeyLi
             }
         }
     }
+    public BitSet getBitSet() {
+        return bitSet;
+    }
 
     public void setSlide() {
         isSlide = true;
