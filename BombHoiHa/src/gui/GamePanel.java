@@ -33,19 +33,19 @@ public class GamePanel extends JPanel implements Runnable {
         setFocusable(true);
         gameManager = new GameManager(versus);
         title = new JLabel();
+
         addKeyListener((KeyListener) GameManager.playerController);
-        if (versus) {
-            addKeyListener((KeyListener) GameManager.playerTwoController);
-            addTitle(new ImageIcon("resources/System/stage-0.png"));
-        } else {
-            addTitle(new ImageIcon("resources/System/stage-1.png"));
-        }
+        if (versus)
+            addKeyListener((KeyListener) GameManager.secondPlayerController);
+
         pausedPanel = new PausedPanel(this);
         add(pausedPanel);
 
         running = true;
         thread = new Thread(this);
         thread.start();
+
+        GameManager.setTransitionEnd(true);
     }
 
     @Override

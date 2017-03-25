@@ -4,18 +4,13 @@ import controllers.*;
 import gui.GameFrame;
 import gui.MainPanel;
 import models.*;
-import sun.applet.Main;
 import utils.Utils;
-import views.AnimationView;
 import views.AutoLoadPic;
-import views.PlayerView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by KhoaBeo on 3/9/2017.
@@ -26,7 +21,7 @@ public class GameManager {
     public static CollisionManager collisionManager;
     public static List<GameController> arrBlocks;
     public static GameController playerController;
-    public static GameController playerTwoController;
+    public static GameController secondPlayerController;
     public static ControllerManager mapManager;
 
     public static boolean versus;
@@ -49,7 +44,7 @@ public class GameManager {
                     arrBlocks,
                     "Bomberman"
             );
-            playerTwoController = new PlayerTwoController(
+            secondPlayerController = new SecondPlayerController(
                     new PlayerModel(12 * ItemMapModel.SIZE_TILED, 12 * ItemMapModel.SIZE_TILED - 30),
                     arrBlocks,
                     "BombermanTwo"
@@ -75,9 +70,36 @@ public class GameManager {
         mapManager.draw(graphics);
         controllerManager.draw(graphics);
         drawTransition(graphics);
+        drawInf(graphics);
     }
 
-    public void drawTransition(Graphics graphics){
+    public void drawInf(Graphics g) {
+        if (GameManager.versus) {
+            for (int i = 0; i < ((PlayerModel) playerController.getModel()).getNumberShuriken(); i++) {
+                g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"), 40 + 20 * i, 5, 20, 20, null);
+            }
+            g.drawImage(Utils.loadImageFromRes("Bomberman/life"), 0, 0, null);
+            g.drawString(((PlayerModel) playerController.getModel()).getLife() + "", 9, 20);
+
+            for (int i = 0; i < ((PlayerModel) secondPlayerController.getModel()).getNumberShuriken(); i++) {
+                g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"), GameFrame.WIDTH - 60 - 20 * i, 5, 20, 20, null);
+            }
+            g.drawImage(Utils.loadImageFromRes("Bomberman/life"), GameFrame.WIDTH - 35, 0, null);
+            g.drawString(((PlayerModel) secondPlayerController.getModel()).getLife() + "", GameFrame.WIDTH - 26, 20);
+        } else {
+            for (int i = 0; i < ((PlayerModel) playerController.getModel()).getNumberShuriken(); i++) {
+                g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"), 140 + 20 * i, 5, 20, 20, null);
+            }
+            g.drawImage(Utils.loadImageFromRes("Bomberman/life"), 0, 0, null);
+            g.drawImage(Utils.loadImageFromRes("Bomberman/clock"), 40, 0, null);
+            g.setFont(new Font("Courier New", Font.BOLD, 20));
+            g.setColor(Color.white);
+            g.drawString("Score:" + ((PlayerModel) playerController.getModel()).getScore(), GameFrame.WIDTH - 200, 22);
+            g.drawString(((PlayerModel) playerController.getModel()).getLife() + "", 9, 20);
+        }
+    }
+
+    public void drawTransition(Graphics graphics) {
         if (transitionStart) {
             if (transitionFrameStart < 0) {
                 graphics.drawImage(Utils.loadImageFromRes("System/transition-" + 0), 0, 0, GameFrame.WIDTH, GameFrame.HEIGHT, null);
@@ -90,7 +112,7 @@ public class GameManager {
                 transitionFrameStart--;
                 transitionDelay = 0;
             }
-            if(transitionFrameStart==-10){
+            if (transitionFrameStart == -10) {
                 transitionEnd = true;
                 transitionStart = false;
             }
@@ -115,7 +137,7 @@ public class GameManager {
         }
     }
 
-    public void runTransition(){
+    public void runTransition() {
         if (transitionFrameStart == 0 && flag == true) {
             ((MapManager) GameManager.mapManager).changeMap(MapManager.mapLevel + 1);
             playerController.getModel().setX(0);
@@ -126,5 +148,9 @@ public class GameManager {
 
     public static void setTransitionStart(boolean transitionStart) {
         GameManager.transitionStart = transitionStart;
+    }
+
+    public static void setTransitionEnd(boolean transitionEnd) {
+        GameManager.transitionEnd = transitionEnd;
     }
 }

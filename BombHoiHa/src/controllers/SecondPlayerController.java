@@ -1,33 +1,19 @@
 package controllers;
 
 import controllers.enemy_weapon.ShotDirection;
-import gui.GameFrame;
 import models.PlayerModel;
 import models.ShurikenModel;
-import utils.Utils;
 import views.PlayerView;
-
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
 /**
  * Created by KhoaBeo on 3/25/2017.
  */
-public class PlayerTwoController extends PlayerController {
+public class SecondPlayerController extends PlayerController {
 
-    public PlayerTwoController(PlayerModel model, List<GameController> arrBlocks, String urlImage) {
+    public SecondPlayerController(PlayerModel model, List<GameController> arrBlocks, String urlImage) {
         super(model, arrBlocks, urlImage);
-    }
-
-    @Override
-    public void draw(Graphics g) {
-        view.draw(g, model);
-        for (int i = 0; i < ((PlayerModel) model).getNumberShuriken(); i++) {
-            g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"), GameFrame.WIDTH - 60 - 20 * i, 5, 20, 20, null);
-        }
-        g.drawImage(Utils.loadImageFromRes("Bomberman/life"), GameFrame.WIDTH - 35, 0, null);
-        g.drawString(((PlayerModel) model).getLife() + "", GameFrame.WIDTH - 26, 20);
     }
 
     @Override

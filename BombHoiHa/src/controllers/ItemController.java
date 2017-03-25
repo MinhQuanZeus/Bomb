@@ -61,10 +61,10 @@ public class ItemController extends GameController implements Collision {
                     break;
                 case SLIDE:
                     if (GameManager.versus) {
-                        if (other instanceof PlayerTwoController) {
+                        if (other instanceof SecondPlayerController) {
                             ((PlayerController) GameManager.playerController).setSlide();
                         } else {
-                            ((PlayerController) GameManager.playerTwoController).setSlide();
+                            ((PlayerController) GameManager.secondPlayerController).setSlide();
                         }
                     } else {
                         ((PlayerController) other).setSlide();
@@ -72,10 +72,10 @@ public class ItemController extends GameController implements Collision {
                     break;
                 case REVERSE_MOVE:
                     if (GameManager.versus) {
-                        if (other instanceof PlayerTwoController) {
+                        if (other instanceof SecondPlayerController) {
                             ((PlayerController) GameManager.playerController).reverseMove();
                         } else {
-                            ((PlayerController) GameManager.playerTwoController).reverseMove();
+                            ((PlayerController) GameManager.secondPlayerController).reverseMove();
                         }
                     } else {
                         ((PlayerController) other).reverseMove();
@@ -83,10 +83,10 @@ public class ItemController extends GameController implements Collision {
                     break;
                 case DIE:
                     if (GameManager.versus) {
-                        if (other instanceof PlayerTwoController) {
+                        if (other instanceof SecondPlayerController) {
                             ((PlayerModel) GameManager.playerController.getModel()).setExplode(true);
                         } else {
-                            ((PlayerModel) GameManager.playerTwoController.getModel()).setExplode(true);
+                            ((PlayerModel) GameManager.secondPlayerController.getModel()).setExplode(true);
                         }
                     } else {
                         playerModel.setExplode(true);
@@ -94,10 +94,10 @@ public class ItemController extends GameController implements Collision {
                     break;
                 case SPIDERWEB:
                     if (GameManager.versus) {
-                        if (other instanceof PlayerTwoController) {
+                        if (other instanceof SecondPlayerController) {
                             ((PlayerModel) GameManager.playerController.getModel()).speedDown();
                         } else {
-                            ((PlayerModel) GameManager.playerTwoController.getModel()).speedDown();
+                            ((PlayerModel) GameManager.secondPlayerController.getModel()).speedDown();
                         }
                     } else {
                         playerModel.speedDown();

@@ -43,22 +43,6 @@ public class PlayerController extends GameController implements Collision, KeyLi
     }
 
     @Override
-    public void draw(Graphics g) {
-        super.draw(g);
-        if (GameManager.versus) {
-            for (int i = 0; i < ((PlayerModel) model).getNumberShuriken(); i++) {
-                g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"), 40 + 20 * i, 5, 20, 20, null);
-            }
-            g.drawImage(Utils.loadImageFromRes("Bomberman/life"), 0, 0, null);
-            g.drawString(((PlayerModel) model).getLife() + "", 9, 20);
-        } else {
-            for (int i = 0; i < ((PlayerModel) model).getNumberShuriken(); i++) {
-                g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"), 140 + 20 * i, 5, 20, 20, null);
-            }
-        }
-    }
-
-    @Override
     public void run() {
         reloadShuriken++;
         if (isReverse) {

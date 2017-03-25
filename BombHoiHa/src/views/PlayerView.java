@@ -37,14 +37,6 @@ public class PlayerView extends GameView {
         } else {
             super.draw(graphics, model);
         }
-        if (!GameManager.versus) {
-            graphics.drawImage(Utils.loadImageFromRes("Bomberman/life"), 0, 0, null);
-            graphics.drawImage(Utils.loadImageFromRes("Bomberman/clock"), 40, 0, null);
-            graphics.setFont(new Font("Courier New", Font.BOLD, 20));
-            graphics.setColor(Color.white);
-            graphics.drawString("Score:" + ((PlayerModel) model).getScore(), GameFrame.WIDTH - 200, 22);
-            graphics.drawString(((PlayerModel) model).getLife() + "", 9, 20);
-        }
     }
 
     public void setImage(String url) {
