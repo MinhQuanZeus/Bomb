@@ -1,6 +1,7 @@
 package models;
 
 import controllers.enemy_weapon.ShotDirection;
+import manager.GameManager;
 
 import java.awt.*;
 
@@ -36,7 +37,11 @@ public class PlayerModel extends GameModel {
         explosionSize = 1;
         speed = 2;
         explode = false;
-        life = 3;
+        if (GameManager.versus) {
+            life = 0;
+        } else {
+            life = 3;
+        }
         countDownImmunity = 100;
     }
 

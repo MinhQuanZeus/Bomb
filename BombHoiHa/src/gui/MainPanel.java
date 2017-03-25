@@ -46,12 +46,12 @@ public class MainPanel extends JPanel {
         setBGM(tag);
     }
 
-    public void showGamePanel() {
+    public void showGamePanel(boolean versus) {
         if (gamePanel != null) {
             gamePanel.setRunning(false);
         }
         EnemyModel.enemyCount = 0;
-        gamePanel = new GamePanel();
+        gamePanel = new GamePanel(versus);
         add(gamePanel, TAG_GAME);
         setBGM(TAG_GAME);
         cardLayout.show(this, TAG_GAME);

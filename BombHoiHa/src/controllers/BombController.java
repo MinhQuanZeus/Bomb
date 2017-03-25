@@ -24,11 +24,11 @@ public class BombController extends GameController implements Collision {
     private boolean isSlide = false;
     private ShotDirection slideDirection;
 
-    public BombController(GameModel model, GameView view, List<GameController> arrBlocks) {
+    public BombController(GameModel model, GameView view, List<GameController> arrBlocks, GameModel playerModel) {
         super(model, view);
         exist = 150;
-        this.playerModel = (PlayerModel) GameManager.playerController.getModel();
-        playerModel.increaseCountBomb();
+        this.playerModel = (PlayerModel) playerModel;
+        this.playerModel.increaseCountBomb();
         GameManager.collisionManager.add(this);
         GameManager.controllerManager.add(this);
         GameManager.arrBlocks.add(this);

@@ -30,9 +30,9 @@ public class TerrainBreakView extends GameView {
             image = Utils.loadImageFromRes("Map/map-" + MapManager.mapLevel + "/0");
             ((ItemMapModel) model).setTerrain(Terrain.LAND);
             fire = false;
-      //      if (Utils.getRandom(3) == 0) {
+            if (Utils.getRandom(3) == 0) {
                 ItemController.create(model.getX(), model.getY());
-      //      }
+            }
         }
     }
 

@@ -1,10 +1,14 @@
 package controllers;
+
 import controllers.enemy_weapon.ShotDirection;
+import gui.GamePanel;
+import manager.MapManager;
 import models.PlayerModel;
 import models.ShurikenModel;
-import views.GameView;
+import utils.Utils;
 import views.PlayerView;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
@@ -13,8 +17,20 @@ import java.util.List;
  */
 public class PlayerTwoController extends PlayerController {
 
-    public PlayerTwoController(PlayerModel model, GameView view, List<GameController> arrBlocks) {
-        super(model, view, arrBlocks);
+    public PlayerTwoController(PlayerModel model, List<GameController> arrBlocks, String urlImage) {
+        super(model, arrBlocks, urlImage);
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        view.draw(g, model);
+        for (int i = 0; i < ((PlayerModel) model).getNumberShuriken(); i++) {
+            g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"), 400 + 20 * i, 5, 20, 20, null);
+        }
+        if (MapManager.mapLevel == 0) {
+            g.drawImage(Utils.loadImageFromRes("Bomberman/life"), 360, 0, null);
+            g.drawString(((PlayerModel) model).getLife() + "", 369, 20);
+        }
     }
 
     @Override
@@ -29,7 +45,7 @@ public class PlayerTwoController extends PlayerController {
             if (!isSlide) {
                 this.vector.dx = 0;
                 this.vector.dy = 0;
-                if (bitSet.get(KeyEvent.VK_S)) {
+                if (bitSet.get(KeyEvent.VK_DOWN)) {
                     if (isReverse) {
                         ((PlayerModel) model).setShotDirection(ShotDirection.UP);
                         view.setImage(PlayerView.MOVE_UP);
@@ -39,7 +55,7 @@ public class PlayerTwoController extends PlayerController {
                         view.setImage(PlayerView.MOVE_DOWN);
                         this.vector.dy = ((PlayerModel) model).getSpeed();
                     }
-                } else if (bitSet.get(KeyEvent.VK_W)) {
+                } else if (bitSet.get(KeyEvent.VK_UP)) {
                     if (isReverse) {
                         ((PlayerModel) model).setShotDirection(ShotDirection.DOWN);
                         view.setImage(PlayerView.MOVE_DOWN);
@@ -49,7 +65,7 @@ public class PlayerTwoController extends PlayerController {
                         view.setImage(PlayerView.MOVE_UP);
                         this.vector.dy = -((PlayerModel) model).getSpeed();
                     }
-                } else if (bitSet.get(KeyEvent.VK_A)) {
+                } else if (bitSet.get(KeyEvent.VK_LEFT)) {
                     if (isReverse) {
                         ((PlayerModel) model).setShotDirection(ShotDirection.RIGHT);
                         view.setImage(PlayerView.MOVE_RIGHT);
@@ -59,7 +75,7 @@ public class PlayerTwoController extends PlayerController {
                         view.setImage(PlayerView.MOVE_LEFT);
                         this.vector.dx = -((PlayerModel) model).getSpeed();
                     }
-                } else if (bitSet.get(KeyEvent.VK_D)) {
+                } else if (bitSet.get(KeyEvent.VK_RIGHT)) {
                     if (isReverse) {
                         ((PlayerModel) model).setShotDirection(ShotDirection.LEFT);
                         view.setImage(PlayerView.MOVE_LEFT);
@@ -91,11 +107,11 @@ public class PlayerTwoController extends PlayerController {
                 }
 
             }
-            if (bitSet.get(KeyEvent.VK_J)) {
+            if (bitSet.get(KeyEvent.VK_NUMPAD0)) {
                 bombard();
             }
-            if (bitSet.get(KeyEvent.VK_K)) {
-                if (numberShuriken > 0 && reloadShuriken > RELOAL_SHURIKEN_SPEED) {
+            if (bitSet.get(KeyEvent.VK_NUMPAD1)) {
+                if (((PlayerModel) model).getNumberShuriken() > 0 && reloadShuriken > RELOAL_SHURIKEN_SPEED) {
                     ShurikenController shurikenController = ShurikenController.create(model.getX() + model.getWidth() / 2 - ShurikenModel.WIDTH / 2, model.getY() + model.getHeight() / 2, ((PlayerModel) model).getShotDirection());
                     reloadShuriken = 0;
                     ((PlayerModel) model).decreaseNumberShuriken();
@@ -104,5 +120,14 @@ public class PlayerTwoController extends PlayerController {
         } else {
             view.explode(model);
         }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN
+                || keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_RIGHT)
+            bitSet.clear();
+        bitSet.set(e.getKeyCode());
     }
 }

@@ -38,7 +38,11 @@ public class MapManager extends ControllerManager {
 
     public MapManager() {
         super();
-        mapLevel = 1;
+        if (GameManager.versus) {
+            mapLevel = 0;
+        } else {
+            mapLevel = 1;
+        }
         map = new int[14][14];
         readMap(mapLevel);
         exist = 120000;
@@ -109,10 +113,12 @@ public class MapManager extends ControllerManager {
     @Override
     public void run() {
         super.run();
-        if (getCurrentTime().equals("0:00")) {
-            MainPanel.gamePanel.addTitle(new ImageIcon("resources/System/time-up.png"));
+        if (mapLevel > 0) {
+            if (getCurrentTime().equals("0:00")) {
+                MainPanel.gamePanel.addTitle(new ImageIcon("resources/System/time-up.png"));
+            }
+            checkLevelClear();
         }
-        checkLevelClear();
     }
 
     @Override
@@ -120,13 +126,12 @@ public class MapManager extends ControllerManager {
         super.draw(g);
         g.setFont(new Font("Courier New", Font.BOLD, 20));
         g.setColor(Color.white);
-        for (int i = 0; i < ((PlayerModel) ((PlayerController) GameManager.playerController).getModel()).getNumberShuriken(); i++) {
-            g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"), 140 + 20 * i, 5, 20, 20, null);
+        if (mapLevel > 0) {
+            if ((getCurrentTime().contains("0:0") || getCurrentTime().contains("0:1") || getCurrentTime().contains("0:2"))
+                    && System.currentTimeMillis() % 2 == 0)
+                g.setColor(Color.RED);
+            g.drawString(getCurrentTime(), 80, 22);
         }
-        if ((getCurrentTime().contains("0:0") || getCurrentTime().contains("0:1") || getCurrentTime().contains("0:2"))
-                && System.currentTimeMillis() % 2 == 0)
-            g.setColor(Color.RED);
-        g.drawString(getCurrentTime(), 80, 22);
     }
 
     private void readMap(int mapLevel) {
@@ -162,14 +167,13 @@ public class MapManager extends ControllerManager {
                 }
                 add(itemMapController);
 
-                //EnemyController.createByRow_Colum_Number(bitEnemy, i, j, (PlayerModel) GameManager.playerController.getModel());
+                EnemyController.createByRow_Colum_Number(bitEnemy, i, j, (PlayerModel) GameManager.playerController.getModel());
 
                 if (terrain == Terrain.BLOCK || terrain == Terrain.BREAK) {
                     GameManager.arrBlocks.add(itemMapController);
                 }
             }
         }
-        EnemyController.createByRow_Colum_Number(20, 5, 5, (PlayerModel) GameManager.playerController.getModel());
     }
 
     public void reloadStart(long offset) {

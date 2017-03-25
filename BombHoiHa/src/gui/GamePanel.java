@@ -1,10 +1,8 @@
 package gui;
 
-import controllers.GameController;
 import controllers.PlayerController;
 import manager.GameManager;
 import manager.MapManager;
-import utils.GameKey;
 import utils.Utils;
 
 import javax.swing.*;
@@ -28,11 +26,14 @@ public class GamePanel extends JPanel implements Runnable {
     private JLabel title;
     private int titleExist;
 
-    public GamePanel() {
+    public GamePanel(boolean versus) {
         setLayout(null);
         setFocusable(true);
-        gameManager = new GameManager();
-        addKeyListener(GameKey.instance);
+        gameManager = new GameManager(versus);
+        addKeyListener((KeyListener) GameManager.playerController);
+        if (versus) {
+            addKeyListener((KeyListener) GameManager.playerTwoController);
+        }
         pausedPanel = new PausedPanel(this);
         add(pausedPanel);
         title = new JLabel();
@@ -68,7 +69,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private void checkPaused() {
-        BitSet bitSet = PlayerController.bitSet;
+        BitSet bitSet = ((PlayerController) GameManager.playerController).getBitSet();
         if (bitSet.get(KeyEvent.VK_P)) {
             paused();
             Utils.playSound("select.wav",false);

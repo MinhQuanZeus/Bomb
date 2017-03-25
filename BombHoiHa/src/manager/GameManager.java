@@ -26,8 +26,10 @@ public class GameManager {
     public static CollisionManager collisionManager;
     public static List<GameController> arrBlocks;
     public static GameController playerController;
+    public static GameController playerTwoController;
     public static ControllerManager mapManager;
 
+    public static boolean versus;
     private static boolean transitionStart = false;
     private static boolean transitionEnd = false;
     private static boolean flag = true;
@@ -35,16 +37,30 @@ public class GameManager {
     private static int transitionFrameEnd = 0;
     private static int transitionDelay = 0;
 
-    public GameManager() {
+    public GameManager(boolean versus) {
         AutoLoadPic.init();
+        this.versus = versus;
         controllerManager = new ControllerManager();
         arrBlocks = new ArrayList<>();
         collisionManager = new CollisionManager();
-        playerController = new PlayerController(
-                new PlayerModel(0, 50),
-                new PlayerView(),
-                arrBlocks
-        );
+        if (versus) {
+            playerController = new PlayerController(
+                    new PlayerModel(50, 50),
+                    arrBlocks,
+                    "Bomberman"
+            );
+            playerTwoController = new PlayerTwoController(
+                    new PlayerModel(12 * ItemMapModel.SIZE_TILED, 12 * ItemMapModel.SIZE_TILED - 30),
+                    arrBlocks,
+                    "BombermanTwo"
+            );
+        } else {
+            playerController = new PlayerController(
+                    new PlayerModel(0, 50),
+                    arrBlocks,
+                    "Bomberman"
+            );
+        }
         mapManager = new MapManager();
     }
 

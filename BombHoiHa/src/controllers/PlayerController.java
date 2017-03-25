@@ -22,11 +22,10 @@ import java.util.List;
 /**
  * Created by QuanT on 3/9/2017.
  */
-public class PlayerController extends GameController implements Collision {
+public class PlayerController extends GameController implements Collision, KeyListener {
 
-    public static BitSet bitSet = new BitSet(256);
+    protected BitSet bitSet = new BitSet(256);
     protected List<GameController> arrBlocks;
-    public static int numberShuriken = 0;
     public static final int RELOAL_SHURIKEN_SPEED = 50;
     public static final int SLIDE_SPEED = 8;
 
@@ -35,10 +34,8 @@ public class PlayerController extends GameController implements Collision {
     private int reverseCount = 0;
     protected boolean isSlide = false;
 
-
-
-    public PlayerController(PlayerModel model, GameView view, List<GameController> arrBlocks) {
-        super(model, view);
+    public PlayerController(PlayerModel model, List<GameController> arrBlocks, String urlImage) {
+        super(model, new PlayerView(urlImage));
         GameManager.controllerManager.add(this);
         GameManager.collisionManager.add(this);
         this.arrBlocks = arrBlocks;
@@ -47,6 +44,13 @@ public class PlayerController extends GameController implements Collision {
     @Override
     public void draw(Graphics g) {
         super.draw(g);
+        for (int i = 0; i < ((PlayerModel) model).getNumberShuriken(); i++) {
+            g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"), 40 + 20 * i, 5, 20, 20, null);
+        }
+        if (MapManager.mapLevel == 0) {
+            g.drawImage(Utils.loadImageFromRes("Bomberman/life"), 0, 0, null);
+            g.drawString(((PlayerModel) model).getLife() + "", 9, 20);
+        }
     }
 
     @Override
@@ -142,7 +146,7 @@ public class PlayerController extends GameController implements Collision {
                 bombard();
             }
             if (bitSet.get(KeyEvent.VK_K)) {
-                if (numberShuriken > 0 && reloadShuriken > RELOAL_SHURIKEN_SPEED) {
+                if (((PlayerModel) model).getNumberShuriken() > 0 && reloadShuriken > RELOAL_SHURIKEN_SPEED) {
                     ShurikenController shurikenController = ShurikenController.create(model.getX() + model.getWidth() / 2 - ShurikenModel.WIDTH / 2, model.getY() + model.getHeight() / 2, ((PlayerModel) model).getShotDirection());
                     reloadShuriken = 0;
                     ((PlayerModel) model).decreaseNumberShuriken();
@@ -165,7 +169,8 @@ public class PlayerController extends GameController implements Collision {
             new BombController(
                     new GameModel(bombX, bombY, ItemMapModel.SIZE_TILED, ItemMapModel.SIZE_TILED),
                     new AnimationView("Bombs & Explosions/normalbomb", 4),
-                    arrBlocks
+                    arrBlocks,
+                    model
             );
             Utils.playSound("bomb-set.wav", false);
             MapManager.map[rowBombMatrix][colBombMatrix] = 9;
@@ -229,5 +234,32 @@ public class PlayerController extends GameController implements Collision {
 
     public void speedDown() {
         ((PlayerModel) model).speedDown();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent keyEvent) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_S
+                || keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_A)
+            bitSet.clear();
+        if (keyCode == KeyEvent.VK_P && GamePanel.paused) {
+            return;
+        } else {
+            bitSet.set(e.getKeyCode());
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        bitSet.clear(e.getKeyCode());
+    }
+
+    public BitSet getBitSet() {
+        return bitSet;
     }
 }
