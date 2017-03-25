@@ -2,6 +2,7 @@ package controllers;
 
 import controllers.enemy_weapon.ShotDirection;
 import gui.GamePanel;
+import manager.GameManager;
 import manager.MapManager;
 import models.PlayerModel;
 import models.ShurikenModel;
@@ -16,7 +17,7 @@ import java.util.List;
  * Created by KhoaBeo on 3/25/2017.
  */
 public class PlayerTwoController extends PlayerController {
-
+    private int countDownKickPlayer = ItemController.MAX_KICK_TIME;
     public PlayerTwoController(PlayerModel model, List<GameController> arrBlocks, String urlImage) {
         super(model, arrBlocks, urlImage);
     }
@@ -119,6 +120,18 @@ public class PlayerTwoController extends PlayerController {
             }
         } else {
             view.explode(model);
+        }
+    }
+
+    @Override
+    public void run() {
+        super.run();
+        if(((PlayerModel) GameManager.playerTwoController.getModel()).isKick()){
+            countDownKickPlayer--;
+            if(countDownKickPlayer==0){
+                ((PlayerModel)GameManager.playerTwoController.getModel()).setKick(false);
+                countDownKickPlayer=ItemController.MAX_KICK_TIME;
+            }
         }
     }
 

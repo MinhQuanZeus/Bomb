@@ -17,8 +17,10 @@ import java.awt.*;
 public class ItemController extends GameController implements Collision {
     public static final int WIDTH = ItemMapModel.SIZE_TILED;
     public static final int HEIGHT = ItemMapModel.SIZE_TILED;
+    public static final int MAX_KICK_TIME = 1500;
     private ItemType type;
     private int countDown = 4;
+
     int count = 0;
 
     public ItemController(GameModel model, ItemView view, ItemType itemType) {

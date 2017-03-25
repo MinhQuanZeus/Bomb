@@ -33,7 +33,10 @@ public class PlayerController extends GameController implements Collision, KeyLi
     protected boolean isReverse = false;
     private int reverseCount = 0;
     protected boolean isSlide = false;
+    private int countDownKickPlayer = ItemController.MAX_KICK_TIME;
 
+//    public PlayerController(PlayerModel model, GameView view, List<GameController> arrBlocks) {
+//        super(model, view);
     public PlayerController(PlayerModel model, List<GameController> arrBlocks, String urlImage) {
         super(model, new PlayerView(urlImage));
         GameManager.controllerManager.add(this);
@@ -66,6 +69,14 @@ public class PlayerController extends GameController implements Collision, KeyLi
         checkBitSet();
         if (reloadShuriken == 4000) {
             reloadShuriken = 0;
+        }
+
+        if(((PlayerModel) GameManager.playerTwoController.getModel()).isKick()){
+            countDownKickPlayer--;
+            if(countDownKickPlayer==0){
+                ((PlayerModel)GameManager.playerTwoController.getModel()).setKick(false);
+                countDownKickPlayer=ItemController.MAX_KICK_TIME;
+            }
         }
     }
 
@@ -219,6 +230,10 @@ public class PlayerController extends GameController implements Collision, KeyLi
             }
         }
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0a2a840f9a40065c66c255eaa3b52e843a352b8e
 
     public void setSlide() {
         isSlide = true;
