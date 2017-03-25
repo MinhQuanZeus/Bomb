@@ -81,7 +81,10 @@ public class MapManager extends ControllerManager {
                     portalItem.getModel().setX(x);
                     portalItem.getModel().setY(y);
                 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0cf05a355e2897b8cb52a09282e2cb96a805d8e1
             } else if (mapLevel >= LEVEL_MAX) {
                 MainPanel.gamePanel.addTitle(winIcon);
             }

@@ -17,12 +17,13 @@ import java.awt.*;
 public class ItemController extends GameController implements Collision {
     public static final int WIDTH = ItemMapModel.SIZE_TILED;
     public static final int HEIGHT = ItemMapModel.SIZE_TILED;
-    private static ItemType type;
-    private int countDown = 3;
+    private ItemType type;
+    private int countDown = 4;
     int count = 0;
 
-    public ItemController(GameModel model, ItemView view) {
+    public ItemController(GameModel model, ItemView view, ItemType itemType) {
         super(model, view);
+        type = itemType;
         GameManager.controllerManager.add(this);
         GameManager.collisionManager.add(this);
     }
@@ -56,6 +57,7 @@ public class ItemController extends GameController implements Collision {
                 case BONUS_LIFE:
                     playerModel.bonusLife();
                     break;
+<<<<<<< HEAD
                 case SLIDE:
                     ((PlayerController) other).setSlide();
                     model.setAlive(false);
@@ -72,6 +74,24 @@ public class ItemController extends GameController implements Collision {
                 case KICK:
                     playerModel.setKick(true);
                     break;
+=======
+//                case SLIDE:
+//                    PlayerController.setSlide();
+//                    model.setAlive(false);
+//                    break;
+//                case REVERSE_MOVE:
+//                    PlayerController.reverseMove();
+//                    break;
+//                case DIE:
+//                    playerModel.setExplode(true);
+//                    break;
+//                case SPIDERWEB:
+//                    playerModel.speedDown();
+//                    break;
+//                case KICK:
+//                    playerModel.setKick(true);
+//                    break;
+>>>>>>> 0cf05a355e2897b8cb52a09282e2cb96a805d8e1
 
             }
         }
@@ -81,10 +101,11 @@ public class ItemController extends GameController implements Collision {
     }
 
     public static void create(int x, int y) {
-        type = ItemType.getRandomItemType();
+        ItemType type = ItemType.getRandomItemType();
         new ItemController(
                 new GameModel(x, y, WIDTH, HEIGHT),
-                new ItemView("Items/" + type)
+                new ItemView("Items/" + type),
+                type
         );
     }
 
@@ -100,6 +121,7 @@ public class ItemController extends GameController implements Collision {
             PlayerController playerController = (PlayerController) GameManager.playerController;
             switch (type) {
                 case SLIDE:
+<<<<<<< HEAD
                     playerController.setSlide();
                     break;
                 case REVERSE_MOVE:
@@ -110,9 +132,25 @@ public class ItemController extends GameController implements Collision {
                     break;
                 case SPIDERWEB:
                     playerController.speedDown();
+=======
+                    PlayerController.setSlide();
+                    model.setAlive(false);
+                    break;
+                case REVERSE_MOVE:
+                    PlayerController.reverseMove();
+                    model.setAlive(false);
+                    break;
+                case DIE:
+                    PlayerController.die();
+                    model.setAlive(false);
+                    break;
+                case SPIDERWEB:
+                    PlayerController.speedDown();
+                    model.setAlive(false);
+>>>>>>> 0cf05a355e2897b8cb52a09282e2cb96a805d8e1
                     break;
             }
-            model.setAlive(false);
+
         }
     }
 
