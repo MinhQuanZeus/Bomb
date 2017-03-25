@@ -108,7 +108,7 @@ public class PlayerTwoController extends PlayerController {
                 bombard();
             }
             if (bitSet.get(KeyEvent.VK_NUMPAD1)) {
-                if (((PlayerModel) model).getNumberShuriken() > 0 && reloadShuriken > RELOAL_SHURIKEN_SPEED) {
+                if (((PlayerModel) model).getNumberShuriken() > 0 && reloadShuriken > RELOAD_SHURIKEN_SPEED) {
                     ShurikenController shurikenController = ShurikenController.create(model.getX() + model.getWidth() / 2 - ShurikenModel.WIDTH / 2, model.getY() + model.getHeight() / 2, ((PlayerModel) model).getShotDirection());
                     reloadShuriken = 0;
                     ((PlayerModel) model).decreaseNumberShuriken();

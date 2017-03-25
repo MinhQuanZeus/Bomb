@@ -73,9 +73,9 @@ public class MainPanel extends JPanel {
         cardLayout.show(this, TAG_STORY_END);
     }
 
-    public void showEndPanel(String tag) {
+    public void showEndPanel(String tag, Integer score) {
         gamePanel.setRunning(false);
-        endGamePanel = new EndGamePanel(tag);
+        endGamePanel = new EndGamePanel(tag, score);
         if (tag.equals(EndGamePanel.LOSE)) {
             add(endGamePanel, TAG_END_GAME_LOSE);
             setBGM(TAG_END_GAME_LOSE);

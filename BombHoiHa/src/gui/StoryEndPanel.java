@@ -1,5 +1,7 @@
 package gui;
 
+import manager.GameManager;
+import models.PlayerModel;
 import utils.Utils;
 
 import javax.swing.*;
@@ -28,7 +30,7 @@ public class StoryEndPanel extends JPanel {
                 super.mouseClicked(mouseEvent);
                 Utils.playSound("select.wav", false);
                 if (part == 6) {
-                    GameFrame.mainPanel.showEndPanel(EndGamePanel.WIN);
+                    GameFrame.mainPanel.showEndPanel(EndGamePanel.WIN, ((PlayerModel) GameManager.playerController.getModel()).getScore());
                     GamePanel.setFlag(true);
                     part = 0;
                 }

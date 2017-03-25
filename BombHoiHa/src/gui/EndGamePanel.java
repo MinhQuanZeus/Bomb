@@ -19,8 +19,9 @@ public class EndGamePanel extends JPanel {
 
     private JLabel btnBackToMenu;
     private Image backGround;
+    private Integer score;
 
-    public EndGamePanel(String tag) {
+    public EndGamePanel(String tag, Integer score) {
         setLayout(null);
         initComp();
         switch (tag) {
@@ -37,6 +38,7 @@ public class EndGamePanel extends JPanel {
                 backGround = Utils.loadImageFromRes("System/hammer-won");
                 break;
         }
+        this.score = score;
     }
 
     private void initComp() {
@@ -77,6 +79,12 @@ public class EndGamePanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics graphics) {
+        super.paintComponent(graphics);
         graphics.drawImage(backGround, 0, 0, GameFrame.WIDTH, GameFrame.HEIGHT, null);
+        if (score != null) {
+            graphics.setFont(new Font("Bookman Old Style", Font.BOLD, 30));
+            graphics.setColor(Color.BLACK);
+            graphics.drawString("Your Score: " + score, 30, 30);
+        }
     }
 }

@@ -72,12 +72,12 @@ public class PlayerView extends GameView {
             if (((PlayerModel) model).getLife() == 0) {
                 model.setAlive(false);
                 if (!GameManager.versus) {
-                    GameFrame.mainPanel.showEndPanel(EndGamePanel.LOSE);
+                    GameFrame.mainPanel.showEndPanel(EndGamePanel.LOSE, ((PlayerModel) GameManager.playerController.getModel()).getScore());
                 } else {
                     if (animation.getUrl().contains("BombermanTwo")) {
-                        GameFrame.mainPanel.showEndPanel(EndGamePanel.BOMBERMAN);
+                        GameFrame.mainPanel.showEndPanel(EndGamePanel.BOMBERMAN, null);
                     } else {
-                        GameFrame.mainPanel.showEndPanel(EndGamePanel.HAMMERBOMBER);
+                        GameFrame.mainPanel.showEndPanel(EndGamePanel.HAMMERBOMBER, null);
                     }
                 }
             } else {

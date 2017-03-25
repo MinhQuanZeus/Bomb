@@ -3,6 +3,7 @@ package gui;
 import controllers.PlayerController;
 import manager.GameManager;
 import manager.MapManager;
+import models.PlayerModel;
 import utils.Utils;
 
 import javax.swing.*;
@@ -75,7 +76,7 @@ public class GamePanel extends JPanel implements Runnable {
         BitSet bitSet = ((PlayerController) GameManager.playerController).getBitSet();
         if (bitSet.get(KeyEvent.VK_P)) {
             paused();
-            Utils.playSound("select.wav",false);
+            Utils.playSound("select.wav", false);
             bitSet.clear();
             pausedPanel.setVisible(true);
         }
@@ -97,7 +98,7 @@ public class GamePanel extends JPanel implements Runnable {
                 resume();
                 String titleURL = title.getIcon().toString();
                 if (titleURL.equals("resources/System/time-up.png"))
-                    GameFrame.mainPanel.showEndPanel(EndGamePanel.LOSE);
+                    GameFrame.mainPanel.showEndPanel(EndGamePanel.LOSE, ((PlayerModel) GameManager.playerController.getModel()).getScore());
                 if (titleURL.equals("resources/System/win.png")) {
                     if (flag == true) {
                         GameFrame.mainPanel.showStoryEndPanel();

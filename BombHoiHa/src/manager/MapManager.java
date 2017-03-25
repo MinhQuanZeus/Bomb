@@ -41,7 +41,7 @@ public class MapManager extends ControllerManager {
         if (GameManager.versus) {
             mapLevel = 0;
         } else {
-            mapLevel = 3;
+            mapLevel = 1;
         }
         map = new int[14][14];
         readMap(mapLevel);

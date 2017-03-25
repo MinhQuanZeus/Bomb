@@ -9,7 +9,6 @@ import manager.MapManager;
 import models.*;
 import utils.Utils;
 import views.AnimationView;
-import views.GameView;
 import views.PlayerView;
 
 import javax.swing.*;
@@ -24,15 +23,16 @@ import java.util.List;
  */
 public class PlayerController extends GameController implements Collision, KeyListener {
 
-    protected BitSet bitSet = new BitSet(256);
-    protected List<GameController> arrBlocks;
-    public static final int RELOAL_SHURIKEN_SPEED = 50;
+
+    public static final int RELOAD_SHURIKEN_SPEED = 50;
     public static final int SLIDE_SPEED = 8;
 
     protected int reloadShuriken = 0;
     protected boolean isReverse = false;
-    private int reverseCount = 0;
+    protected BitSet bitSet = new BitSet(256);
+    protected List<GameController> arrBlocks;
     protected boolean isSlide = false;
+    private int reverseCount = 0;
     private int countDownKickPlayer = ItemController.MAX_KICK_TIME;
 
     public PlayerController(PlayerModel model, List<GameController> arrBlocks, String urlImage) {
@@ -45,12 +45,16 @@ public class PlayerController extends GameController implements Collision, KeyLi
     @Override
     public void draw(Graphics g) {
         super.draw(g);
-        for (int i = 0; i < ((PlayerModel) model).getNumberShuriken(); i++) {
-            g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"), 40 + 20 * i, 5, 20, 20, null);
-        }
         if (GameManager.versus) {
+            for (int i = 0; i < ((PlayerModel) model).getNumberShuriken(); i++) {
+                g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"), 40 + 20 * i, 5, 20, 20, null);
+            }
             g.drawImage(Utils.loadImageFromRes("Bomberman/life"), 0, 0, null);
             g.drawString(((PlayerModel) model).getLife() + "", 9, 20);
+        } else {
+            for (int i = 0; i < ((PlayerModel) model).getNumberShuriken(); i++) {
+                g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"), 140 + 20 * i, 5, 20, 20, null);
+            }
         }
     }
 
@@ -155,7 +159,7 @@ public class PlayerController extends GameController implements Collision, KeyLi
                 bombard();
             }
             if (bitSet.get(KeyEvent.VK_K)) {
-                if (((PlayerModel) model).getNumberShuriken() > 0 && reloadShuriken > RELOAL_SHURIKEN_SPEED) {
+                if (((PlayerModel) model).getNumberShuriken() > 0 && reloadShuriken > RELOAD_SHURIKEN_SPEED) {
                     ShurikenController shurikenController = ShurikenController.create(model.getX() + model.getWidth() / 2 - ShurikenModel.WIDTH / 2, model.getY() + model.getHeight() / 2, ((PlayerModel) model).getShotDirection());
                     reloadShuriken = 0;
                     ((PlayerModel) model).decreaseNumberShuriken();
