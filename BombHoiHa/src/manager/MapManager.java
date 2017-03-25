@@ -27,10 +27,8 @@ public class MapManager extends ControllerManager {
     private long start;
     private ImageIcon winIcon;
 
-
-    public static boolean isCountTime = true;
+    public static boolean isCountTime;
     private static final int TIME_BONUS = 15;
-
     private long currentTime = 0;
 
     public MapManager() {
@@ -40,6 +38,7 @@ public class MapManager extends ControllerManager {
         } else {
             mapLevel = 1;
         }
+        isCountTime = true;
         map = new int[14][14];
         readMap(mapLevel);
         exist = 120000;

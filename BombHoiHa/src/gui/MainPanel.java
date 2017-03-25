@@ -68,6 +68,7 @@ public class MainPanel extends JPanel {
     }
 
     public void showStoryEndPanel() {
+        gamePanel.setRunning(false);
         StoryEndPanel storyEndPanel = new StoryEndPanel();
         add(storyEndPanel, TAG_STORY_END);
         cardLayout.show(this, TAG_STORY_END);
@@ -85,7 +86,6 @@ public class MainPanel extends JPanel {
             setBGM(TAG_END_GAME_WIN);
             cardLayout.show(this, TAG_END_GAME_WIN);
         }
-
     }
 
     public static void setBGM(String tag) {

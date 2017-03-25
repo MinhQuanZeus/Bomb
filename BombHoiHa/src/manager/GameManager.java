@@ -25,12 +25,12 @@ public class GameManager {
     public static ControllerManager mapManager;
 
     public static boolean versus;
-    private static boolean transitionStart = false;
-    private static boolean transitionEnd = false;
-    private static boolean flag = true;
-    private static int transitionFrameStart = 11;
-    private static int transitionFrameEnd = 0;
-    private static int transitionDelay = 0;
+    private static boolean transitionStart;
+    private static boolean transitionEnd;
+    private static boolean flag;
+    private static int transitionFrameStart;
+    private static int transitionFrameEnd;
+    private static int transitionDelay;
 
     public GameManager(boolean versus) {
         AutoLoadPic.init();
@@ -38,6 +38,12 @@ public class GameManager {
         controllerManager = new ControllerManager();
         arrBlocks = new ArrayList<>();
         collisionManager = new CollisionManager();
+        transitionStart = false;
+        transitionEnd = false;
+        transitionFrameStart = 11;
+        transitionFrameEnd = 0;
+        transitionDelay = 0;
+        flag = true;
         if (versus) {
             playerController = new PlayerController(
                     new PlayerModel(50, 50),

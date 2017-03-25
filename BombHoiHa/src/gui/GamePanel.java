@@ -18,7 +18,7 @@ import java.util.BitSet;
 public class GamePanel extends JPanel implements Runnable {
 
     public static boolean paused;
-    private static boolean flag = true;
+    private static boolean flag;
 
     private boolean running;
     private Thread thread;
@@ -32,8 +32,11 @@ public class GamePanel extends JPanel implements Runnable {
         setLayout(null);
         setFocusable(true);
         gameManager = new GameManager(versus);
-        title = new JLabel();
 
+        paused = false;
+        flag = true;
+
+        title = new JLabel();
         addKeyListener((KeyListener) GameManager.playerController);
         if (versus)
             addKeyListener((KeyListener) GameManager.secondPlayerController);
