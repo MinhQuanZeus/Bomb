@@ -32,7 +32,7 @@ public class ItemController extends GameController implements Collision {
         if (other instanceof PlayerController) {
             Utils.playSound("item-get.wav", false);
             model.setAlive(false);
-            PlayerModel playerModel = (PlayerModel) ((PlayerController) other).getModel();
+            PlayerModel playerModel = (PlayerModel) other.getModel();
             switch (type) {
                 case BONUS_TIME:
                     MapManager.bonusTime();
@@ -57,11 +57,11 @@ public class ItemController extends GameController implements Collision {
                     playerModel.bonusLife();
                     break;
                 case SLIDE:
-                    PlayerController.setSlide();
+                    ((PlayerController) other).setSlide();
                     model.setAlive(false);
                     break;
                 case REVERSE_MOVE:
-                    PlayerController.reverseMove();
+                    ((PlayerController) other).reverseMove();
                     break;
                 case DIE:
                     playerModel.setExplode(true);
@@ -97,18 +97,19 @@ public class ItemController extends GameController implements Collision {
             count = 0;
         }
         if (countDown == 0) {
+            PlayerController playerController = (PlayerController) GameManager.playerController;
             switch (type) {
                 case SLIDE:
-                    PlayerController.setSlide();
+                    playerController.setSlide();
                     break;
                 case REVERSE_MOVE:
-                    PlayerController.reverseMove();
+                    playerController.reverseMove();
                     break;
                 case DIE:
-                    PlayerController.die();
+                    playerController.die();
                     break;
                 case SPIDERWEB:
-                    PlayerController.speedDown();
+                    playerController.speedDown();
                     break;
             }
             model.setAlive(false);
