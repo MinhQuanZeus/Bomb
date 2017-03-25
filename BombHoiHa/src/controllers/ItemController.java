@@ -57,7 +57,6 @@ public class ItemController extends GameController implements Collision {
                 case BONUS_LIFE:
                     playerModel.bonusLife();
                     break;
-<<<<<<< HEAD
                 case SLIDE:
                     ((PlayerController) other).setSlide();
                     model.setAlive(false);
@@ -74,25 +73,6 @@ public class ItemController extends GameController implements Collision {
                 case KICK:
                     playerModel.setKick(true);
                     break;
-=======
-//                case SLIDE:
-//                    PlayerController.setSlide();
-//                    model.setAlive(false);
-//                    break;
-//                case REVERSE_MOVE:
-//                    PlayerController.reverseMove();
-//                    break;
-//                case DIE:
-//                    playerModel.setExplode(true);
-//                    break;
-//                case SPIDERWEB:
-//                    playerModel.speedDown();
-//                    break;
-//                case KICK:
-//                    playerModel.setKick(true);
-//                    break;
->>>>>>> 0cf05a355e2897b8cb52a09282e2cb96a805d8e1
-
             }
         }
         if (other instanceof ExplosionController) {
@@ -121,36 +101,22 @@ public class ItemController extends GameController implements Collision {
             PlayerController playerController = (PlayerController) GameManager.playerController;
             switch (type) {
                 case SLIDE:
-<<<<<<< HEAD
                     playerController.setSlide();
+                    model.setAlive(false);
                     break;
                 case REVERSE_MOVE:
                     playerController.reverseMove();
+                    model.setAlive(false);
                     break;
                 case DIE:
                     playerController.die();
+                    model.setAlive(false);
                     break;
                 case SPIDERWEB:
                     playerController.speedDown();
-=======
-                    PlayerController.setSlide();
                     model.setAlive(false);
-                    break;
-                case REVERSE_MOVE:
-                    PlayerController.reverseMove();
-                    model.setAlive(false);
-                    break;
-                case DIE:
-                    PlayerController.die();
-                    model.setAlive(false);
-                    break;
-                case SPIDERWEB:
-                    PlayerController.speedDown();
-                    model.setAlive(false);
->>>>>>> 0cf05a355e2897b8cb52a09282e2cb96a805d8e1
                     break;
             }
-
         }
     }
 

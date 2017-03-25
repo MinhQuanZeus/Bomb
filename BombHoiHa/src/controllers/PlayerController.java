@@ -25,15 +25,15 @@ import java.util.List;
 public class PlayerController extends GameController implements Collision {
 
     public static BitSet bitSet = new BitSet(256);
-    private List<GameController> arrBlocks;
+    protected List<GameController> arrBlocks;
     public static int numberShuriken = 0;
     public static final int RELOAL_SHURIKEN_SPEED = 50;
-    private final int SLIDE_SPEED = 8;
+    public static final int SLIDE_SPEED = 8;
 
-    private int reloadShuriken = 0;
-    private boolean isReverse = false;
+    protected int reloadShuriken = 0;
+    protected boolean isReverse = false;
     private int reverseCount = 0;
-    private boolean isSlide = false;
+    protected boolean isSlide = false;
 
 
 
@@ -153,7 +153,7 @@ public class PlayerController extends GameController implements Collision {
         }
     }
 
-    private void bombard() {
+    public void bombard() {
         PlayerModel model = (PlayerModel) this.model;
         if (model.checkMaxBomb()) {
             int bombX = ((model.getX() + model.getHeight() / 2) / ItemMapModel.SIZE_TILED) * ItemMapModel.SIZE_TILED;
