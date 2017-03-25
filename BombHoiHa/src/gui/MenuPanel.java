@@ -1,5 +1,6 @@
 package gui;
 
+import manager.GameManager;
 import utils.SoundPlayer;
 import utils.Utils;
 
@@ -16,6 +17,7 @@ public class MenuPanel extends JPanel {
     private JLabel btnStart;
     private JLabel btnExit;
     private JLabel btnInstruction;
+    private JLabel btnVersus;
 
     public MenuPanel() {
         setLayout(null);
@@ -32,7 +34,14 @@ public class MenuPanel extends JPanel {
                     System.exit(0);
                 }
                 if (mouseEvent.getSource().equals(btnStart)) {
-                    GameFrame.mainPanel.showGamePanel();
+<<<<<<< HEAD
+                    GameFrame.mainPanel.showGamePanel(false);
+                }
+                if (mouseEvent.getSource().equals(btnVersus)) {
+                    GameFrame.mainPanel.showGamePanel(true);
+=======
+                    GameFrame.mainPanel.showStoryIntroPanel();
+>>>>>>> 287c0eda2e17e29a6e2557796fea7c907e6a92c9
                 }
                 if (mouseEvent.getSource().equals(btnInstruction)) {
                     GameFrame.mainPanel.showPanel(MainPanel.TAG_INSTRUCTION);
@@ -54,6 +63,10 @@ public class MenuPanel extends JPanel {
                     ImageIcon imageIcon = new ImageIcon("resources/System/instruction-1.png");
                     btnInstruction.setIcon(imageIcon);
                 }
+                if(e.getSource().equals(btnVersus)){
+                    ImageIcon imageIcon = new ImageIcon("resources/System/versus-1.png");
+                    btnVersus.setIcon(imageIcon);
+                }
             }
 
             @Override
@@ -71,27 +84,38 @@ public class MenuPanel extends JPanel {
                     ImageIcon imageIcon = new ImageIcon("resources/System/instruction-0.png");
                     btnInstruction.setIcon(imageIcon);
                 }
+                if(e.getSource().equals(btnVersus)){
+                    ImageIcon imageIcon = new ImageIcon("resources/System/versus-0.png");
+                    btnVersus.setIcon(imageIcon);
+                }
             }
 
         };
 
         ImageIcon imageIcon = new ImageIcon("resources/System/start-0.png");
         btnStart = new JLabel(imageIcon);
-        btnStart.setBounds(350, 400, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+        btnStart.setBounds(350, 350, imageIcon.getIconWidth(), imageIcon.getIconHeight());
         btnStart.setFocusable(false);
         add(btnStart);
         btnStart.addMouseListener(mouseAdapter);
 
+        imageIcon = new ImageIcon("resources/System/versus-0.png");
+        btnVersus = new JLabel(imageIcon);
+        btnVersus.setBounds(btnStart.getX(), btnStart.getY() + btnStart.getHeight() + 10, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+        btnVersus.setFocusable(false);
+        add(btnVersus);
+        btnVersus.addMouseListener(mouseAdapter);
+
         imageIcon = new ImageIcon("resources/System/instruction-0.png");
         btnInstruction = new JLabel(imageIcon);
-        btnInstruction.setBounds(btnStart.getX(), btnStart.getY() + btnStart.getHeight() + 10, btnStart.getWidth(), btnStart.getHeight());
+        btnInstruction.setBounds(btnStart.getX(), btnVersus.getY() + btnVersus.getHeight() + 10, imageIcon.getIconWidth(), imageIcon.getIconHeight());
         btnInstruction.setFocusable(false);
         add(btnInstruction);
         btnInstruction.addMouseListener(mouseAdapter);
 
         imageIcon = new ImageIcon("resources/System/exit-0.png");
         btnExit = new JLabel(imageIcon);
-        btnExit.setBounds(btnStart.getX(), btnStart.getY() + btnStart.getHeight() + 60, btnStart.getWidth(), btnStart.getHeight());
+        btnExit.setBounds(btnStart.getX(), btnInstruction.getY() + btnInstruction.getHeight() + 10, imageIcon.getIconWidth(), imageIcon.getIconHeight());
         btnExit.setFocusable(false);
         add(btnExit);
         btnExit.addMouseListener(mouseAdapter);

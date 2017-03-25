@@ -1,10 +1,8 @@
 package gui;
 
-import controllers.GameController;
 import controllers.PlayerController;
 import manager.GameManager;
 import manager.MapManager;
-import utils.GameKey;
 import utils.Utils;
 
 import javax.swing.*;
@@ -19,6 +17,7 @@ import java.util.BitSet;
 public class GamePanel extends JPanel implements Runnable {
 
     public static boolean paused;
+    private static boolean flag = true;
 
     private boolean running;
     private Thread thread;
@@ -28,11 +27,14 @@ public class GamePanel extends JPanel implements Runnable {
     private JLabel title;
     private int titleExist;
 
-    public GamePanel() {
+    public GamePanel(boolean versus) {
         setLayout(null);
         setFocusable(true);
-        gameManager = new GameManager();
-        addKeyListener(GameKey.instance);
+        gameManager = new GameManager(versus);
+        addKeyListener((KeyListener) GameManager.playerController);
+        if (versus) {
+            addKeyListener((KeyListener) GameManager.playerTwoController);
+        }
         pausedPanel = new PausedPanel(this);
         add(pausedPanel);
         title = new JLabel();
@@ -68,7 +70,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private void checkPaused() {
-        BitSet bitSet = PlayerController.bitSet;
+        BitSet bitSet = ((PlayerController) GameManager.playerController).getBitSet();
         if (bitSet.get(KeyEvent.VK_P)) {
             paused();
             Utils.playSound("select.wav",false);
@@ -94,8 +96,13 @@ public class GamePanel extends JPanel implements Runnable {
                 String titleURL = title.getIcon().toString();
                 if (titleURL.equals("resources/System/time-up.png"))
                     GameFrame.mainPanel.showEndPanel(false);
-                if (titleURL.equals("resources/System/win.png"))
-                    GameFrame.mainPanel.showEndPanel(true);
+                if (titleURL.equals("resources/System/win.png")) {
+                    if (flag == true) {
+                        GameFrame.mainPanel.showStoryEndPanel();
+                        flag = false;
+                    }
+                    //GameFrame.mainPanel.showEndPanel(true);
+                }
             }
         }
     }
@@ -108,6 +115,10 @@ public class GamePanel extends JPanel implements Runnable {
     public void resume() {
         paused = false;
         ((MapManager) GameManager.mapManager).reloadStart(System.currentTimeMillis() - startPaused);
+    }
+
+    public static void setFlag(boolean flag) {
+        GamePanel.flag = flag;
     }
 
     public void setRunning(boolean running) {

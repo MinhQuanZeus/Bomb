@@ -15,8 +15,11 @@ public class MainPanel extends JPanel {
 
     public static final String TAG_GAME = "tag_game";
     public static final String TAG_MENU = "tag_menu";
-    public static final String TAG_END_GAME = "tag_end_game";
+    public static final String TAG_END_GAME_WIN = "tag_end_game_win";
+    public static final String TAG_END_GAME_LOSE = "tag_end_game_lose";
     public static final String TAG_INSTRUCTION = "tag_instruction";
+    public static final String TAG_STORY_INTRO = "tag_story_intro";
+    public static final String TAG_STORY_END = "tag_story_end";
 
 
     public static GamePanel gamePanel;
@@ -46,24 +49,43 @@ public class MainPanel extends JPanel {
         setBGM(tag);
     }
 
-    public void showGamePanel() {
+    public void showGamePanel(boolean versus) {
         if (gamePanel != null) {
             gamePanel.setRunning(false);
         }
         EnemyModel.enemyCount = 0;
-        gamePanel = new GamePanel();
+        gamePanel = new GamePanel(versus);
         add(gamePanel, TAG_GAME);
         setBGM(TAG_GAME);
         cardLayout.show(this, TAG_GAME);
         gamePanel.requestFocusInWindow();
     }
 
+    public void showStoryIntroPanel(){
+        StoryIntroPanel storyIntroPanel = new StoryIntroPanel();
+        add(storyIntroPanel, TAG_STORY_INTRO);
+        cardLayout.show(this,TAG_STORY_INTRO);
+    }
+
+    public void showStoryEndPanel(){
+        StoryEndPanel storyEndPanel = new StoryEndPanel();
+        add(storyEndPanel, TAG_STORY_END);
+        cardLayout.show(this,TAG_STORY_END);
+    }
+
     public void showEndPanel(boolean win) {
         gamePanel.setRunning(false);
         endGamePanel = new EndGamePanel(win);
-        add(endGamePanel, TAG_END_GAME);
-        setBGM(TAG_END_GAME);
-        cardLayout.show(this, TAG_END_GAME);
+        if (win) {
+            add(endGamePanel, TAG_END_GAME_WIN);
+            setBGM(TAG_END_GAME_WIN);
+            cardLayout.show(this, TAG_END_GAME_WIN);
+        }
+        else{
+            add(endGamePanel, TAG_END_GAME_LOSE);
+            setBGM(TAG_END_GAME_LOSE);
+            cardLayout.show(this, TAG_END_GAME_LOSE);
+        }
     }
 
     public static void setBGM(String tag) {
@@ -78,8 +100,12 @@ public class MainPanel extends JPanel {
                 bgm = new SoundPlayer(new File("resources/Sounds/game-stage-" + MapManager.mapLevel + ".wav"));
             }
             break;
-            case TAG_END_GAME: {
+            case TAG_END_GAME_LOSE: {
                 bgm = new SoundPlayer(new File("resources/Sounds/game-over.wav"));
+            }
+            break;
+            case TAG_END_GAME_WIN: {
+                bgm = new SoundPlayer(new File("resources/Sounds/game-won.wav"));
             }
             break;
             case TAG_INSTRUCTION: {

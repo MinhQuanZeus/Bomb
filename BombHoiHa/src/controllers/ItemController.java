@@ -58,17 +58,48 @@ public class ItemController extends GameController implements Collision {
                     playerModel.bonusLife();
                     break;
                 case SLIDE:
-                    ((PlayerController) other).setSlide();
-                    model.setAlive(false);
+                    if (GameManager.versus) {
+                        if (other instanceof PlayerTwoController) {
+                            ((PlayerController) GameManager.playerController).setSlide();
+                        } else {
+                            ((PlayerController) GameManager.playerTwoController).setSlide();
+                        }
+                    } else {
+                        ((PlayerController) other).setSlide();
+                    }
                     break;
                 case REVERSE_MOVE:
-                    ((PlayerController) other).reverseMove();
+                    if (GameManager.versus) {
+                        if (other instanceof PlayerTwoController) {
+                            ((PlayerController) GameManager.playerController).reverseMove();
+                        } else {
+                            ((PlayerController) GameManager.playerTwoController).reverseMove();
+                        }
+                    } else {
+                        ((PlayerController) other).reverseMove();
+                    }
                     break;
                 case DIE:
-                    playerModel.setExplode(true);
+                    if (GameManager.versus) {
+                        if (other instanceof PlayerTwoController) {
+                            ((PlayerModel) GameManager.playerController.getModel()).setExplode(true);
+                        } else {
+                            ((PlayerModel) GameManager.playerTwoController.getModel()).setExplode(true);
+                        }
+                    } else {
+                        playerModel.setExplode(true);
+                    }
                     break;
                 case SPIDERWEB:
-                    playerModel.speedDown();
+                    if (GameManager.versus) {
+                        if (other instanceof PlayerTwoController) {
+                            ((PlayerModel) GameManager.playerController.getModel()).speedDown();
+                        } else {
+                            ((PlayerModel) GameManager.playerTwoController.getModel()).speedDown();
+                        }
+                    } else {
+                        playerModel.speedDown();
+                    }
                     break;
                 case KICK:
                     playerModel.setKick(true);
@@ -81,7 +112,15 @@ public class ItemController extends GameController implements Collision {
     }
 
     public static void create(int x, int y) {
+<<<<<<< HEAD
         ItemType type = ItemType.SHURIKEN;
+=======
+        ItemType type;
+        do {
+            type = ItemType.getRandomItemType();
+        } while (GameManager.versus && (type == ItemType.BONUS_TIME || type == ItemType.FREEZE || type == ItemType.DIE));
+
+>>>>>>> 34915bfa16b6157fbabde49397c0f32b708d5ada
         new ItemController(
                 new GameModel(x, y, WIDTH, HEIGHT),
                 new ItemView("Items/" + type),
@@ -97,7 +136,7 @@ public class ItemController extends GameController implements Collision {
             countDown--;
             count = 0;
         }
-        if (countDown == 0) {
+        if (countDown == 0 && !GameManager.versus) {
             PlayerController playerController = (PlayerController) GameManager.playerController;
             switch (type) {
                 case SLIDE:
@@ -125,8 +164,10 @@ public class ItemController extends GameController implements Collision {
         super.draw(g);
         g.setFont(new Font("Courier New", Font.BOLD, 20));
         g.setColor(Color.white);
-        if (type == ItemType.REVERSE_MOVE || type == ItemType.DIE || type == ItemType.SLIDE || type == ItemType.SPIDERWEB) {
-            g.drawString(countDown + "", model.getX(), model.getY());
+        if (!GameManager.versus) {
+            if (type == ItemType.REVERSE_MOVE || type == ItemType.DIE || type == ItemType.SLIDE || type == ItemType.SPIDERWEB) {
+                g.drawString(countDown + "", model.getX(), model.getY());
+            }
         }
     }
 

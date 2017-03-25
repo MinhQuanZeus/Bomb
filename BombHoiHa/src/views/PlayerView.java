@@ -1,6 +1,7 @@
 package views;
 
 import gui.GameFrame;
+import manager.GameManager;
 import models.GameModel;
 import models.PlayerModel;
 import utils.Utils;
@@ -12,16 +13,18 @@ import java.awt.*;
  */
 public class PlayerView extends GameView {
 
-    public static final String MOVE_UP = "Bomberman/moveup";
-    public static final String MOVE_DOWN = "Bomberman/movedown";
-    public static final String MOVE_LEFT = "Bomberman/moveleft";
-    public static final String MOVE_RIGHT = "Bomberman/moveright";
+    public static final String MOVE_UP = "/moveup";
+    public static final String MOVE_DOWN = "/movedown";
+    public static final String MOVE_LEFT = "/moveleft";
+    public static final String MOVE_RIGHT = "/moveright";
 
     private Animation animation;
+    private String urlImage;
 
-    public PlayerView() {
-        super(MOVE_DOWN + "-0");
-        animation = new Animation(150, 4, MOVE_DOWN);
+    public PlayerView(String url) {
+        super(url + MOVE_DOWN + "-0");
+        this.urlImage = url;
+        animation = new Animation(150, 4, urlImage + MOVE_DOWN);
     }
 
     @Override
@@ -33,18 +36,19 @@ public class PlayerView extends GameView {
         } else {
             super.draw(graphics, model);
         }
-
-        graphics.drawImage(Utils.loadImageFromRes("Bomberman/life"), 0, 0, null);
-        graphics.drawImage(Utils.loadImageFromRes("Bomberman/clock"), 40, 0, null);
-        graphics.setFont(new Font("Courier New", Font.BOLD, 20));
-        graphics.setColor(Color.white);
-        graphics.drawString("Score:" + ((PlayerModel) model).getScore(), GameFrame.WIDTH - 200, 22);
-        graphics.drawString(((PlayerModel) model).getLife() + "", 9, 20);
+        if (!GameManager.versus) {
+            graphics.drawImage(Utils.loadImageFromRes("Bomberman/life"), 0, 0, null);
+            graphics.drawImage(Utils.loadImageFromRes("Bomberman/clock"), 40, 0, null);
+            graphics.setFont(new Font("Courier New", Font.BOLD, 20));
+            graphics.setColor(Color.white);
+            graphics.drawString("Score:" + ((PlayerModel) model).getScore(), GameFrame.WIDTH - 200, 22);
+            graphics.drawString(((PlayerModel) model).getLife() + "", 9, 20);
+        }
     }
 
     public void setImage(String url) {
-        if (!animation.getUrl().equals(url)) {
-            animation.setUrl(url);
+        if (!animation.getUrl().equals(urlImage + url)) {
+            animation.setUrl(urlImage + url);
             animation.reload();
         }
 
@@ -56,8 +60,8 @@ public class PlayerView extends GameView {
     }
 
     public void explode(GameModel model) {
-        if (!animation.getUrl().equals("Bomberman/explosion")) {
-            animation.setUrl("Bomberman/explosion");
+        if (!animation.getUrl().equals(urlImage + "/explosion")) {
+            animation.setUrl(urlImage + "/explosion");
             animation.reload();
         }
 
@@ -70,7 +74,7 @@ public class PlayerView extends GameView {
             } else {
                 ((PlayerModel) model).setExplode(false);
                 ((PlayerModel) model).reduceLife();
-                animation.setUrl(MOVE_DOWN);
+                animation.setUrl(urlImage + MOVE_DOWN);
                 ((PlayerModel) model).setImmunity(true);
             }
         }
