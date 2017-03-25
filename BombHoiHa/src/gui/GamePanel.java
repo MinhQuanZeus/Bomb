@@ -19,6 +19,7 @@ import java.util.BitSet;
 public class GamePanel extends JPanel implements Runnable {
 
     public static boolean paused;
+    private static boolean flag = true;
 
     private boolean running;
     private Thread thread;
@@ -94,8 +95,13 @@ public class GamePanel extends JPanel implements Runnable {
                 String titleURL = title.getIcon().toString();
                 if (titleURL.equals("resources/System/time-up.png"))
                     GameFrame.mainPanel.showEndPanel(false);
-                if (titleURL.equals("resources/System/win.png"))
-                    GameFrame.mainPanel.showEndPanel(true);
+                if (titleURL.equals("resources/System/win.png")) {
+                    if (flag == true) {
+                        GameFrame.mainPanel.showStoryEndPanel();
+                        flag = false;
+                    }
+                    //GameFrame.mainPanel.showEndPanel(true);
+                }
             }
         }
     }
@@ -108,6 +114,10 @@ public class GamePanel extends JPanel implements Runnable {
     public void resume() {
         paused = false;
         ((MapManager) GameManager.mapManager).reloadStart(System.currentTimeMillis() - startPaused);
+    }
+
+    public static void setFlag(boolean flag) {
+        GamePanel.flag = flag;
     }
 
     public void setRunning(boolean running) {

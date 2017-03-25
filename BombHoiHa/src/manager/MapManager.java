@@ -38,7 +38,7 @@ public class MapManager extends ControllerManager {
 
     public MapManager() {
         super();
-        mapLevel = 1;
+        mapLevel = 3;
         map = new int[14][14];
         readMap(mapLevel);
         exist = 120000;

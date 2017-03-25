@@ -214,6 +214,9 @@ public class PlayerController extends GameController implements Collision {
             }
         }
     }
+    public BitSet getBitSet() {
+        return bitSet;
+    }
 
     public void setSlide() {
         isSlide = true;
