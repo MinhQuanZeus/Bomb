@@ -33,15 +33,12 @@ public class PlayerController extends GameController implements Collision, KeyLi
     protected boolean isReverse = false;
     private int reverseCount = 0;
     protected boolean isSlide = false;
+    private int countDownKickPlayer = ItemController.MAX_KICK_TIME;
 
-<<<<<<< HEAD
-
-    public PlayerController(PlayerModel model, GameView view, List<GameController> arrBlocks) {
-        super(model, view);
-=======
+//    public PlayerController(PlayerModel model, GameView view, List<GameController> arrBlocks) {
+//        super(model, view);
     public PlayerController(PlayerModel model, List<GameController> arrBlocks, String urlImage) {
         super(model, new PlayerView(urlImage));
->>>>>>> 34915bfa16b6157fbabde49397c0f32b708d5ada
         GameManager.controllerManager.add(this);
         GameManager.collisionManager.add(this);
         this.arrBlocks = arrBlocks;
@@ -72,6 +69,14 @@ public class PlayerController extends GameController implements Collision, KeyLi
         checkBitSet();
         if (reloadShuriken == 4000) {
             reloadShuriken = 0;
+        }
+
+        if(((PlayerModel) GameManager.playerTwoController.getModel()).isKick()){
+            countDownKickPlayer--;
+            if(countDownKickPlayer==0){
+                ((PlayerModel)GameManager.playerTwoController.getModel()).setKick(false);
+                countDownKickPlayer=ItemController.MAX_KICK_TIME;
+            }
         }
     }
 
@@ -152,13 +157,7 @@ public class PlayerController extends GameController implements Collision, KeyLi
                 bombard();
             }
             if (bitSet.get(KeyEvent.VK_K)) {
-<<<<<<< HEAD
-                System.out.println("fire"+numberShuriken);
                 if (((PlayerModel) model).getNumberShuriken() > 0 && reloadShuriken > RELOAL_SHURIKEN_SPEED) {
-                    System.out.println("fire");
-=======
-                if (((PlayerModel) model).getNumberShuriken() > 0 && reloadShuriken > RELOAL_SHURIKEN_SPEED) {
->>>>>>> 34915bfa16b6157fbabde49397c0f32b708d5ada
                     ShurikenController shurikenController = ShurikenController.create(model.getX() + model.getWidth() / 2 - ShurikenModel.WIDTH / 2, model.getY() + model.getHeight() / 2, ((PlayerModel) model).getShotDirection());
                     reloadShuriken = 0;
                     ((PlayerModel) model).decreaseNumberShuriken();
@@ -230,13 +229,6 @@ public class PlayerController extends GameController implements Collision, KeyLi
                 }
             }
         }
-    }
-    public BitSet getBitSet() {
-        return bitSet;
-    }
-
-    public BitSet getBitSet() {
-        return bitSet;
     }
 
 

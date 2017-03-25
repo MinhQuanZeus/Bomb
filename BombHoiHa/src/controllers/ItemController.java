@@ -17,8 +17,10 @@ import java.awt.*;
 public class ItemController extends GameController implements Collision {
     public static final int WIDTH = ItemMapModel.SIZE_TILED;
     public static final int HEIGHT = ItemMapModel.SIZE_TILED;
+    public static final int MAX_KICK_TIME = 1500;
     private ItemType type;
     private int countDown = 4;
+
     int count = 0;
 
     public ItemController(GameModel model, ItemView view, ItemType itemType) {
@@ -112,15 +114,11 @@ public class ItemController extends GameController implements Collision {
     }
 
     public static void create(int x, int y) {
-<<<<<<< HEAD
-        ItemType type = ItemType.SHURIKEN;
-=======
         ItemType type;
         do {
             type = ItemType.getRandomItemType();
         } while (GameManager.versus && (type == ItemType.BONUS_TIME || type == ItemType.FREEZE || type == ItemType.DIE));
 
->>>>>>> 34915bfa16b6157fbabde49397c0f32b708d5ada
         new ItemController(
                 new GameModel(x, y, WIDTH, HEIGHT),
                 new ItemView("Items/" + type),
