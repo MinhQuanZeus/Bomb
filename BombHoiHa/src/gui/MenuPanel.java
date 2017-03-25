@@ -34,14 +34,10 @@ public class MenuPanel extends JPanel {
                     System.exit(0);
                 }
                 if (mouseEvent.getSource().equals(btnStart)) {
-<<<<<<< HEAD
-                    GameFrame.mainPanel.showGamePanel(false);
+                    GameFrame.mainPanel.showStoryIntroPanel();
                 }
                 if (mouseEvent.getSource().equals(btnVersus)) {
                     GameFrame.mainPanel.showGamePanel(true);
-=======
-                    GameFrame.mainPanel.showStoryIntroPanel();
->>>>>>> 287c0eda2e17e29a6e2557796fea7c907e6a92c9
                 }
                 if (mouseEvent.getSource().equals(btnInstruction)) {
                     GameFrame.mainPanel.showPanel(MainPanel.TAG_INSTRUCTION);

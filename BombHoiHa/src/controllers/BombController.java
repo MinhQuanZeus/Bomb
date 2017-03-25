@@ -3,10 +3,7 @@ package controllers;
 import controllers.enemy_weapon.ShotDirection;
 import manager.GameManager;
 import manager.MapManager;
-import models.Collision;
-import models.GameModel;
-import models.ItemMapModel;
-import models.PlayerModel;
+import models.*;
 import utils.Utils;
 import views.GameView;
 
@@ -20,8 +17,6 @@ public class BombController extends GameController implements Collision {
     private PlayerModel playerModel;
     private int exist;
     private List<GameController> arrBlocks;
-    private int SLIDE_SPEED = 4;
-    private boolean isSlide = false;
     private ShotDirection slideDirection;
 
     public BombController(GameModel model, GameView view, List<GameController> arrBlocks, GameModel playerModel) {
@@ -33,6 +28,7 @@ public class BombController extends GameController implements Collision {
         GameManager.controllerManager.add(this);
         GameManager.arrBlocks.add(this);
         this.arrBlocks = arrBlocks;
+        model.setSpeed(4);
     }
 
 
@@ -41,29 +37,29 @@ public class BombController extends GameController implements Collision {
         model.move(vector, arrBlocks);
         this.vector.dx = 0;
         this.vector.dy = 0;
-        if (isSlide) {
+        if (((BombModel) model).isSlide()) {
             move(slideDirection);
         }
         countDown();
     }
 
     public void slide(ShotDirection slideDirection) {
-        this.isSlide = true;
+        ((BombModel) model).setSlide(true);
         this.slideDirection = slideDirection;
     }
 
     public void move(ShotDirection shotDirection) {
         if (shotDirection == ShotDirection.DOWN) {
-            this.vector.dy = SLIDE_SPEED;
+            this.vector.dy = model.getSpeed();
         }
         if (shotDirection == ShotDirection.UP) {
-            this.vector.dy = -SLIDE_SPEED;
+            this.vector.dy = -model.getSpeed();
         }
         if (shotDirection == ShotDirection.LEFT) {
-            this.vector.dx = -SLIDE_SPEED;
+            this.vector.dx = -model.getSpeed();
         }
         if (shotDirection == ShotDirection.RIGHT) {
-            this.vector.dx = SLIDE_SPEED;
+            this.vector.dx = model.getSpeed();
         }
     }
 

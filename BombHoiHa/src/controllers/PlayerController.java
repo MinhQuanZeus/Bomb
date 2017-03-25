@@ -167,7 +167,7 @@ public class PlayerController extends GameController implements Collision, KeyLi
             if (MapManager.map[rowBombMatrix][colBombMatrix] == 9)
                 return;
             new BombController(
-                    new GameModel(bombX, bombY, ItemMapModel.SIZE_TILED, ItemMapModel.SIZE_TILED),
+                    new BombModel(bombX, bombY, ItemMapModel.SIZE_TILED, ItemMapModel.SIZE_TILED),
                     new AnimationView("Bombs & Explosions/normalbomb", 4),
                     arrBlocks,
                     model
@@ -218,9 +218,6 @@ public class PlayerController extends GameController implements Collision, KeyLi
                 }
             }
         }
-    }
-    public BitSet getBitSet() {
-        return bitSet;
     }
 
     public void setSlide() {

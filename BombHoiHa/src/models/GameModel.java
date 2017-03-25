@@ -51,9 +51,6 @@ public class GameModel {
         this.height = height;
     }
 
-    public static boolean check = true;
-    public static boolean kick = false;
-
     public boolean move(GameVector gameVector, List<GameController> arrBlocks) {
         int dx = this.x + gameVector.dx;
         int dy = this.y + gameVector.dy;
@@ -101,6 +98,11 @@ public class GameModel {
                 }
                 break;
             } else if (!intersectionRect.isEmpty()) {
+                if (this instanceof BombModel) {
+                    x = gameController.getModel().getX() - gameVector.dx / speed * ItemMapModel.SIZE_TILED;
+                    y = gameController.getModel().getY() - gameVector.dy / speed * ItemMapModel.SIZE_TILED;
+                    ((BombModel) this).setSlide(false);
+                }
                 return false;
             }
         }
@@ -151,5 +153,13 @@ public class GameModel {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 }

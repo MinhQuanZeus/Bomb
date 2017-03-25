@@ -61,31 +61,31 @@ public class MainPanel extends JPanel {
         gamePanel.requestFocusInWindow();
     }
 
-    public void showStoryIntroPanel(){
+    public void showStoryIntroPanel() {
         StoryIntroPanel storyIntroPanel = new StoryIntroPanel();
         add(storyIntroPanel, TAG_STORY_INTRO);
-        cardLayout.show(this,TAG_STORY_INTRO);
+        cardLayout.show(this, TAG_STORY_INTRO);
     }
 
-    public void showStoryEndPanel(){
+    public void showStoryEndPanel() {
         StoryEndPanel storyEndPanel = new StoryEndPanel();
         add(storyEndPanel, TAG_STORY_END);
-        cardLayout.show(this,TAG_STORY_END);
+        cardLayout.show(this, TAG_STORY_END);
     }
 
-    public void showEndPanel(boolean win) {
+    public void showEndPanel(String tag) {
         gamePanel.setRunning(false);
-        endGamePanel = new EndGamePanel(win);
-        if (win) {
+        endGamePanel = new EndGamePanel(tag);
+        if (tag.equals(EndGamePanel.LOSE)) {
+            add(endGamePanel, TAG_END_GAME_LOSE);
+            setBGM(TAG_END_GAME_LOSE);
+            cardLayout.show(this, TAG_END_GAME_LOSE);
+        } else {
             add(endGamePanel, TAG_END_GAME_WIN);
             setBGM(TAG_END_GAME_WIN);
             cardLayout.show(this, TAG_END_GAME_WIN);
         }
-        else{
-            add(endGamePanel, TAG_END_GAME_LOSE);
-            setBGM(TAG_END_GAME_LOSE);
-            cardLayout.show(this, TAG_END_GAME_LOSE);
-        }
+
     }
 
     public static void setBGM(String tag) {

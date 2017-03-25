@@ -31,14 +31,16 @@ public class GamePanel extends JPanel implements Runnable {
         setLayout(null);
         setFocusable(true);
         gameManager = new GameManager(versus);
+        title = new JLabel();
         addKeyListener((KeyListener) GameManager.playerController);
         if (versus) {
             addKeyListener((KeyListener) GameManager.playerTwoController);
+            addTitle(new ImageIcon("resources/System/stage-0.png"));
+        } else {
+            addTitle(new ImageIcon("resources/System/stage-1.png"));
         }
         pausedPanel = new PausedPanel(this);
         add(pausedPanel);
-        title = new JLabel();
-        addTitle(new ImageIcon("resources/System/stage-1.png"));
 
         running = true;
         thread = new Thread(this);
@@ -95,13 +97,12 @@ public class GamePanel extends JPanel implements Runnable {
                 resume();
                 String titleURL = title.getIcon().toString();
                 if (titleURL.equals("resources/System/time-up.png"))
-                    GameFrame.mainPanel.showEndPanel(false);
+                    GameFrame.mainPanel.showEndPanel(EndGamePanel.LOSE);
                 if (titleURL.equals("resources/System/win.png")) {
                     if (flag == true) {
                         GameFrame.mainPanel.showStoryEndPanel();
                         flag = false;
                     }
-                    //GameFrame.mainPanel.showEndPanel(true);
                 }
             }
         }

@@ -12,16 +12,30 @@ import java.awt.event.MouseEvent;
  */
 public class EndGamePanel extends JPanel {
 
+    public static final String BOMBERMAN = "bomberman";
+    public static final String HAMMERBOMBER = "hammerbomber";
+    public static final String WIN = "win";
+    public static final String LOSE = "lose";
+
     private JLabel btnBackToMenu;
     private Image backGround;
 
-    public EndGamePanel(boolean win) {
+    public EndGamePanel(String tag) {
         setLayout(null);
         initComp();
-        if (win) {
-            backGround = Utils.loadImageFromRes("System/game-won");
-        } else {
-            backGround = Utils.loadImageFromRes("System/game-over2");
+        switch (tag) {
+            case WIN:
+                backGround = Utils.loadImageFromRes("System/game-won");
+                break;
+            case LOSE:
+                backGround = Utils.loadImageFromRes("System/game-over2");
+                break;
+            case BOMBERMAN:
+                backGround = Utils.loadImageFromRes("System/bomberman-won");
+                break;
+            case HAMMERBOMBER:
+                backGround = Utils.loadImageFromRes("System/hammer-won");
+                break;
         }
     }
 

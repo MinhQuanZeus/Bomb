@@ -28,7 +28,7 @@ public class StoryEndPanel extends JPanel {
                 super.mouseClicked(mouseEvent);
                 Utils.playSound("select.wav", false);
                 if (part == 6) {
-                    GameFrame.mainPanel.showEndPanel(true);
+                    GameFrame.mainPanel.showEndPanel(EndGamePanel.WIN);
                     GamePanel.setFlag(true);
                     part = 0;
                 }

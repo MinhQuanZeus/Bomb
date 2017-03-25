@@ -38,15 +38,11 @@ public class MapManager extends ControllerManager {
 
     public MapManager() {
         super();
-<<<<<<< HEAD
         if (GameManager.versus) {
             mapLevel = 0;
         } else {
-            mapLevel = 1;
+            mapLevel = 3;
         }
-=======
-        mapLevel = 3;
->>>>>>> 287c0eda2e17e29a6e2557796fea7c907e6a92c9
         map = new int[14][14];
         readMap(mapLevel);
         exist = 120000;

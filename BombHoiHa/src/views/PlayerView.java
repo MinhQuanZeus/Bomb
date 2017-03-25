@@ -1,5 +1,6 @@
 package views;
 
+import gui.EndGamePanel;
 import gui.GameFrame;
 import manager.GameManager;
 import models.GameModel;
@@ -70,7 +71,15 @@ public class PlayerView extends GameView {
         } else {
             if (((PlayerModel) model).getLife() == 0) {
                 model.setAlive(false);
-                GameFrame.mainPanel.showEndPanel(false);
+                if (!GameManager.versus) {
+                    GameFrame.mainPanel.showEndPanel(EndGamePanel.LOSE);
+                } else {
+                    if (animation.getUrl().contains("BombermanTwo")) {
+                        GameFrame.mainPanel.showEndPanel(EndGamePanel.BOMBERMAN);
+                    } else {
+                        GameFrame.mainPanel.showEndPanel(EndGamePanel.HAMMERBOMBER);
+                    }
+                }
             } else {
                 ((PlayerModel) model).setExplode(false);
                 ((PlayerModel) model).reduceLife();
