@@ -215,8 +215,6 @@ public class PlayerController extends GameController implements Collision {
     public BitSet getBitSet() {
         return bitSet;
     }
-<<<<<<< HEAD
-=======
 
 
     public static void setSlide() {
@@ -234,5 +232,4 @@ public class PlayerController extends GameController implements Collision {
     public static void speedDown(){
         myModel.speedDown();
     }
->>>>>>> c6e633d6cbd1031c74c1f4af1c48e6eddec1dbef
 }
