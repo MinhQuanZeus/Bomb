@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class MapManager extends ControllerManager {
 
-    public static final int LEVEL_MAX = 3;
+    public static final int LEVEL_MAX = 4;
     public static int[][] map;
     public static int mapLevel;
     private static long exist;
@@ -41,7 +41,7 @@ public class MapManager extends ControllerManager {
         if (GameManager.versus) {
             mapLevel = 0;
         } else {
-            mapLevel = 1;
+            mapLevel = 4;
         }
         map = new int[14][14];
         readMap(mapLevel);
