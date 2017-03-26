@@ -13,6 +13,7 @@ import views.AutoLoadPic;
 import views.EnemyView;
 import views.GameView;
 
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -196,7 +197,9 @@ public class EnemyController extends GameController implements Collision {
     @Override
     public void onContact(Collision other) {
         if (other instanceof ExplosionController) {
-            if (((EnemyModel) model).getHp() != 0) {
+            Rectangle rectangle = this.model.getIntersectionRect(other.getModel());
+            if (((EnemyModel) model).getHp() != 0
+                    && rectangle.getWidth() > 10 && rectangle.getHeight() > 10) {
                 System.out.println("enemyCount--" + EnemyModel.enemyCount);
                 ((EnemyModel) model).setHp(0);
                 Utils.playSound("enemy-out.wav", false);

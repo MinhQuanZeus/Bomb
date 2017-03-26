@@ -142,7 +142,7 @@ public class GameModel {
     }
 
     public Rectangle getBottomRect(int x, int y) {
-        return new Rectangle(x + 5, y + height - ItemMapModel.SIZE_TILED + 5, width - 10, ItemMapModel.SIZE_TILED - 10);
+        return new Rectangle(x + 5, y + height - ItemMapModel.SIZE_TILED + 10, width - 10, ItemMapModel.SIZE_TILED - 10);
     }
 
     public void setWidth(int width) {
