@@ -26,6 +26,7 @@ public class PlayerModel extends GameModel {
     private int numberShuriken;
     private boolean kick = false;
     private boolean driver;
+    private String pet;
     private ShotDirection shotDirection = ShotDirection.RIGHT;
 
     public PlayerModel(int x, int y) {
@@ -73,6 +74,10 @@ public class PlayerModel extends GameModel {
         explosionSize++;
     }
 
+    public void expandExplosionSize(int size) {
+        explosionSize += size;
+    }
+
     public void expandMaxBomb() {
         maxBomb++;
     }
@@ -103,10 +108,12 @@ public class PlayerModel extends GameModel {
 
     public void setExplode(boolean explode) {
         this.explode = explode;
-        maxBomb = 1;
-        explosionSize = 1;
-        speed = 2;
-        numberShuriken = 0;
+        if (!driver) {
+            maxBomb = 1;
+            explosionSize = 1;
+            speed = 2;
+            numberShuriken = 0;
+        }
     }
 
     public void increaseScore() {
@@ -199,5 +206,13 @@ public class PlayerModel extends GameModel {
         if (this.height != 0)
             y -= height - this.height;
         super.setHeight(height);
+    }
+
+    public String getPet() {
+        return pet;
+    }
+
+    public void setPet(String pet) {
+        this.pet = pet;
     }
 }

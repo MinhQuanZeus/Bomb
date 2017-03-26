@@ -19,6 +19,7 @@ public class PlayerView extends GameView {
     public static final String MOVE_LEFT = "/moveleft";
     public static final String MOVE_RIGHT = "/moveright";
     public static final String DINO = "Dino";
+    public static final String FISH = "Fish";
     private Animation animation;
     private String urlImage;
     private String urlPlayer;
@@ -65,7 +66,7 @@ public class PlayerView extends GameView {
             }
             graphics.drawImage(driver,
                     model.getX() + (model.getWidth() - driver.getWidth(null) * 2) / 2,
-                    model.getY() - 10,
+                    model.getY() - 15,
                     driver.getWidth(null) * 2, driver.getHeight(null) * 2,
                     null);
         }
@@ -117,16 +118,13 @@ public class PlayerView extends GameView {
                 urlImage = urlPlayer;
                 animation.setUrl(urlImage + MOVE_DOWN);
                 ((PlayerModel) model).setImmunity(true);
+                if (((PlayerModel) model).getPet().equals(DINO)) {
+                    ((PlayerModel) model).expandExplosionSize(-5);
+                } else {
+                    ((PlayerModel) model).speedDown();
+                }
             }
         }
-    }
-
-    public String getUrlPlayer() {
-        return urlPlayer;
-    }
-
-    public String getUrlImage() {
-        return urlImage;
     }
 
     public void setUrlImage(String urlImage) {

@@ -8,6 +8,7 @@ import models.ItemMapModel;
 import models.PlayerModel;
 import utils.Utils;
 import views.ItemView;
+import views.PlayerView;
 
 import java.awt.*;
 
@@ -38,7 +39,18 @@ public class ItemController extends GameController implements Collision {
             PlayerModel playerModel = (PlayerModel) other.getModel();
             switch (type) {
                 case EGG:
-                    ((PlayerController) other).driver();
+                    if (playerModel.isDriver() && playerModel.getPet().equals(PlayerView.DINO)) {
+                        model.setAlive(true);
+                    } else {
+                        ((PlayerController) other).driverDino();
+                    }
+                    break;
+                case EGGFISH:
+                    if (playerModel.isDriver() && playerModel.getPet().equals(PlayerView.FISH)) {
+                        model.setAlive(true);
+                    } else {
+                        ((PlayerController) other).driverFish();
+                    }
                     break;
                 case BONUS_TIME:
                     MapManager.bonusTime();
@@ -131,7 +143,13 @@ public class ItemController extends GameController implements Collision {
             type = ItemType.getRandomItemType();
         } while (GameManager.versus && (type == ItemType.BONUS_TIME || type == ItemType.DIE));
 
-        if (type == ItemType.EGG) {
+//        if (System.currentTimeMillis() % 2 == 0) {
+//            type = ItemType.EGG;
+//        } else {
+//            type = ItemType.EGGFISH;
+//        }
+
+        if (type == ItemType.EGG || type == ItemType.EGGFISH) {
             new ItemController(
                     new GameModel(x, y, WIDTH, HEIGHT),
                     new ItemView("Items/" + type, 9),

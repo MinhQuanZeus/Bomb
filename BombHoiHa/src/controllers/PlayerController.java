@@ -70,7 +70,7 @@ public class PlayerController extends GameController implements Collision, KeyLi
                 ((PlayerModel) model).setKick(false);
                 countDownKickPlayer = ItemController.MAX_KICK_TIME;
             }
-        }else{
+        } else {
             countDownKickPlayer = ItemController.MAX_KICK_TIME;
         }
 
@@ -265,9 +265,18 @@ public class PlayerController extends GameController implements Collision, KeyLi
 
     }
 
-    public void driver() {
+    public void driverDino() {
         ((PlayerModel) model).setDriver(true);
         ((PlayerView) view).setUrlImage(PlayerView.DINO);
+        ((PlayerModel) model).expandExplosionSize(5);
+        ((PlayerModel) model).setPet(PlayerView.DINO);
+    }
+
+    public void driverFish() {
+        ((PlayerModel) model).setDriver(true);
+        ((PlayerView) view).setUrlImage(PlayerView.FISH);
+        ((PlayerModel) model).speedUp();
+        ((PlayerModel) model).setPet(PlayerView.FISH);
     }
 
     @Override

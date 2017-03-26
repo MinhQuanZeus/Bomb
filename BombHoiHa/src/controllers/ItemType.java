@@ -18,7 +18,8 @@ public enum ItemType {
     SLIDE,
     KICK,
     FREEZE,
-    EGG;
+    EGG,
+    EGGFISH;
 
     private static final ItemType[] VALUES = values();
     private static final int SIZE = VALUES.length;
