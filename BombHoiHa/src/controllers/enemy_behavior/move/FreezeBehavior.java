@@ -1,6 +1,7 @@
 package controllers.enemy_behavior.move;
 
 import controllers.EnemyController;
+import controllers.Stage;
 import manager.MapManager;
 
 /**
@@ -23,7 +24,7 @@ public class FreezeBehavior {
                 count++;
                 if(count > frezzePeriod) {
                     count = 0;
-                    enemyController.setEnemyState(EnemyController.EnemyState.NORMAL);
+                    enemyController.setEnemyState(Stage.NORMAL);
                     MapManager.setCountTime(true);
                 }
                 break;

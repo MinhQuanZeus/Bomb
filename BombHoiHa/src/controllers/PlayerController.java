@@ -34,25 +34,30 @@ public class PlayerController extends GameController implements Collision, KeyLi
     protected boolean isSlide = false;
     private int reverseCount = 0;
     private int countDownKickPlayer = ItemController.MAX_KICK_TIME;
+    private Stage playerStage;
+    private PlayerFreezeBehavior playerFreezeBehavior;
 
-    public PlayerController(PlayerModel model, List<GameController> arrBlocks, String urlImage) {
+    public PlayerController(PlayerModel model, List<GameController> arrBlocks, String urlImage, PlayerFreezeBehavior playerFreezeBehavior) {
         super(model, new PlayerView(urlImage));
         GameManager.controllerManager.add(this);
         GameManager.collisionManager.add(this);
+        this.playerFreezeBehavior = playerFreezeBehavior;
+        playerStage = Stage.NORMAL;
         this.arrBlocks = arrBlocks;
     }
 
     @Override
     public void run() {
-        reloadShuriken++;
+
         if (isReverse) {
             reverseCount++;
             if (reverseCount == 170) {
                 isReverse = false;
                 reverseCount = 0;
             }
+        } else {
+            reverseCount = 0;
         }
-        checkBitSet();
         if (reloadShuriken == 4000) {
             reloadShuriken = 0;
         }
@@ -63,7 +68,19 @@ public class PlayerController extends GameController implements Collision, KeyLi
                 ((PlayerModel) model).setKick(false);
                 countDownKickPlayer = ItemController.MAX_KICK_TIME;
             }
+        }else{
+            countDownKickPlayer = ItemController.MAX_KICK_TIME;
         }
+        switch (playerStage) {
+            case NORMAL:
+                checkBitSet();
+            case FREEZE:
+                break;
+        }
+        if (playerFreezeBehavior != null) {
+            playerFreezeBehavior.run(this);
+        }
+
     }
 
     public void checkBitSet() {
@@ -144,7 +161,7 @@ public class PlayerController extends GameController implements Collision, KeyLi
             }
             if (bitSet.get(KeyEvent.VK_K)) {
                 if (((PlayerModel) model).getNumberShuriken() > 0 && reloadShuriken > RELOAD_SHURIKEN_SPEED) {
-                    ShurikenController shurikenController = ShurikenController.create(model.getX() + model.getWidth() / 2 - ShurikenModel.WIDTH / 2, model.getY() + model.getHeight() / 2, ((PlayerModel) model).getShotDirection());
+                    ShurikenController.create(model.getX() + model.getWidth() / 2 - ShurikenModel.WIDTH / 2, model.getY() + model.getHeight() / 2, ((PlayerModel) model).getShotDirection());
                     reloadShuriken = 0;
                     ((PlayerModel) model).decreaseNumberShuriken();
                 }
@@ -223,6 +240,11 @@ public class PlayerController extends GameController implements Collision, KeyLi
 
     public void reverseMove() {
         isReverse = true;
+        reverseCount = 0;
+    }
+
+    public void resetCountDownKickPlayer() {
+        countDownKickPlayer = ItemController.MAX_KICK_TIME;
     }
 
     public void die() {
@@ -231,6 +253,15 @@ public class PlayerController extends GameController implements Collision, KeyLi
 
     public void speedDown() {
         ((PlayerModel) model).speedDown();
+    }
+
+    public Stage getPlayerStage() {
+        return playerStage;
+    }
+
+    public void setPlayStage(Stage stage) {
+        this.playerStage = stage;
+
     }
 
     @Override

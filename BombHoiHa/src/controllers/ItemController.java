@@ -17,7 +17,7 @@ import java.awt.*;
 public class ItemController extends GameController implements Collision {
     public static final int WIDTH = ItemMapModel.SIZE_TILED;
     public static final int HEIGHT = ItemMapModel.SIZE_TILED;
-    public static final int MAX_KICK_TIME = 1500;
+    public static final int MAX_KICK_TIME = 1000;
     private ItemType type;
     private int countDown = 4;
 
@@ -50,8 +50,16 @@ public class ItemController extends GameController implements Collision {
                     playerModel.expandMaxBomb();
                     break;
                 case FREEZE:
-                    GameManager.controllerManager.freeze();
-                    MapManager.setCountTime(false);
+                    if(GameManager.versus){
+                        if (other instanceof SecondPlayerController) {
+                            ((PlayerController) GameManager.playerController).setPlayStage(Stage.FREEZE);
+                        } else {
+                            ((PlayerController) GameManager.secondPlayerController).setPlayStage(Stage.FREEZE);
+                        }
+                    }else {
+                        GameManager.controllerManager.freeze();
+                        MapManager.setCountTime(false);
+                    }
                     break;
                 case SHURIKEN:
                     playerModel.bonusShuriken();
@@ -105,6 +113,7 @@ public class ItemController extends GameController implements Collision {
                     break;
                 case KICK:
                     playerModel.setKick(true);
+                    ((PlayerController)other).resetCountDownKickPlayer();
                     break;
             }
         }
@@ -117,8 +126,7 @@ public class ItemController extends GameController implements Collision {
         ItemType type;
         do {
             type = ItemType.getRandomItemType();
-        } while (GameManager.versus && (type == ItemType.BONUS_TIME || type == ItemType.FREEZE || type == ItemType.DIE));
-
+        } while (GameManager.versus && (type == ItemType.BONUS_TIME || type == ItemType.DIE));
         new ItemController(
                 new GameModel(x, y, WIDTH, HEIGHT),
                 new ItemView("Items/" + type),

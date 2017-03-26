@@ -24,7 +24,7 @@ import java.util.List;
 public class EnemyController extends GameController implements Collision {
     protected PlayerModel playerModel;
     protected EnemyType type;
-    private EnemyState enemyState;
+    private Stage enemyState;
     private FreezeBehavior freezeBehavior;
 
     protected EnemyMoveBehavior enemyMoveBehavior;
@@ -34,7 +34,7 @@ public class EnemyController extends GameController implements Collision {
     // cần enum type để vẽ trong movebehavior, cần managerController để thêm việc tấn công, quái bắn lửa
     public EnemyController(int x, int y, int speed, int hp, EnemyView enemyView, PlayerModel playerModel, FreezeBehavior freezeBehavior, EnemyType type) {
         this(new EnemyModel(x, y, speed, hp, type), enemyView, playerModel, freezeBehavior, type);
-        enemyState = EnemyState.NORMAL;
+        enemyState = Stage.NORMAL;
     }
 
 
@@ -43,7 +43,6 @@ public class EnemyController extends GameController implements Collision {
         this.playerModel = playerModel;
         this.type = type;
         this.freezeBehavior = freezeBehavior;
-
         GameManager.controllerManager.add(this);
         GameManager.collisionManager.add(this);
     }
@@ -84,16 +83,11 @@ public class EnemyController extends GameController implements Collision {
         SMART_MAN
     }
 
-    public static enum EnemyState {
-        NORMAL,
-        FREEZE
-    }
-
-    public EnemyState getEnemyState() {
+    public Stage getEnemyState() {
         return enemyState;
     }
 
-    public void setEnemyState(EnemyState enemyState) {
+    public void setEnemyState(Stage enemyState) {
         this.enemyState = enemyState;
     }
 

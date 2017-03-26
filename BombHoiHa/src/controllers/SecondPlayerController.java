@@ -12,8 +12,8 @@ import java.util.List;
  */
 public class SecondPlayerController extends PlayerController {
 
-    public SecondPlayerController(PlayerModel model, List<GameController> arrBlocks, String urlImage) {
-        super(model, arrBlocks, urlImage);
+    public SecondPlayerController(PlayerModel model, List<GameController> arrBlocks, String urlImage, PlayerFreezeBehavior playerFreezeBehavior) {
+        super(model, arrBlocks, urlImage, playerFreezeBehavior);
     }
 
     @Override

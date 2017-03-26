@@ -48,18 +48,21 @@ public class GameManager {
             playerController = new PlayerController(
                     new PlayerModel(50, 50),
                     arrBlocks,
-                    "Bomberman"
+                    "Bomberman",
+                    new PlayerFreezeBehavior(250)
             );
             secondPlayerController = new SecondPlayerController(
                     new PlayerModel(12 * ItemMapModel.SIZE_TILED, 12 * ItemMapModel.SIZE_TILED - 30),
                     arrBlocks,
-                    "BombermanTwo"
+                    "BombermanTwo",
+                    new PlayerFreezeBehavior(250)
             );
         } else {
             playerController = new PlayerController(
                     new PlayerModel(0, 50),
                     arrBlocks,
-                    "Bomberman"
+                    "Bomberman",
+                    new PlayerFreezeBehavior(250)
             );
         }
         mapManager = new MapManager();

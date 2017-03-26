@@ -3,6 +3,7 @@ package manager;
 import controllers.EnemyController;
 import controllers.GameController;
 import controllers.PlayerController;
+import controllers.Stage;
 import controllers.enemy_behavior.move.Stop;
 import models.PlayerModel;
 
@@ -39,7 +40,7 @@ public class ControllerManager {
             GameController gameController = gameControllers.get(i);
             if (gameController.getModel().isAlive()) {
                 if (gameController instanceof EnemyController) {
-                    ((EnemyController) gameController).setEnemyState(EnemyController.EnemyState.FREEZE);
+                    ((EnemyController) gameController).setEnemyState(Stage.FREEZE);
                 }
             }
         }
