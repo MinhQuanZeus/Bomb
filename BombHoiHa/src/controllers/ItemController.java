@@ -39,15 +39,25 @@ public class ItemController extends GameController implements Collision {
             PlayerModel playerModel = (PlayerModel) other.getModel();
             switch (type) {
                 case EGG:
-                    if (playerModel.isDriver() && playerModel.getPet().equals(PlayerView.DINO)) {
-                        model.setAlive(true);
+                    if (playerModel.isDriver()) {
+                        if (playerModel.getPet().equals(PlayerView.DINO)) {
+                            model.setAlive(true);
+                        } else {
+                            playerModel.speedDown();
+                            ((PlayerController) other).driverDino();
+                        }
                     } else {
                         ((PlayerController) other).driverDino();
                     }
                     break;
                 case EGGFISH:
-                    if (playerModel.isDriver() && playerModel.getPet().equals(PlayerView.FISH)) {
-                        model.setAlive(true);
+                    if (playerModel.isDriver()) {
+                        if (playerModel.getPet().equals(PlayerView.FISH)) {
+                            model.setAlive(true);
+                        } else {
+                            playerModel.expandExplosionSize(-5);
+                            ((PlayerController) other).driverFish();
+                        }
                     } else {
                         ((PlayerController) other).driverFish();
                     }
