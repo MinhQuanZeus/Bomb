@@ -130,7 +130,7 @@ public class ItemController extends GameController implements Collision {
         do {
             type = ItemType.getRandomItemType();
         } while (GameManager.versus && (type == ItemType.BONUS_TIME || type == ItemType.DIE));
-        type = ItemType.EGG;
+
         if (type == ItemType.EGG) {
             new ItemController(
                     new GameModel(x, y, WIDTH, HEIGHT),
@@ -182,6 +182,7 @@ public class ItemController extends GameController implements Collision {
         super.draw(g);
         g.setFont(new Font("Courier New", Font.BOLD, 20));
         g.setColor(Color.white);
+
         if (!GameManager.versus) {
             if (type == ItemType.REVERSE_MOVE || type == ItemType.DIE || type == ItemType.SLIDE || type == ItemType.SPIDERWEB) {
                 g.drawString(countDown + "", model.getX(), model.getY());

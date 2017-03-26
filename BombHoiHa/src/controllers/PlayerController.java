@@ -58,6 +58,8 @@ public class PlayerController extends GameController implements Collision, KeyLi
         } else {
             reverseCount = 0;
         }
+
+        reloadShuriken++;
         if (reloadShuriken == 4000) {
             reloadShuriken = 0;
         }
@@ -71,6 +73,7 @@ public class PlayerController extends GameController implements Collision, KeyLi
         }else{
             countDownKickPlayer = ItemController.MAX_KICK_TIME;
         }
+
         switch (playerStage) {
             case NORMAL:
                 checkBitSet();
