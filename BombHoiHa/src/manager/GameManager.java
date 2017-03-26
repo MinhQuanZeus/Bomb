@@ -119,30 +119,30 @@ public class GameManager {
         graphics.setFont(new Font("Courier New", Font.BOLD, 20));
         graphics.setColor(Color.white);
 
-        graphics.drawImage(Utils.loadImageFromRes("Items/EXPAND_BOMB-0"), x, y, 30, 30, null);
+        graphics.drawImage(Utils.loadImageFromRes("Items/EXPAND_BOMB-1"), x, y, 30, 30, null);
         graphics.drawString(model.getMaxBomb() + "", x, y + 15);
         y += 40;
 
-        graphics.drawImage(Utils.loadImageFromRes("Items/EXPAND_EXPLOSIVE-0"), x, y, 30, 30, null);
+        graphics.drawImage(Utils.loadImageFromRes("Items/EXPAND_EXPLOSIVE-1"), x, y, 30, 30, null);
         graphics.drawString(model.getExplosionSize() + "", x, y + 15);
         y += 40;
 
-        graphics.drawImage(Utils.loadImageFromRes("Items/SPEED_UP-0"), x, y, 30, 30, null);
+        graphics.drawImage(Utils.loadImageFromRes("Items/SPEED_UP-1"), x, y, 30, 30, null);
         graphics.drawString(model.getSpeed() + "", x, y + 15);
         y += 40;
 
         if (model.isKick()) {
-            graphics.drawImage(Utils.loadImageFromRes("Items/KICK-0"), x, y, 30, 30, null);
+            graphics.drawImage(Utils.loadImageFromRes("Items/KICK-1"), x, y, 30, 30, null);
             y += 40;
         }
 
         if (((PlayerController) gameController).isReverse()) {
-            graphics.drawImage(Utils.loadImageFromRes("Items/REVERSE_MOVE-0"), x, y, 30, 30, null);
+            graphics.drawImage(Utils.loadImageFromRes("Items/REVERSE_MOVE-1"), x, y, 30, 30, null);
             y += 40;
         }
 
         if (((PlayerController) gameController).isSlide()) {
-            graphics.drawImage(Utils.loadImageFromRes("Items/SLIDE-0"), x, y, 30, 30, null);
+            graphics.drawImage(Utils.loadImageFromRes("Items/SLIDE-1"), x, y, 30, 30, null);
         }
 
         ((Graphics2D) graphics).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
