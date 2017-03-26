@@ -59,7 +59,7 @@ public class GameManager {
             );
         } else {
             playerController = new PlayerController(
-                    new PlayerModel(0, 50),
+                    new PlayerModel(5, 50),
                     arrBlocks,
                     "Bomberman",
                     new PlayerFreezeBehavior(250)

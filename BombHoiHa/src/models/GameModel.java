@@ -49,10 +49,6 @@ public class GameModel {
         return height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
     public boolean move(GameVector gameVector, List<GameController> arrBlocks) {
         int dx = this.x + gameVector.dx;
         int dy = this.y + gameVector.dy;
@@ -142,11 +138,23 @@ public class GameModel {
     }
 
     public Rectangle getBottomRect(int x, int y) {
-        return new Rectangle(x + 5, y + height - ItemMapModel.SIZE_TILED + 10, width - 10, ItemMapModel.SIZE_TILED - 10);
+        return new Rectangle(x + (width - ItemMapModel.SIZE_TILED + 10) / 2, y + height - ItemMapModel.SIZE_TILED + 10, ItemMapModel.SIZE_TILED - 10, ItemMapModel.SIZE_TILED - 10);
+    }
+
+    public int getXRect() {
+        return x + (width - ItemMapModel.SIZE_TILED + 10) / 2;
+    }
+
+    public int getYRect() {
+        return y + height - ItemMapModel.SIZE_TILED + 10;
     }
 
     public void setWidth(int width) {
         this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public void setX(int x) {

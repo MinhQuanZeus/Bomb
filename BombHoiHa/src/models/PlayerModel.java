@@ -12,8 +12,6 @@ public class PlayerModel extends GameModel {
 
     public static final int MAX_SPEED = 4;
     public static final int MIN_SPEED = 2;
-    public static final int WIDTH = 40;
-    public static final int HEIGHT = 56;
     public static final int MAX_LIFE = 6;
 
 
@@ -27,15 +25,17 @@ public class PlayerModel extends GameModel {
     private int countDownImmunity;
     private int numberShuriken;
     private boolean kick = false;
+    private boolean driver;
     private ShotDirection shotDirection = ShotDirection.RIGHT;
 
     public PlayerModel(int x, int y) {
-        super(x, y, WIDTH, HEIGHT);
+        super(x, y, 0, 0);
         maxBomb = 1;
         explosionSize = 1;
         speed = 2;
         numberShuriken = 0;
         explode = false;
+        driver = false;
         if (GameManager.versus) {
             life = 0;
         } else {
@@ -177,5 +177,27 @@ public class PlayerModel extends GameModel {
 
     public int getMaxBomb() {
         return maxBomb;
+    }
+
+    public boolean isDriver() {
+        return driver;
+    }
+
+    public void setDriver(boolean driver) {
+        this.driver = driver;
+    }
+
+    @Override
+    public void setWidth(int width) {
+        if (this.width != 0)
+            x -= (width - this.width) / 2;
+        super.setWidth(width);
+    }
+
+    @Override
+    public void setHeight(int height) {
+        if (this.height != 0)
+            y -= height - this.height;
+        super.setHeight(height);
     }
 }

@@ -174,14 +174,12 @@ public class PlayerController extends GameController implements Collision, KeyLi
     public void bombard() {
         PlayerModel model = (PlayerModel) this.model;
         if (model.checkMaxBomb()) {
-            int bombX = ((model.getX() + model.getHeight() / 2) / ItemMapModel.SIZE_TILED) * ItemMapModel.SIZE_TILED;
-            int bombY = (model.getY() / ItemMapModel.SIZE_TILED + 1) * ItemMapModel.SIZE_TILED;
-            int rowBombMatrix = Utils.getRowMatrix(bombY);
-            int colBombMatrix = Utils.getColMatrix(bombX);
+            int rowBombMatrix = Utils.getRowMatrix(model.getYRect() + ItemMapModel.SIZE_TILED / 2);
+            int colBombMatrix = Utils.getColMatrix(model.getXRect() + ItemMapModel.SIZE_TILED / 2);
             if (MapManager.map[rowBombMatrix][colBombMatrix] == 9)
                 return;
             new BombController(
-                    new BombModel(bombX, bombY, ItemMapModel.SIZE_TILED, ItemMapModel.SIZE_TILED),
+                    new BombModel(colBombMatrix * ItemMapModel.SIZE_TILED, rowBombMatrix * ItemMapModel.SIZE_TILED, ItemMapModel.SIZE_TILED, ItemMapModel.SIZE_TILED),
                     new AnimationView("Bombs & Explosions/normalbomb", 4),
                     arrBlocks,
                     model
@@ -262,6 +260,11 @@ public class PlayerController extends GameController implements Collision, KeyLi
     public void setPlayStage(Stage stage) {
         this.playerStage = stage;
 
+    }
+
+    public void driver() {
+        ((PlayerModel) model).setDriver(true);
+        ((PlayerView) view).setUrlImage(PlayerView.DINO);
     }
 
     @Override

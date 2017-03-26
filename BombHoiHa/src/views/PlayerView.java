@@ -18,24 +18,56 @@ public class PlayerView extends GameView {
     public static final String MOVE_DOWN = "/movedown";
     public static final String MOVE_LEFT = "/moveleft";
     public static final String MOVE_RIGHT = "/moveright";
-
+    public static final String DINO = "Dino";
     private Animation animation;
     private String urlImage;
+    private String urlPlayer;
+    private Image driver;
 
     public PlayerView(String url) {
         super(url + MOVE_DOWN + "-0");
         this.urlImage = url;
+        this.urlPlayer = url;
         animation = new Animation(150, 4, urlImage + MOVE_DOWN);
     }
 
     @Override
-    public void draw(Graphics graphics, GameModel model) {
-        if (((PlayerModel) model).isImmunity() && System.currentTimeMillis() % 2 == 0) {
+    public void draw(Graphics graphics, GameModel gameModel) {
+        PlayerModel model = (PlayerModel) gameModel;
+        model.setWidth(image.getWidth(null) * 23 / 10);
+        model.setHeight(image.getHeight(null) * 23 / 10);
+        if (model.isImmunity() && System.currentTimeMillis() % 2 == 0) {
             ((Graphics2D) graphics).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f));
-            super.draw(graphics, model);
+            graphics.drawImage(image, model.getX(), model.getY(),
+                    model.getWidth(), model.getHeight(),
+                    null);
             ((Graphics2D) graphics).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         } else {
-            super.draw(graphics, model);
+            graphics.drawImage(image, model.getX(), model.getY(),
+                    model.getWidth(), model.getHeight(),
+                    null);
+        }
+
+        if (model.isDriver()) {
+            switch (model.getShotDirection()) {
+                case RIGHT:
+                    driver = Utils.loadImageFromRes(urlPlayer + "/driverright");
+                    break;
+                case LEFT:
+                    driver = Utils.loadImageFromRes(urlPlayer + "/driverleft");
+                    break;
+                case DOWN:
+                    driver = Utils.loadImageFromRes(urlPlayer + "/driverdown");
+                    break;
+                case UP:
+                    driver = Utils.loadImageFromRes(urlPlayer + "/driverup");
+                    break;
+            }
+            graphics.drawImage(driver,
+                    model.getX() + (model.getWidth() - driver.getWidth(null) * 2) / 2,
+                    model.getY() - 10,
+                    driver.getWidth(null) * 2, driver.getHeight(null) * 2,
+                    null);
         }
     }
 
@@ -61,26 +93,45 @@ public class PlayerView extends GameView {
         if (animation.getImage() != null) {
             image = animation.getImage();
         } else {
-            if (((PlayerModel) model).getLife() == 0) {
-                model.setAlive(false);
-                if (!GameManager.versus) {
-                    GameFrame.mainPanel.showEndPanel(EndGamePanel.LOSE, ((PlayerModel) GameManager.playerController.getModel()).getScore());
-                } else {
-                    if (animation.getUrl().contains("BombermanTwo")) {
-                        GameFrame.mainPanel.showEndPanel(EndGamePanel.BOMBERMAN, null);
+            if (!((PlayerModel) model).isDriver()) {
+                if (((PlayerModel) model).getLife() == 0) {
+                    model.setAlive(false);
+                    if (!GameManager.versus) {
+                        GameFrame.mainPanel.showEndPanel(EndGamePanel.LOSE, ((PlayerModel) GameManager.playerController.getModel()).getScore());
                     } else {
-                        GameFrame.mainPanel.showEndPanel(EndGamePanel.HAMMERBOMBER, null);
+                        if (animation.getUrl().contains("BombermanTwo")) {
+                            GameFrame.mainPanel.showEndPanel(EndGamePanel.BOMBERMAN, null);
+                        } else {
+                            GameFrame.mainPanel.showEndPanel(EndGamePanel.HAMMERBOMBER, null);
+                        }
                     }
+                } else {
+                    ((PlayerModel) model).setExplode(false);
+                    ((PlayerModel) model).reduceLife();
+                    animation.setUrl(urlImage + MOVE_DOWN);
+                    ((PlayerModel) model).setImmunity(true);
                 }
             } else {
                 ((PlayerModel) model).setExplode(false);
-                ((PlayerModel) model).reduceLife();
+                ((PlayerModel) model).setDriver(false);
+                urlImage = urlPlayer;
                 animation.setUrl(urlImage + MOVE_DOWN);
                 ((PlayerModel) model).setImmunity(true);
             }
         }
     }
 
+    public String getUrlPlayer() {
+        return urlPlayer;
+    }
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
 
     public void setImageHold() {
         image = Utils.loadImageFromRes(animation.getUrl() + "-1");

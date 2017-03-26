@@ -17,7 +17,8 @@ public enum ItemType {
     SPIDERWEB,
     SLIDE,
     KICK,
-    FREEZE;
+    FREEZE,
+    EGG;
 
     private static final ItemType[] VALUES = values();
     private static final int SIZE = VALUES.length;
@@ -26,5 +27,4 @@ public enum ItemType {
     public static ItemType getRandomItemType()  {
         return VALUES[RANDOM.nextInt(SIZE)];
     }
-
 }

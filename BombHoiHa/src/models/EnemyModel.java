@@ -9,8 +9,8 @@ import java.awt.*;
  * Created by QuanT on 3/9/2017.
  */
 public class EnemyModel extends GameModel implements Collision{
-    public static final int WIDTH = PlayerModel.WIDTH;
-    public static final int HEIGHT = PlayerModel.HEIGHT;
+    public static final int WIDTH = 40;
+    public static final int HEIGHT = 56;
     public static int enemyCount;
     private int hp = 1;
     private boolean destroy = false;

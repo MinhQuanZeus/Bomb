@@ -37,6 +37,9 @@ public class ItemController extends GameController implements Collision {
             model.setAlive(false);
             PlayerModel playerModel = (PlayerModel) other.getModel();
             switch (type) {
+                case EGG:
+                    ((PlayerController) other).driver();
+                    break;
                 case BONUS_TIME:
                     MapManager.bonusTime();
                     break;
@@ -127,11 +130,20 @@ public class ItemController extends GameController implements Collision {
         do {
             type = ItemType.getRandomItemType();
         } while (GameManager.versus && (type == ItemType.BONUS_TIME || type == ItemType.DIE));
-        new ItemController(
-                new GameModel(x, y, WIDTH, HEIGHT),
-                new ItemView("Items/" + type),
-                type
-        );
+        type = ItemType.EGG;
+        if (type == ItemType.EGG) {
+            new ItemController(
+                    new GameModel(x, y, WIDTH, HEIGHT),
+                    new ItemView("Items/" + type, 9),
+                    type
+            );
+        } else {
+            new ItemController(
+                    new GameModel(x, y, WIDTH, HEIGHT),
+                    new ItemView("Items/" + type, 2),
+                    type
+            );
+        }
     }
 
     @Override
