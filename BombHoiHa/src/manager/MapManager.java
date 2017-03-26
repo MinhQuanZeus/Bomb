@@ -5,6 +5,7 @@ import controllers.GameController;
 import controllers.ItemMapController;
 import controllers.*;
 import gui.GameFrame;
+import gui.GamePanel;
 import models.*;
 import utils.Utils;
 import gui.MainPanel;
@@ -19,13 +20,12 @@ import java.util.List;
  */
 public class MapManager extends ControllerManager {
 
-    public static final int LEVEL_MAX = 4;
+    public static final int LEVEL_MAX = 3;
     public static int[][] map;
     public static int mapLevel;
     private static long exist;
     private ItemMapController portalItem;
     private long start;
-    private ImageIcon winIcon;
 
     public static boolean isCountTime;
     private static final int TIME_BONUS = 15;
@@ -49,7 +49,6 @@ public class MapManager extends ControllerManager {
                 Terrain.CHANGE_MAP,
                 new AnimationView("Portal/portal", 4)
         );
-        winIcon = new ImageIcon("resources/System/win.png");
     }
 
     public void changeMap(int level) {
@@ -82,7 +81,7 @@ public class MapManager extends ControllerManager {
                     portalItem.getModel().setY(y);
                 }
             } else if (mapLevel >= LEVEL_MAX) {
-                MainPanel.gamePanel.addTitle(winIcon);
+                MainPanel.gamePanel.addTitle(GamePanel.winIcon);
             }
         }
     }

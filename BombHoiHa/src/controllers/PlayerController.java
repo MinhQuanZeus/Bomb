@@ -198,7 +198,7 @@ public class PlayerController extends GameController implements Collision, KeyLi
         if (other instanceof ItemMapController) {
             if (((ItemMapModel) other.getModel()).getTerrain() == Terrain.CHANGE_MAP) {
                 GameManager.collisionManager.remove(other);
-                MainPanel.gamePanel.addTitle(new ImageIcon("resources/System/stage-clear.png"));
+                MainPanel.gamePanel.addTitle(GamePanel.clearIcon);
                 GameManager.setTransitionStart(true);
             }
         }

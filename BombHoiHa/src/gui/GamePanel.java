@@ -18,6 +18,8 @@ import java.util.BitSet;
 public class GamePanel extends JPanel implements Runnable {
 
     public static boolean paused;
+    public static final ImageIcon winIcon = new ImageIcon("resources/System/win.png");
+    public static final ImageIcon clearIcon = new ImageIcon("resources/System/stage-clear.png");
     private static boolean flag;
 
     private boolean running;
