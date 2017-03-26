@@ -31,6 +31,7 @@ public class GameManager {
     private static int transitionFrameStart;
     private static int transitionFrameEnd;
     private static int transitionDelay;
+    private int countDownRandomItem;
 
     public GameManager(boolean versus) {
         AutoLoadPic.init();
@@ -43,6 +44,7 @@ public class GameManager {
         transitionFrameStart = 11;
         transitionFrameEnd = 0;
         transitionDelay = 0;
+        countDownRandomItem = 0;
         flag = true;
         if (versus) {
             playerController = new PlayerController(
@@ -73,6 +75,7 @@ public class GameManager {
         controllerManager.run();
         collisionManager.run();
         runTransition();
+        randomItem();
     }
 
     public void draw(Graphics graphics) {
@@ -80,6 +83,24 @@ public class GameManager {
         controllerManager.draw(graphics);
         drawTransition(graphics);
         drawInf(graphics);
+    }
+
+    public void randomItem() {
+        if (versus) {
+            countDownRandomItem++;
+            if (countDownRandomItem == 1800) {
+                int x;
+                int y;
+
+                do {
+                    x = Utils.getRandom(14) * ItemMapModel.SIZE_TILED;
+                    y = Utils.getRandom(14) * ItemMapModel.SIZE_TILED;
+                } while (MapManager.map[Utils.getRowMatrix(y)][Utils.getColMatrix(x)] != 0);
+
+                ItemController.create(x, y);
+                countDownRandomItem = 0;
+            }
+        }
     }
 
     public void drawInf(Graphics g) {

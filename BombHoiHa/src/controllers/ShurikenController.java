@@ -10,7 +10,7 @@ import views.ShurikenView;
  * Created by QuanT on 3/22/2017.
  */
 public class ShurikenController extends GameController implements Collision {
-    public static final int SPEED = 8;
+    public static final int SPEED = 5;
     public ShotDirection type;
 
     public ShurikenController(ShurikenModel model, ShurikenView view) {
