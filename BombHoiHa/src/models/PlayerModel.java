@@ -25,17 +25,16 @@ public class PlayerModel extends GameModel {
     private int score;
     private boolean immunity;
     private int countDownImmunity;
-    private int numberShuriken=0;
+    private int numberShuriken;
     private boolean kick = false;
     private ShotDirection shotDirection = ShotDirection.RIGHT;
-
-
 
     public PlayerModel(int x, int y) {
         super(x, y, WIDTH, HEIGHT);
         maxBomb = 1;
         explosionSize = 1;
         speed = 2;
+        numberShuriken = 0;
         explode = false;
         if (GameManager.versus) {
             life = 0;
@@ -63,29 +62,30 @@ public class PlayerModel extends GameModel {
     public int getExplosionSize() {
         return explosionSize;
     }
-    public void bonusLife(){
-        if(life+1<=MAX_LIFE){
+
+    public void bonusLife() {
+        if (life + 1 <= MAX_LIFE) {
             life++;
         }
     }
-    public void expandExplosionSize(){
+
+    public void expandExplosionSize() {
         explosionSize++;
     }
 
-    public void expandMaxBomb(){
+    public void expandMaxBomb() {
         maxBomb++;
     }
 
     public void speedUp() {
-        if(speed<= MAX_SPEED)
-        speed+=1;
+        if (speed <= MAX_SPEED)
+            speed += 1;
     }
 
     public void speedDown() {
-        if(speed>= MIN_SPEED)
-            speed-=1;
+        if (speed >= MIN_SPEED)
+            speed -= 1;
     }
-
 
 
     public int getSpeed() {
@@ -103,8 +103,10 @@ public class PlayerModel extends GameModel {
 
     public void setExplode(boolean explode) {
         this.explode = explode;
-        numberShuriken = 0;
+        maxBomb = 1;
+        explosionSize = 1;
         speed = 2;
+        numberShuriken = 0;
     }
 
     public void increaseScore() {
@@ -140,16 +142,19 @@ public class PlayerModel extends GameModel {
             }
         }
     }
+
     public int getNumberShuriken() {
         return numberShuriken;
     }
-    public void decreaseNumberShuriken(){
+
+    public void decreaseNumberShuriken() {
         numberShuriken--;
     }
-    public void bonusShuriken(){
-        if(numberShuriken+3<=6) {
+
+    public void bonusShuriken() {
+        if (numberShuriken + 3 <= 6) {
             numberShuriken += 3;
-        }else if(numberShuriken+3>6){
+        } else if (numberShuriken + 3 > 6) {
             numberShuriken = 6;
         }
     }
@@ -161,11 +166,16 @@ public class PlayerModel extends GameModel {
     public void setKick(boolean kick) {
         this.kick = kick;
     }
+
     public ShotDirection getShotDirection() {
         return shotDirection;
     }
 
     public void setShotDirection(ShotDirection shotDirection) {
         this.shotDirection = shotDirection;
+    }
+
+    public int getMaxBomb() {
+        return maxBomb;
     }
 }

@@ -81,41 +81,41 @@ public class PlayerController extends GameController implements Collision, KeyLi
                     if (isReverse) {
                         ((PlayerModel) model).setShotDirection(ShotDirection.UP);
                         view.setImage(PlayerView.MOVE_UP);
-                        this.vector.dy = -((PlayerModel) model).getSpeed();
+                        this.vector.dy = -model.getSpeed();
                     } else {
                         ((PlayerModel) model).setShotDirection(ShotDirection.DOWN);
                         view.setImage(PlayerView.MOVE_DOWN);
-                        this.vector.dy = ((PlayerModel) model).getSpeed();
+                        this.vector.dy = model.getSpeed();
                     }
                 } else if (bitSet.get(KeyEvent.VK_W)) {
                     if (isReverse) {
                         ((PlayerModel) model).setShotDirection(ShotDirection.DOWN);
                         view.setImage(PlayerView.MOVE_DOWN);
-                        this.vector.dy = ((PlayerModel) model).getSpeed();
+                        this.vector.dy = model.getSpeed();
                     } else {
                         ((PlayerModel) model).setShotDirection(ShotDirection.UP);
                         view.setImage(PlayerView.MOVE_UP);
-                        this.vector.dy = -((PlayerModel) model).getSpeed();
+                        this.vector.dy = -model.getSpeed();
                     }
                 } else if (bitSet.get(KeyEvent.VK_A)) {
                     if (isReverse) {
                         ((PlayerModel) model).setShotDirection(ShotDirection.RIGHT);
                         view.setImage(PlayerView.MOVE_RIGHT);
-                        this.vector.dx = ((PlayerModel) model).getSpeed();
+                        this.vector.dx = model.getSpeed();
                     } else {
                         ((PlayerModel) model).setShotDirection(ShotDirection.LEFT);
                         view.setImage(PlayerView.MOVE_LEFT);
-                        this.vector.dx = -((PlayerModel) model).getSpeed();
+                        this.vector.dx = -model.getSpeed();
                     }
                 } else if (bitSet.get(KeyEvent.VK_D)) {
                     if (isReverse) {
                         ((PlayerModel) model).setShotDirection(ShotDirection.LEFT);
                         view.setImage(PlayerView.MOVE_LEFT);
-                        this.vector.dx = -((PlayerModel) model).getSpeed();
+                        this.vector.dx = -model.getSpeed();
                     } else {
                         ((PlayerModel) model).setShotDirection(ShotDirection.RIGHT);
                         view.setImage(PlayerView.MOVE_RIGHT);
-                        this.vector.dx = ((PlayerModel) model).getSpeed();
+                        this.vector.dx = model.getSpeed();
                     }
                 } else {
                     view.setImageHold();
@@ -254,6 +254,14 @@ public class PlayerController extends GameController implements Collision, KeyLi
     @Override
     public void keyReleased(KeyEvent e) {
         bitSet.clear(e.getKeyCode());
+    }
+
+    public boolean isReverse() {
+        return isReverse;
+    }
+
+    public boolean isSlide() {
+        return isSlide;
     }
 
     public BitSet getBitSet() {

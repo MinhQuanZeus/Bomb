@@ -18,13 +18,13 @@ import java.util.List;
 public class GameManager {
 
     public static ControllerManager controllerManager;
+    public static ControllerManager mapManager;
     public static CollisionManager collisionManager;
     public static List<GameController> arrBlocks;
     public static GameController playerController;
     public static GameController secondPlayerController;
-    public static ControllerManager mapManager;
-
     public static boolean versus;
+
     private static boolean transitionStart;
     private static boolean transitionEnd;
     private static boolean flag;
@@ -81,6 +81,8 @@ public class GameManager {
 
     public void drawInf(Graphics g) {
         if (GameManager.versus) {
+            drawAbility(g, playerController, 0);
+            drawAbility(g, secondPlayerController, GameFrame.WIDTH - 30);
             for (int i = 0; i < ((PlayerModel) playerController.getModel()).getNumberShuriken(); i++) {
                 g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"), 40 + 20 * i, 5, 20, 20, null);
             }
@@ -93,6 +95,7 @@ public class GameManager {
             g.drawImage(Utils.loadImageFromRes("Bomberman/life"), GameFrame.WIDTH - 35, 0, null);
             g.drawString(((PlayerModel) secondPlayerController.getModel()).getLife() + "", GameFrame.WIDTH - 26, 20);
         } else {
+            drawAbility(g, playerController, 0);
             for (int i = 0; i < ((PlayerModel) playerController.getModel()).getNumberShuriken(); i++) {
                 g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"), 140 + 20 * i, 5, 20, 20, null);
             }
@@ -103,6 +106,43 @@ public class GameManager {
             g.drawString("Score:" + ((PlayerModel) playerController.getModel()).getScore(), GameFrame.WIDTH - 200, 22);
             g.drawString(((PlayerModel) playerController.getModel()).getLife() + "", 9, 20);
         }
+    }
+
+    public void drawAbility(Graphics graphics, GameController gameController, int x) {
+        PlayerModel model = (PlayerModel) gameController.getModel();
+        ((Graphics2D) graphics).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6f));
+
+        int y = 200;
+        graphics.setFont(new Font("Courier New", Font.BOLD, 20));
+        graphics.setColor(Color.white);
+
+        graphics.drawImage(Utils.loadImageFromRes("Items/EXPAND_BOMB-0"), x, y, 30, 30, null);
+        graphics.drawString(model.getMaxBomb() + "", x, y + 15);
+        y += 40;
+
+        graphics.drawImage(Utils.loadImageFromRes("Items/EXPAND_EXPLOSIVE-0"), x, y, 30, 30, null);
+        graphics.drawString(model.getExplosionSize() + "", x, y + 15);
+        y += 40;
+
+        graphics.drawImage(Utils.loadImageFromRes("Items/SPEED_UP-0"), x, y, 30, 30, null);
+        graphics.drawString(model.getSpeed() + "", x, y + 15);
+        y += 40;
+
+        if (model.isKick()) {
+            graphics.drawImage(Utils.loadImageFromRes("Items/KICK-0"), x, y, 30, 30, null);
+            y += 40;
+        }
+
+        if (((PlayerController) gameController).isReverse()) {
+            graphics.drawImage(Utils.loadImageFromRes("Items/REVERSE_MOVE-0"), x, y, 30, 30, null);
+            y += 40;
+        }
+
+        if (((PlayerController) gameController).isSlide()) {
+            graphics.drawImage(Utils.loadImageFromRes("Items/SLIDE-0"), x, y, 30, 30, null);
+        }
+
+        ((Graphics2D) graphics).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
     }
 
     public void drawTransition(Graphics graphics) {
