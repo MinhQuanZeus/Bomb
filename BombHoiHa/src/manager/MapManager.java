@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class MapManager extends ControllerManager {
 
-    public static final int LEVEL_MAX = 3;
+    public static final int LEVEL_MAX = 4;
     public static int[][] map;
     public static int mapLevel;
     private static long exist;

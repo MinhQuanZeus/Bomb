@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
  */
 public class StoryIntroPanel extends JPanel {
     private JLabel btnNext;
+    private JLabel btnPrev;
 
     private int part = 0;
 
@@ -24,15 +25,20 @@ public class StoryIntroPanel extends JPanel {
         MouseAdapter mouseAdapter = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
-                System.out.println(part);
                 super.mouseClicked(mouseEvent);
                 Utils.playSound("select.wav", false);
-                if (part == 5) {
-                    GameFrame.mainPanel.showGamePanel(false);
-                    part = 0;
-                }
                 if (mouseEvent.getSource().equals(btnNext)) {
-                    part++;
+                    if (part == 5) {
+                        GameFrame.mainPanel.showGamePanel(false);
+                        part = 0;
+                    }
+                    if (part < 5)
+                        part++;
+                    repaint();
+                }
+                if (mouseEvent.getSource().equals(btnPrev)) {
+                    if (part > 0)
+                        part--;
                     repaint();
                 }
             }
@@ -44,6 +50,10 @@ public class StoryIntroPanel extends JPanel {
                     ImageIcon imageIcon = new ImageIcon("resources/System/next-1.png");
                     btnNext.setIcon(imageIcon);
                 }
+                if (e.getSource().equals(btnPrev)) {
+                    ImageIcon imageIcon = new ImageIcon("resources/System/prev-1.png");
+                    btnPrev.setIcon(imageIcon);
+                }
             }
 
             @Override
@@ -52,6 +62,10 @@ public class StoryIntroPanel extends JPanel {
                 if (e.getSource().equals(btnNext)) {
                     ImageIcon imageIcon = new ImageIcon("resources/System/next-0.png");
                     btnNext.setIcon(imageIcon);
+                }
+                if (e.getSource().equals(btnPrev)) {
+                    ImageIcon imageIcon = new ImageIcon("resources/System/prev-0.png");
+                    btnPrev.setIcon(imageIcon);
                 }
             }
 
@@ -63,6 +77,13 @@ public class StoryIntroPanel extends JPanel {
         btnNext.setFocusable(false);
         add(btnNext);
         btnNext.addMouseListener(mouseAdapter);
+
+        imageIcon = new ImageIcon("resources/System/prev-0.png");
+        btnPrev = new JLabel(imageIcon);
+        btnPrev.setBounds(50, 460, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+        btnPrev.setFocusable(false);
+        add(btnPrev);
+        btnPrev.addMouseListener(mouseAdapter);
 
     }
 

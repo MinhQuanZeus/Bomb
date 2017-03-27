@@ -18,6 +18,7 @@ public class MenuPanel extends JPanel {
     private JLabel btnExit;
     private JLabel btnInstruction;
     private JLabel btnVersus;
+    private JLabel gifLabel;
 
     public MenuPanel() {
         setLayout(null);
@@ -29,7 +30,7 @@ public class MenuPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
                 super.mouseClicked(mouseEvent);
-                Utils.playSound("select.wav",false);
+                Utils.playSound("select.wav", false);
                 if (mouseEvent.getSource().equals(btnExit)) {
                     System.exit(0);
                 }
@@ -47,19 +48,19 @@ public class MenuPanel extends JPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
-                if(e.getSource().equals(btnStart)){
+                if (e.getSource().equals(btnStart)) {
                     ImageIcon imageIcon = new ImageIcon("resources/System/start-1.png");
                     btnStart.setIcon(imageIcon);
                 }
-                if(e.getSource().equals(btnExit)){
+                if (e.getSource().equals(btnExit)) {
                     ImageIcon imageIcon = new ImageIcon("resources/System/exit-1.png");
                     btnExit.setIcon(imageIcon);
                 }
-                if(e.getSource().equals(btnInstruction)){
+                if (e.getSource().equals(btnInstruction)) {
                     ImageIcon imageIcon = new ImageIcon("resources/System/instruction-1.png");
                     btnInstruction.setIcon(imageIcon);
                 }
-                if(e.getSource().equals(btnVersus)){
+                if (e.getSource().equals(btnVersus)) {
                     ImageIcon imageIcon = new ImageIcon("resources/System/versus-1.png");
                     btnVersus.setIcon(imageIcon);
                 }
@@ -68,24 +69,23 @@ public class MenuPanel extends JPanel {
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
-                if(e.getSource().equals(btnStart)){
+                if (e.getSource().equals(btnStart)) {
                     ImageIcon imageIcon = new ImageIcon("resources/System/start-0.png");
                     btnStart.setIcon(imageIcon);
                 }
-                if(e.getSource().equals(btnExit)){
+                if (e.getSource().equals(btnExit)) {
                     ImageIcon imageIcon = new ImageIcon("resources/System/exit-0.png");
                     btnExit.setIcon(imageIcon);
                 }
-                if(e.getSource().equals(btnInstruction)){
+                if (e.getSource().equals(btnInstruction)) {
                     ImageIcon imageIcon = new ImageIcon("resources/System/instruction-0.png");
                     btnInstruction.setIcon(imageIcon);
                 }
-                if(e.getSource().equals(btnVersus)){
+                if (e.getSource().equals(btnVersus)) {
                     ImageIcon imageIcon = new ImageIcon("resources/System/versus-0.png");
                     btnVersus.setIcon(imageIcon);
                 }
             }
-
         };
 
         ImageIcon imageIcon = new ImageIcon("resources/System/start-0.png");
@@ -115,6 +115,12 @@ public class MenuPanel extends JPanel {
         btnExit.setFocusable(false);
         add(btnExit);
         btnExit.addMouseListener(mouseAdapter);
+
+        imageIcon = new ImageIcon("resources/System/dancing.gif");
+        gifLabel = new JLabel(imageIcon);
+        gifLabel.setBounds(90, btnStart.getY() - 55, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+        gifLabel.setFocusable(false);
+        add(gifLabel);
     }
 
     @Override

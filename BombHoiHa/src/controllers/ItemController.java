@@ -152,7 +152,6 @@ public class ItemController extends GameController implements Collision {
         do {
             type = ItemType.getRandomItemType();
         } while (GameManager.versus && (type == ItemType.BONUS_TIME || type == ItemType.DIE));
-
         if (type == ItemType.EGG || type == ItemType.EGGFISH) {
             new ItemController(
                     new GameModel(x, y, WIDTH, HEIGHT),
