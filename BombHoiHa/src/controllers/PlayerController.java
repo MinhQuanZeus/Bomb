@@ -208,7 +208,6 @@ public class PlayerController extends GameController implements Collision, KeyLi
                 Rectangle rectangle = model.getIntersectionRect(((ExplosionController) other).model);
                 if (rectangle.getWidth() > 10 && rectangle.getHeight() > 10) {
                     if (!((PlayerModel) model).isExplode()) {
-                        Utils.playSound("player-out.wav", false);
                         ((PlayerModel) model).setExplode(true);
                     }
                 }
@@ -219,7 +218,6 @@ public class PlayerController extends GameController implements Collision, KeyLi
                 if (enemyModel.getBottomRect(enemyModel.getX(), enemyModel.getY()).intersects(model.getBottomRect(model.getX(), model.getY()))) {
                     if (enemyModel.getHp() != 0) {
                         if (!((PlayerModel) model).isExplode()) {
-                            Utils.playSound("player-out.wav", false);
                             ((PlayerModel) model).setExplode(true);
                         }
                     }
@@ -228,7 +226,6 @@ public class PlayerController extends GameController implements Collision, KeyLi
 
             if (other instanceof BulletController) {
                 if (!((PlayerModel) model).isExplode()) {
-                    Utils.playSound("player-out.wav", false);
                     ((PlayerModel) model).setExplode(true);
                 }
             }
@@ -237,7 +234,6 @@ public class PlayerController extends GameController implements Collision, KeyLi
                 Rectangle r = new Rectangle(other.getModel().getX() + 10,other.getModel().getY() + other.getModel().getHeight()/2,other.getModel().getWidth() - 20,BossEnemyModel.BOSS_HEIGHT/2 + BossEnemyModel.BOSS_SHADOW_DISTANCE + BossEnemyModel.BOSS_HEIGHT/5);
                 if(r.intersects(new Rectangle(model.getX(),model.getY(),model.getHeight(),model.getWidth()))){
                     if (!((PlayerModel) model).isExplode()) {
-                        Utils.playSound("player-out.wav", false);
                         ((PlayerModel) model).setExplode(true);
                     }
                 }
@@ -285,7 +281,7 @@ public class PlayerController extends GameController implements Collision, KeyLi
     public void driverFish() {
         ((PlayerModel) model).setDriver(true);
         ((PlayerView) view).setUrlImage(PlayerView.FISH);
-        ((PlayerModel) model).speedUp();
+        ((PlayerModel) model).getInFish();
         ((PlayerModel) model).setPet(PlayerView.FISH);
     }
 

@@ -121,7 +121,7 @@ public class PlayerView extends GameView {
                 if (((PlayerModel) model).getPet().equals(DINO)) {
                     ((PlayerModel) model).expandExplosionSize(-5);
                 } else {
-                    ((PlayerModel) model).speedDown();
+                    ((PlayerModel) model).getOutFish();
                 }
             }
         }

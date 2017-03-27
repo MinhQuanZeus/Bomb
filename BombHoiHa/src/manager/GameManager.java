@@ -27,7 +27,6 @@ public class GameManager {
 
     private static boolean transitionStart;
     private static boolean transitionEnd;
-    private static boolean flag;
     private static int transitionFrameStart;
     private static int transitionFrameEnd;
     private static int transitionDelay;
@@ -45,7 +44,7 @@ public class GameManager {
         transitionFrameEnd = 0;
         transitionDelay = 0;
         countDownRandomItem = 0;
-        flag = true;
+
         if (versus) {
             playerController = new PlayerController(
                     new PlayerModel(50, 50),
@@ -74,7 +73,6 @@ public class GameManager {
         mapManager.run();
         controllerManager.run();
         collisionManager.run();
-        runTransition();
         randomItem();
     }
 
@@ -182,6 +180,16 @@ public class GameManager {
                 transitionFrameStart--;
                 transitionDelay = 0;
             }
+            if (transitionFrameStart == 0) {
+                ((MapManager) GameManager.mapManager).changeMap(MapManager.mapLevel + 1);
+                playerController.getModel().setX(0);
+                playerController.getModel().setY(50);
+
+                if(MapManager.mapLevel == 4){
+                    playerController.getModel().setX(6*ItemMapModel.SIZE_TILED);
+                    playerController.getModel().setY(10*ItemMapModel.SIZE_TILED);
+                }
+            }
             if (transitionFrameStart == -10) {
                 transitionEnd = true;
                 transitionStart = false;
@@ -201,24 +209,8 @@ public class GameManager {
                 transitionFrameStart = 11;
                 transitionDelay = 0;
                 transitionEnd = false;
-                flag = true;
                 MainPanel.gamePanel.addTitle(new ImageIcon("resources/System/stage-" + MapManager.mapLevel + ".png"));
             }
-        }
-    }
-
-    public void runTransition() {
-        if (transitionFrameStart == 0 && flag == true) {
-            ((MapManager) GameManager.mapManager).changeMap(MapManager.mapLevel + 1);
-            playerController.getModel().setX(0);
-            playerController.getModel().setY(50);
-
-            if(MapManager.mapLevel == 4){
-                playerController.getModel().setX(6*ItemMapModel.SIZE_TILED);
-                playerController.getModel().setY(10*ItemMapModel.SIZE_TILED);
-            }
-
-            flag = false;
         }
     }
 

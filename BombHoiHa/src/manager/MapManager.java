@@ -41,7 +41,7 @@ public class MapManager extends ControllerManager {
         isCountTime = true;
         map = new int[14][14];
         readMap(mapLevel);
-        exist = 120000;
+        exist = 180000;
         start = System.currentTimeMillis();
         portalItem = new ItemMapController(
                 0,

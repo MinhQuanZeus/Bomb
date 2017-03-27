@@ -2,6 +2,7 @@ package models;
 
 import controllers.enemy_weapon.ShotDirection;
 import manager.GameManager;
+import utils.Utils;
 
 import java.awt.*;
 
@@ -24,6 +25,7 @@ public class PlayerModel extends GameModel {
     private boolean immunity;
     private int countDownImmunity;
     private int numberShuriken;
+    private int storeSpeed;
     private boolean kick = false;
     private boolean driver;
     private String pet;
@@ -34,6 +36,7 @@ public class PlayerModel extends GameModel {
         maxBomb = 1;
         explosionSize = 1;
         speed = 2;
+        storeSpeed = 2;
         numberShuriken = 0;
         explode = false;
         driver = false;
@@ -83,15 +86,27 @@ public class PlayerModel extends GameModel {
     }
 
     public void speedUp() {
-        if (speed <= MAX_SPEED)
-            speed += 1;
+        if (speed < MAX_SPEED)
+            speed++;
+        if (storeSpeed < MAX_SPEED)
+            storeSpeed++;
     }
 
     public void speedDown() {
         if (speed >= MIN_SPEED)
-            speed -= 1;
+            speed--;
+        if (storeSpeed >= MIN_SPEED)
+            storeSpeed--;
     }
 
+    public void getInFish() {
+        storeSpeed = speed;
+        speed = MAX_SPEED;
+    }
+
+    public void getOutFish() {
+        speed = storeSpeed;
+    }
 
     public int getSpeed() {
         return speed;
@@ -108,11 +123,12 @@ public class PlayerModel extends GameModel {
 
     public void setExplode(boolean explode) {
         this.explode = explode;
-        if (!driver) {
+        if (!driver && explode) {
             maxBomb = 1;
             explosionSize = 1;
             speed = 2;
             numberShuriken = 0;
+            Utils.playSound("player-out.wav", false);
         }
     }
 
