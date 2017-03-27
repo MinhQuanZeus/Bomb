@@ -52,7 +52,8 @@ public class MainPanel extends JPanel {
         if (gamePanel != null)
             gamePanel.setRunning(false);
         cardLayout.show(this, tag);
-        setBGM(tag);
+        if (!tag.equals(TAG_CHOOSE_MAP))
+            setBGM(tag);
     }
 
     public void showGamePanel(boolean versus, int stage) {

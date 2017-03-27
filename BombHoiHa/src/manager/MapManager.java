@@ -47,6 +47,8 @@ public class MapManager extends ControllerManager {
                 Terrain.CHANGE_MAP,
                 new AnimationView("Portal/portal", 4)
         );
+//        GameManager.playerController.getModel().setX(70);
+//        GameManager.playerController.getModel().setY(50);
     }
 
     public void changeMap(int level) {
@@ -160,7 +162,7 @@ public class MapManager extends ControllerManager {
                 add(itemMapController);
 
                 if(mapLevel != 4){
-                    EnemyController.createByRow_Colum_Number(bitEnemy, i, j, (PlayerModel) GameManager.playerController.getModel());
+                   EnemyController.createByRow_Colum_Number(bitEnemy, i, j, (PlayerModel) GameManager.playerController.getModel());
                 }
 
                 if (terrain == Terrain.BLOCK || terrain == Terrain.BREAK) {

@@ -45,7 +45,7 @@ public class GameManager {
         transitionFrameEnd = 0;
         transitionDelay = 0;
         countDownRandomItem = 0;
-        flag = true;
+        flag = false;
         if (versus) {
             playerController = new PlayerController(
                     new PlayerModel(0, 0),
@@ -109,7 +109,7 @@ public class GameManager {
     public void randomAddItem() {
         if (versus || MapManager.mapLevel == MapManager.LEVEL_MAX) {
             countDownRandomItem++;
-            if (countDownRandomItem == 1800) {
+            if (countDownRandomItem == 500) {
                 int x;
                 int y;
 
@@ -211,6 +211,11 @@ public class GameManager {
                 transitionDelay = 0;
             }
 
+            if (transitionFrameStart == 0) {
+                flag = true;
+                transitionFrameStart--;
+            }
+
             if (transitionFrameStart == -10) {
                 transitionEnd = true;
                 transitionStart = false;
@@ -230,7 +235,6 @@ public class GameManager {
                 transitionFrameStart = 11;
                 transitionDelay = 0;
                 transitionEnd = false;
-                flag = true;
                 if (versus) {
                     MainPanel.gamePanel.addTitle(new ImageIcon("resources/System/stage-0.png"));
                 } else {
@@ -241,7 +245,7 @@ public class GameManager {
     }
 
     public void runTransition() {
-        if (transitionFrameStart == 0 && flag) {
+        if (flag) {
             ((MapManager) GameManager.mapManager).changeMap(MapManager.mapLevel + 1);
             playerController.getModel().setX(0);
             playerController.getModel().setY(50);
