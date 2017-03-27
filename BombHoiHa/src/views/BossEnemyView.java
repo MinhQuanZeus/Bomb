@@ -10,9 +10,18 @@ import java.awt.*;
  */
 public class BossEnemyView extends GameView {
     private Image imageShadow;
+    private Image imageElec;
 
     public BossEnemyView(Image image) {
         super(image);
+    }
+
+    public Image getImageElec() {
+        return imageElec;
+    }
+
+    public void setImageElec(Image imageElec) {
+        this.imageElec = imageElec;
     }
 
     public void setImageShadow(Image imageShadow) {
@@ -38,14 +47,22 @@ public class BossEnemyView extends GameView {
             }else{
                 ((Graphics2D) graphics).setComposite(AlphaComposite.getInstance(
                         AlphaComposite.SRC_OVER, 0.2f));
+
                 graphics.drawImage(imageShadow, model.getX() + BossEnemyModel.BOSS_WIDTH/2 -((BossEnemyModel)model).getWidth()/3/2, model.getY() + BossEnemyModel.BOSS_HEIGHT + BossEnemyModel.BOSS_SHADOW_DISTANCE,((BossEnemyModel)model).getWidth()/3, ((BossEnemyModel)model).getHeight()/5, null);
                 graphics.drawImage(image, model.getX(), model.getY(), model.getWidth(), model.getHeight(), null);
+                if(imageElec != null){
+                    graphics.drawImage(imageElec,model.getX(),model.getY(),model.getWidth(),model.getHeight()/4,null);
+                }
                 ((Graphics2D) graphics).setComposite(AlphaComposite.getInstance(
                         AlphaComposite.SRC_OVER, 1f));
             }
         } else {
+
             graphics.drawImage(imageShadow, model.getX() + BossEnemyModel.BOSS_WIDTH/2 -((BossEnemyModel)model).getWidth()/3/2, model.getY() + BossEnemyModel.BOSS_HEIGHT + BossEnemyModel.BOSS_SHADOW_DISTANCE,((BossEnemyModel)model).getWidth()/3, ((BossEnemyModel)model).getHeight()/5, null);
             graphics.drawImage(image, model.getX(), model.getY(), model.getWidth(), model.getHeight(), null);
+            if(imageElec != null){
+                graphics.drawImage(imageElec,model.getX(),model.getY(),model.getWidth(),model.getHeight()/4,null);
+            }
         }
     }
 }

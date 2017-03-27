@@ -27,13 +27,12 @@ public class AttackThrowBomd extends BossAttackBehavior {
     private long lastTimeThrowBom = System.currentTimeMillis();
     private long delayTimeThrowBom = 3000;
     private int explosionSize = 2;
-    private int bomQuantity = 3;
+    private int bomQuantity = 4;
 
     @Override
     public void attack(BossEnemyModel bossEnemyModel, BossEnemyView bossEnemyView, PlayerModel playerModel) {
         super.attack(bossEnemyModel, bossEnemyView, playerModel);
-
-
+        setImage();
         generateBomQuantityAndExplosionSize();
 
         if (BomdEnemyController.BOMD_COUNT == 0) {
@@ -85,13 +84,23 @@ public class AttackThrowBomd extends BossAttackBehavior {
 
     private void generateBomQuantityAndExplosionSize() {
         switch (bossEnemyModel.getHp()){
+            case(4):{
+                explosionSize = 3;
+                bomQuantity = 5;
+                break;
+            }
             case(3):{
                 explosionSize = 4;
                 bomQuantity = 3;
                 break;
             }
+            case(2):{
+                explosionSize = 5;
+                bomQuantity = 3;
+                break;
+            }
             case(1):{
-                explosionSize = 6;
+                explosionSize = 8;
                 bomQuantity = 4;
                 break;
             }

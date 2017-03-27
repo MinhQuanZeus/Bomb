@@ -123,6 +123,14 @@ public class AutoLoadPic {
         enemy_weapons_ImageMap.put("smoke1", Utils.loadImageFromRes("Boss/smoke-1"));
         enemy_weapons_ImageMap.put("smoke2", Utils.loadImageFromRes("Boss/smoke-2"));
         enemy_weapons_ImageMap.put("smoke3", Utils.loadImageFromRes("Boss/smoke-3"));
+        enemy_weapons_ImageMap.put("elec0", Utils.loadImageFromRes("Boss/electric-0"));
+        enemy_weapons_ImageMap.put("elec1", Utils.loadImageFromRes("Boss/electric-1"));
+        enemy_weapons_ImageMap.put("elec2", Utils.loadImageFromRes("Boss/electric-2"));
+        enemy_weapons_ImageMap.put("elec3", Utils.loadImageFromRes("Boss/electric-3"));
+        enemy_weapons_ImageMap.put("elec4", Utils.loadImageFromRes("Boss/zelectric-0"));
+        enemy_weapons_ImageMap.put("elec5", Utils.loadImageFromRes("Boss/zelectric-1"));
+        enemy_weapons_ImageMap.put("elec6", Utils.loadImageFromRes("Boss/zelectric-2"));
+        enemy_weapons_ImageMap.put("elec7", Utils.loadImageFromRes("Boss/zelectric-3"));
 
         boss_BigHead_ImageMap.put("dichuyen0",Utils.loadImageFromRes("Boss/boss-0"));
         boss_BigHead_ImageMap.put("dichuyen1",Utils.loadImageFromRes("Boss/boss-1"));
