@@ -155,6 +155,11 @@ public class GameManager {
             y += 40;
         }
 
+        if (model.getCountDownSlow() > 0 ) {
+            graphics.drawImage(Utils.loadImageFromRes("Items/SPIDERWEB-1"), x, y, 30, 30, null);
+            y += 40;
+        }
+
         if (((PlayerController) gameController).isReverse()) {
             graphics.drawImage(Utils.loadImageFromRes("Items/REVERSE_MOVE-1"), x, y, 30, 30, null);
             y += 40;

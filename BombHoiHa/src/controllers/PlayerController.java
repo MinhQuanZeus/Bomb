@@ -83,13 +83,13 @@ public class PlayerController extends GameController implements Collision, KeyLi
         if (playerFreezeBehavior != null) {
             playerFreezeBehavior.run(this);
         }
-
     }
 
     public void checkBitSet() {
         PlayerView view = (PlayerView) this.view;
         if (!((PlayerModel) model).isExplode()) {
             ((PlayerModel) model).checkImmunity();
+            ((PlayerModel) model).checkSlow();
             boolean check = model.move(vector, arrBlocks);
             if (!check) {
                 isSlide = false;

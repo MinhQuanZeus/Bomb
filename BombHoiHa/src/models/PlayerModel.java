@@ -24,6 +24,7 @@ public class PlayerModel extends GameModel {
     private int score;
     private boolean immunity;
     private int countDownImmunity;
+    private int countDownSlow;
     private int numberShuriken;
     private int storeSpeed;
     private boolean kick = false;
@@ -33,6 +34,7 @@ public class PlayerModel extends GameModel {
 
     public PlayerModel(int x, int y) {
         super(x, y, 0, 0);
+        countDownSlow = -1;
         maxBomb = 1;
         explosionSize = 1;
         speed = 2;
@@ -93,6 +95,7 @@ public class PlayerModel extends GameModel {
     }
 
     public void speedDown() {
+        countDownSlow = 300;
         if (speed >= MIN_SPEED)
             speed--;
         if (storeSpeed >= MIN_SPEED)
@@ -156,6 +159,14 @@ public class PlayerModel extends GameModel {
         this.immunity = immunity;
     }
 
+    public void checkSlow() {
+        if (countDownSlow >= 0) {
+            if (countDownSlow == 0) {
+                speedUp();
+            }
+            countDownSlow--;
+        }
+    }
     public void checkImmunity() {
         if (immunity) {
             countDownImmunity--;
@@ -226,6 +237,10 @@ public class PlayerModel extends GameModel {
 
     public String getPet() {
         return pet;
+    }
+
+    public int getCountDownSlow() {
+        return countDownSlow;
     }
 
     public void setPet(String pet) {
