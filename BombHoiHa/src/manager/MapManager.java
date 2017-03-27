@@ -33,7 +33,7 @@ public class MapManager extends ControllerManager {
 
     public MapManager(int stage) {
         super();
-        mapLevel = 1;
+        mapLevel = stage;
         isCountTime = true;
         map = new int[14][14];
         readMap(mapLevel);
