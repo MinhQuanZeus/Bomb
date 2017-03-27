@@ -7,6 +7,7 @@ import controllers.enemy_behavior.destroy.EnemyBeingDestroyBehavior;
 import controllers.enemy_behavior.move.*;
 import manager.ControllerManager;
 import manager.GameManager;
+import manager.MapManager;
 import models.*;
 import utils.Utils;
 import views.AutoLoadPic;
@@ -79,13 +80,29 @@ public class EnemyController extends GameController implements Collision {
     }
 
     private void changeSpeed() {
-        switch (type){
-            case SMART_MAN:{
-                if(EnemyModel.enemyCount == 3){
-                    model.setSpeed(2);
+        if(MapManager.mapLevel != 1){
+            switch (type){
+                case SMART_MAN:{
+                    if(EnemyModel.enemyCount == 3){
+                        model.setSpeed(2);
+                    }
+                    if(EnemyModel.enemyCount == 2){
+                        model.setSpeed(3);
+                    }
+                    if(EnemyModel.enemyCount == 1){
+                        model.setSpeed(4);
+                    }
+                    break;
                 }
-                if(EnemyModel.enemyCount == 2){
-                    model.setSpeed(3);
+                case SLIM_JELLY_HEAD:{
+                    if(EnemyModel.enemyCount == 3){
+                        model.setSpeed(2);
+                    }
+                }
+                case FIRE_HEAD:{
+                    if(EnemyModel.enemyCount == 2){
+                        model.setSpeed(2);
+                    }
                 }
             }
         }

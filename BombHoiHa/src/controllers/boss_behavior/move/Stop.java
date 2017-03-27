@@ -50,7 +50,7 @@ public class Stop extends BossMoveBehavior{
     public void setTimeDelay() {
         switch (type){
             case BIG_HEAD:{
-                delayToChangeMove = 5000;
+                delayToChangeMove = 7000;
                 break;
             }
         }
