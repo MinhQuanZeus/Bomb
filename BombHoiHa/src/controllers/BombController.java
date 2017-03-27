@@ -85,7 +85,7 @@ public class BombController extends GameController implements Collision {
         int dx = colBombMatrix * ItemMapModel.SIZE_TILED;
         int dy = rowBombMatrix * ItemMapModel.SIZE_TILED;
 
-        new ExplosionController(dx, dy, "Explosions/explosion0");
+        new ExplosionController(dx, dy, "Explosions/explosion0",2);
 
         for (int i = 0; i < 4; i++) {
             for (int j = 1; j <= explosionSize; j++) {
@@ -97,14 +97,14 @@ public class BombController extends GameController implements Collision {
                     int valueMatrix = MapManager.map[rowBombMatrix - j][colBombMatrix];
                     if (valueMatrix == 0 || valueMatrix == 9) {
                         if (j != explosionSize) {
-                            new ExplosionController(dx, dy - indexSize, "Explosions/explosion1");
+                            new ExplosionController(dx, dy - indexSize, "Explosions/explosion1",2);
                         } else {
-                            new ExplosionController(dx, dy - indexSize, "Explosions/explosion3");
+                            new ExplosionController(dx, dy - indexSize, "Explosions/explosion3",2);
                         }
                     } else if (valueMatrix == 1) {
                         break;
                     } else if (valueMatrix == 2) {
-                        new ExplosionController(dx, dy - indexSize, "Explosions/explosion1");
+                        new ExplosionController(dx, dy - indexSize, "Explosions/explosion1",2);
                         MapManager.map[rowBombMatrix - j][colBombMatrix] = 0;
                         break;
                     }
@@ -115,14 +115,14 @@ public class BombController extends GameController implements Collision {
                     int valueMatrix = MapManager.map[rowBombMatrix + j][colBombMatrix];
                     if (valueMatrix == 0 || valueMatrix == 9) {
                         if (j != explosionSize) {
-                            new ExplosionController(dx, dy + indexSize, "Explosions/explosion1");
+                            new ExplosionController(dx, dy + indexSize, "Explosions/explosion1",2);
                         } else {
-                            new ExplosionController(dx, dy + indexSize, "Explosions/explosion4");
+                            new ExplosionController(dx, dy + indexSize, "Explosions/explosion4",2);
                         }
                     } else if (valueMatrix == 1) {
                         break;
                     } else if (valueMatrix == 2) {
-                        new ExplosionController(dx, dy + indexSize, "Explosions/explosion1");
+                        new ExplosionController(dx, dy + indexSize, "Explosions/explosion1",2);
                         MapManager.map[rowBombMatrix + j][colBombMatrix] = 0;
                         break;
                     }
@@ -133,14 +133,14 @@ public class BombController extends GameController implements Collision {
                     int valueMatrix = MapManager.map[rowBombMatrix][colBombMatrix - j];
                     if (valueMatrix == 0 || valueMatrix == 9) {
                         if (j != explosionSize) {
-                            new ExplosionController(dx - indexSize, dy, "Explosions/explosion2");
+                            new ExplosionController(dx - indexSize, dy, "Explosions/explosion2",2);
                         } else {
-                            new ExplosionController(dx - indexSize, dy, "Explosions/explosion6");
+                            new ExplosionController(dx - indexSize, dy, "Explosions/explosion6",2);
                         }
                     } else if (valueMatrix == 1) {
                         break;
                     } else if (valueMatrix == 2) {
-                        new ExplosionController(dx - indexSize, dy, "Explosions/explosion2");
+                        new ExplosionController(dx - indexSize, dy, "Explosions/explosion2",2);
                         MapManager.map[rowBombMatrix][colBombMatrix - j] = 0;
                         break;
                     }
@@ -151,14 +151,14 @@ public class BombController extends GameController implements Collision {
                     int valueMatrix = MapManager.map[rowBombMatrix][colBombMatrix + j];
                     if (valueMatrix == 0 || valueMatrix == 9) {
                         if (j != explosionSize) {
-                            new ExplosionController(dx + indexSize, dy, "Explosions/explosion2");
+                            new ExplosionController(dx + indexSize, dy, "Explosions/explosion2",2);
                         } else {
-                            new ExplosionController(dx + indexSize, dy, "Explosions/explosion5");
+                            new ExplosionController(dx + indexSize, dy, "Explosions/explosion5",2);
                         }
                     } else if (valueMatrix == 1) {
                         break;
                     } else if (valueMatrix == 2) {
-                        new ExplosionController(dx + indexSize, dy, "Explosions/explosion2");
+                        new ExplosionController(dx + indexSize, dy, "Explosions/explosion2",2);
                         MapManager.map[rowBombMatrix][colBombMatrix + j] = 0;
                         break;
                     }

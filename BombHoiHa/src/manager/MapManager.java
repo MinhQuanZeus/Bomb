@@ -36,7 +36,7 @@ public class MapManager extends ControllerManager {
         if (GameManager.versus) {
             mapLevel = 0;
         } else {
-            mapLevel = 1;
+            mapLevel = 2;
         }
         isCountTime = true;
         map = new int[14][14];
@@ -161,12 +161,18 @@ public class MapManager extends ControllerManager {
                 }
                 add(itemMapController);
 
-                EnemyController.createByRow_Colum_Number(bitEnemy, i, j, (PlayerModel) GameManager.playerController.getModel());
+                if(mapLevel != 4){
+                    EnemyController.createByRow_Colum_Number(bitEnemy, i, j, (PlayerModel) GameManager.playerController.getModel());
+                }
 
                 if (terrain == Terrain.BLOCK || terrain == Terrain.BREAK) {
                     GameManager.arrBlocks.add(itemMapController);
                 }
             }
+        }
+
+        if(mapLevel == 4){
+            BossEnemyController.create(((PlayerModel) GameManager.playerController.getModel()),BossEnemyController.BossType.BIG_HEAD);
         }
     }
 

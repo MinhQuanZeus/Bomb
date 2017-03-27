@@ -49,6 +49,8 @@ public class EnemyController extends GameController implements Collision {
 
     @Override
     public void run() {
+        changeSpeed();
+
         switch (this.enemyState) {
             case NORMAL:
                 if (model instanceof EnemyModel) {
@@ -74,6 +76,19 @@ public class EnemyController extends GameController implements Collision {
             freezeBehavior.run(this);
         }
 
+    }
+
+    private void changeSpeed() {
+        switch (type){
+            case SMART_MAN:{
+                if(EnemyModel.enemyCount == 3){
+                    model.setSpeed(2);
+                }
+                if(EnemyModel.enemyCount == 2){
+                    model.setSpeed(3);
+                }
+            }
+        }
     }
 
     public enum EnemyType {

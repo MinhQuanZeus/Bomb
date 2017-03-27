@@ -1,9 +1,6 @@
 package manager;
 
-import controllers.EnemyController;
-import controllers.GameController;
-import controllers.PlayerController;
-import controllers.Stage;
+import controllers.*;
 import controllers.enemy_behavior.move.Stop;
 import models.PlayerModel;
 
@@ -23,7 +20,11 @@ public class ControllerManager {
     }
 
     public void add(GameController gameController) {
-        this.gameControllers.add(0, gameController);
+        if(gameController instanceof BossEnemyController){
+            this.gameControllers.add(gameControllers.size(), gameController);
+        }else{
+            this.gameControllers.add(0, gameController);
+        }
     }
 
     public void clear() {

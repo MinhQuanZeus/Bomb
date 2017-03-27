@@ -232,6 +232,16 @@ public class PlayerController extends GameController implements Collision, KeyLi
                     ((PlayerModel) model).setExplode(true);
                 }
             }
+
+            if(other instanceof BossEnemyController){
+                Rectangle r = new Rectangle(other.getModel().getX() + 10,other.getModel().getY() + other.getModel().getHeight()/2,other.getModel().getWidth() - 20,BossEnemyModel.BOSS_HEIGHT/2 + BossEnemyModel.BOSS_SHADOW_DISTANCE + BossEnemyModel.BOSS_HEIGHT/5);
+                if(r.intersects(new Rectangle(model.getX(),model.getY(),model.getHeight(),model.getWidth()))){
+                    if (!((PlayerModel) model).isExplode()) {
+                        Utils.playSound("player-out.wav", false);
+                        ((PlayerModel) model).setExplode(true);
+                    }
+                }
+            }
         }
     }
 

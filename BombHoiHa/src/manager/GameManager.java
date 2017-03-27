@@ -212,6 +212,12 @@ public class GameManager {
             ((MapManager) GameManager.mapManager).changeMap(MapManager.mapLevel + 1);
             playerController.getModel().setX(0);
             playerController.getModel().setY(50);
+
+            if(MapManager.mapLevel == 4){
+                playerController.getModel().setX(6*ItemMapModel.SIZE_TILED);
+                playerController.getModel().setY(10*ItemMapModel.SIZE_TILED);
+            }
+
             flag = false;
         }
     }

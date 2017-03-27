@@ -59,6 +59,7 @@ public class EnemyMoveBehavior {
 
         if (moveDirection.equals("")) {
             view.setImage(map.get("xuong0"));
+            return;
         }
         view.setImage(map.get(moveDirection + drawCount));
         long currentTime = System.currentTimeMillis();

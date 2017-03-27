@@ -1,5 +1,6 @@
 package views;
 
+import controllers.BossEnemyController;
 import controllers.EnemyController;
 import utils.Utils;
 
@@ -18,6 +19,8 @@ public class AutoLoadPic {
     public static HashMap<String, Image> enemy_smartMan_ImageMap;
     public static HashMap<String, Image> enemy_weapons_ImageMap;
 
+    public static HashMap<String, Image> boss_BigHead_ImageMap;
+
     public static void init() {
         enemy_Duck_Image_ImageMap = new HashMap<>();
         explosionImageMap = new HashMap<>();
@@ -25,12 +28,12 @@ public class AutoLoadPic {
         enemy_fireHead_ImageMap = new HashMap<>();
         enemy_smartMan_ImageMap = new HashMap<>();
         enemy_weapons_ImageMap = new HashMap<>();
+        boss_BigHead_ImageMap = new HashMap<>();
 
         int c = 0;
         for (int i = 0; i < 11; i++) {
             if (i >= 0 && i < 3) {
                 enemy_Duck_Image_ImageMap.put("xuong" + c, Utils.loadImageFromRes("Enemies/" + i));
-                //   System.out.println(Utils.loadImageFromRes("Enemies/" + i));
             } else if (i >= 3 && i < 6) {
                 enemy_Duck_Image_ImageMap.put("len" + c, Utils.loadImageFromRes("Enemies/" + i));
             } else if (i >= 6 && i < 8) {
@@ -111,6 +114,23 @@ public class AutoLoadPic {
         enemy_smartMan_ImageMap.put("chet2", Utils.loadImageFromRes("Enemies/62"));
 
         enemy_weapons_ImageMap.put("roundBullet", Utils.loadImageFromRes("Enemies/round"));
+        enemy_weapons_ImageMap.put("bbomd0", Utils.loadImageFromRes("Boss/bombB-3"));
+        enemy_weapons_ImageMap.put("bbomd1", Utils.loadImageFromRes("Boss/bombB-1"));
+        enemy_weapons_ImageMap.put("bbomd2", Utils.loadImageFromRes("Boss/bombB-2"));
+        enemy_weapons_ImageMap.put("bbomd3", Utils.loadImageFromRes("Boss/bombB-4"));
+        enemy_weapons_ImageMap.put("bong", Utils.loadImageFromRes("Boss/boss-shadow"));
+        enemy_weapons_ImageMap.put("smoke0", Utils.loadImageFromRes("Boss/smoke-0"));
+        enemy_weapons_ImageMap.put("smoke1", Utils.loadImageFromRes("Boss/smoke-1"));
+        enemy_weapons_ImageMap.put("smoke2", Utils.loadImageFromRes("Boss/smoke-2"));
+        enemy_weapons_ImageMap.put("smoke3", Utils.loadImageFromRes("Boss/smoke-3"));
+
+        boss_BigHead_ImageMap.put("dichuyen0",Utils.loadImageFromRes("Boss/boss-0"));
+        boss_BigHead_ImageMap.put("dichuyen1",Utils.loadImageFromRes("Boss/boss-1"));
+        boss_BigHead_ImageMap.put("bong",Utils.loadImageFromRes("Boss/boss-shadow"));
+
+        for(int i = 0;i < 7;i++){
+            boss_BigHead_ImageMap.put("chet"+i,Utils.loadImageFromRes("Boss/boss-dead-" + i));
+        }
     }
 
     public static HashMap<String, Image> imageEnemyHashMapFactory(EnemyController.EnemyType type) {
@@ -126,6 +146,16 @@ public class AutoLoadPic {
             }
             case SMART_MAN:{
                 return enemy_smartMan_ImageMap;
+            }
+        }
+
+        return null;
+    }
+
+    public static HashMap<String, Image> imageBossHashMapFactory(BossEnemyController.BossType type){
+        switch (type){
+            case BIG_HEAD:{
+                return boss_BigHead_ImageMap;
             }
         }
 

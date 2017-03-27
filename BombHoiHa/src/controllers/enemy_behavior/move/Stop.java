@@ -16,12 +16,15 @@ public class Stop extends EnemyMoveBehavior{
         //không di chuyển gì cả
        switch (type){
            case SMART_MAN:{
-               delayToChangeMove = 100;
+               moveDirection = "";
+               delayToChangeMove = 300;
                if(System.currentTimeMillis() - timeStartThisMove >= delayToChangeMove){
                    enemyController.setEnemyMoveBehavior(new MoveFindPlayer());
                }
                break;
            }
        }
+
+       setImage();
     }
 }

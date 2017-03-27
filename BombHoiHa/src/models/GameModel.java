@@ -1,9 +1,6 @@
 package models;
 
-import controllers.BombController;
-import controllers.GameController;
-import controllers.ItemMapController;
-import controllers.PlayerController;
+import controllers.*;
 import gui.GameFrame;
 import manager.GameManager;
 import manager.MapManager;
@@ -74,7 +71,7 @@ public class GameModel {
                 }
             }
 
-            if (gameController instanceof BombController && this.overlap(gameController.getModel())) {
+            if ((gameController instanceof BombController || gameController instanceof BomdEnemyController)&& this.overlap(gameController.getModel())) {
                 break;
             } else if (!intersectionRect.isEmpty() && intersectionRect.getHeight() < 25 && intersectionRect.getWidth() < 25) {
                 if (gameVector.dy != 0) {
