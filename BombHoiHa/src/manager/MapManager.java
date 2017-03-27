@@ -36,7 +36,7 @@ public class MapManager extends ControllerManager {
         if (GameManager.versus) {
             mapLevel = 0;
         } else {
-            mapLevel = 2;
+            mapLevel = 1;
         }
         isCountTime = true;
         map = new int[14][14];
