@@ -15,8 +15,8 @@ public class BossEnemyModel extends GameModel {
 
     public static final int BOSS_SHADOW_DISTANCE = 10;
 
-    public static final int BOSS_BIGHEAD_DEFAULT_HP = 5;
-    public static final int BOSS_BIGHEAD_MAD_HP = 4;
+    public static final int BOSS_BIGHEAD_DEFAULT_HP = 8;
+    public static final int BOSS_BIGHEAD_MAD_HP = 7;
 
 
     private boolean immunity = false;
@@ -44,7 +44,7 @@ public class BossEnemyModel extends GameModel {
     }
     @Override
     public Rectangle getRect() {
-        return new Rectangle(x + 50, y + height/2, width - 100, height/2 + BOSS_SHADOW_DISTANCE + BOSS_HEIGHT/5);
+        return new Rectangle(x + 70, y + height/2, width - 140, height/2 + BOSS_SHADOW_DISTANCE + BOSS_HEIGHT/5);
     }
 
     public Rectangle getRectOfBossAndShadow(){
