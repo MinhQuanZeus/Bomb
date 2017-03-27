@@ -22,6 +22,7 @@ public class MainPanel extends JPanel {
     public static final String TAG_INSTRUCTION = "tag_instruction";
     public static final String TAG_STORY_INTRO = "tag_story_intro";
     public static final String TAG_STORY_END = "tag_story_end";
+    public static final String TAG_CHOOSE_MAP = "tag_choose_map";
 
 
     public static GamePanel gamePanel;
@@ -29,6 +30,7 @@ public class MainPanel extends JPanel {
     private MenuPanel menuPanel;
     private EndGamePanel endGamePanel;
     private InstructionPanel instructionPanel;
+    private ChooseMapPanel chooseMapPanel;
 
     private static SoundPlayer bgm;
 
@@ -40,6 +42,8 @@ public class MainPanel extends JPanel {
         add(menuPanel, TAG_MENU);
         instructionPanel = new InstructionPanel();
         add(instructionPanel, TAG_INSTRUCTION);
+        chooseMapPanel = new ChooseMapPanel();
+        add(chooseMapPanel, TAG_CHOOSE_MAP);
         setBGM(TAG_MENU);
         cardLayout.show(this, TAG_MENU);
     }
@@ -51,12 +55,12 @@ public class MainPanel extends JPanel {
         setBGM(tag);
     }
 
-    public void showGamePanel(boolean versus) {
+    public void showGamePanel(boolean versus, int stage) {
         if (gamePanel != null) {
             gamePanel.setRunning(false);
         }
         EnemyModel.enemyCount = 0;
-        gamePanel = new GamePanel(versus);
+        gamePanel = new GamePanel(versus, stage);
         add(gamePanel, TAG_GAME);
         setBGM(TAG_GAME);
         cardLayout.show(this, TAG_GAME);

@@ -31,16 +31,14 @@ public class MapManager extends ControllerManager {
     private static final int TIME_BONUS = 15;
     private long currentTime = 0;
 
-    public MapManager() {
+    public MapManager(int stage) {
         super();
-        if (GameManager.versus) {
-            mapLevel = 0;
-        } else {
-            mapLevel = 1;
-        }
+        mapLevel = 1;
         isCountTime = true;
         map = new int[14][14];
         readMap(mapLevel);
+        if (GameManager.versus)
+            GameManager.controllerManager.clear();
         exist = 180000;
         start = System.currentTimeMillis();
         portalItem = new ItemMapController(
@@ -108,7 +106,7 @@ public class MapManager extends ControllerManager {
     @Override
     public void run() {
         super.run();
-        if (mapLevel > 0) {
+        if (!GameManager.versus) {
             if (getCurrentTime().equals("0:00")) {
                 MainPanel.gamePanel.addTitle(new ImageIcon("resources/System/time-up.png"));
             }
@@ -121,7 +119,7 @@ public class MapManager extends ControllerManager {
         super.draw(g);
         g.setFont(new Font("Courier New", Font.BOLD, 20));
         g.setColor(Color.white);
-        if (mapLevel > 0) {
+        if (!GameManager.versus) {
             if ((getCurrentTime().contains("0:0") || getCurrentTime().contains("0:1") || getCurrentTime().contains("0:2"))
                     && System.currentTimeMillis() % 2 == 0)
                 g.setColor(Color.RED);
@@ -162,7 +160,7 @@ public class MapManager extends ControllerManager {
                 add(itemMapController);
 
                 if(mapLevel != 4){
-                    EnemyController.createByRow_Colum_Number(bitEnemy, i, j, (PlayerModel) GameManager.playerController.getModel());
+                    //EnemyController.createByRow_Colum_Number(bitEnemy, i, j, (PlayerModel) GameManager.playerController.getModel());
                 }
 
                 if (terrain == Terrain.BLOCK || terrain == Terrain.BREAK) {
@@ -170,7 +168,7 @@ public class MapManager extends ControllerManager {
                 }
             }
         }
-
+        EnemyController.createByRow_Colum_Number(20, 5, 5, (PlayerModel) GameManager.playerController.getModel());
         if(mapLevel == 4){
             BossEnemyController.create(((PlayerModel) GameManager.playerController.getModel()),BossEnemyController.BossType.BIG_HEAD);
         }

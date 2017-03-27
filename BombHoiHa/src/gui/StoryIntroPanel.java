@@ -29,7 +29,7 @@ public class StoryIntroPanel extends JPanel {
                 Utils.playSound("select.wav", false);
                 if (mouseEvent.getSource().equals(btnNext)) {
                     if (part == 5) {
-                        GameFrame.mainPanel.showGamePanel(false);
+                        GameFrame.mainPanel.showGamePanel(false, 1);
                         part = 0;
                     }
                     if (part < 5)

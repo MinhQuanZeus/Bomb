@@ -38,7 +38,7 @@ public class MenuPanel extends JPanel {
                     GameFrame.mainPanel.showStoryIntroPanel();
                 }
                 if (mouseEvent.getSource().equals(btnVersus)) {
-                    GameFrame.mainPanel.showGamePanel(true);
+                    GameFrame.mainPanel.showPanel(MainPanel.TAG_CHOOSE_MAP);
                 }
                 if (mouseEvent.getSource().equals(btnInstruction)) {
                     GameFrame.mainPanel.showPanel(MainPanel.TAG_INSTRUCTION);

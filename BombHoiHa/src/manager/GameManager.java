@@ -31,8 +31,9 @@ public class GameManager {
     private static int transitionFrameEnd;
     private static int transitionDelay;
     private int countDownRandomItem;
+    private boolean flag;
 
-    public GameManager(boolean versus) {
+    public GameManager(boolean versus, int stage) {
         AutoLoadPic.init();
         this.versus = versus;
         controllerManager = new ControllerManager();
@@ -44,16 +45,17 @@ public class GameManager {
         transitionFrameEnd = 0;
         transitionDelay = 0;
         countDownRandomItem = 0;
-
+        flag = true;
         if (versus) {
             playerController = new PlayerController(
-                    new PlayerModel(50, 50),
+                    new PlayerModel(0, 0),
                     arrBlocks,
                     "Bomberman",
                     new PlayerFreezeBehavior(250)
             );
+
             secondPlayerController = new SecondPlayerController(
-                    new PlayerModel(12 * ItemMapModel.SIZE_TILED, 12 * ItemMapModel.SIZE_TILED - 30),
+                    new PlayerModel(0, 0),
                     arrBlocks,
                     "BombermanTwo",
                     new PlayerFreezeBehavior(250)
@@ -66,7 +68,27 @@ public class GameManager {
                     new PlayerFreezeBehavior(250)
             );
         }
-        mapManager = new MapManager();
+        mapManager = new MapManager(stage);
+        if (versus) {
+            int x;
+            int y;
+
+            do {
+                x = Utils.getRandom(14) * ItemMapModel.SIZE_TILED;
+                y = Utils.getRandom(14) * ItemMapModel.SIZE_TILED;
+            } while (MapManager.map[Utils.getRowMatrix(y)][Utils.getColMatrix(x)] != 0);
+
+            playerController.getModel().setX(x);
+            playerController.getModel().setY(y - 20);
+
+            do {
+                x = Utils.getRandom(14) * ItemMapModel.SIZE_TILED;
+                y = Utils.getRandom(14) * ItemMapModel.SIZE_TILED;
+            } while (MapManager.map[Utils.getRowMatrix(y)][Utils.getColMatrix(x)] != 0);
+
+            secondPlayerController.getModel().setX(x);
+            secondPlayerController.getModel().setY(y - 20);
+        }
     }
 
     public void run() {
@@ -74,6 +96,7 @@ public class GameManager {
         controllerManager.run();
         collisionManager.run();
         randomAddItem();
+        runTransition();
     }
 
     public void draw(Graphics graphics) {
@@ -179,22 +202,15 @@ public class GameManager {
             } else {
                 graphics.drawImage(Utils.loadImageFromRes("System/transition-" + transitionFrameStart), 0, 0, GameFrame.WIDTH, GameFrame.HEIGHT, null);
             }
+
             if (transitionDelay < 1)
                 transitionDelay++;
+
             if (transitionDelay == 1) {
                 transitionFrameStart--;
                 transitionDelay = 0;
             }
-            if (transitionFrameStart == 0) {
-                ((MapManager) GameManager.mapManager).changeMap(MapManager.mapLevel + 1);
-                playerController.getModel().setX(0);
-                playerController.getModel().setY(50);
 
-                if(MapManager.mapLevel == 4){
-                    playerController.getModel().setX(6*ItemMapModel.SIZE_TILED);
-                    playerController.getModel().setY(10*ItemMapModel.SIZE_TILED);
-                }
-            }
             if (transitionFrameStart == -10) {
                 transitionEnd = true;
                 transitionStart = false;
@@ -214,8 +230,27 @@ public class GameManager {
                 transitionFrameStart = 11;
                 transitionDelay = 0;
                 transitionEnd = false;
-                MainPanel.gamePanel.addTitle(new ImageIcon("resources/System/stage-" + MapManager.mapLevel + ".png"));
+                flag = true;
+                if (versus) {
+                    MainPanel.gamePanel.addTitle(new ImageIcon("resources/System/stage-0.png"));
+                } else {
+                    MainPanel.gamePanel.addTitle(new ImageIcon("resources/System/stage-" + MapManager.mapLevel + ".png"));
+                }
             }
+        }
+    }
+
+    public void runTransition() {
+        if (transitionFrameStart == 0 && flag) {
+            ((MapManager) GameManager.mapManager).changeMap(MapManager.mapLevel + 1);
+            playerController.getModel().setX(0);
+            playerController.getModel().setY(50);
+
+            if(MapManager.mapLevel == MapManager.LEVEL_MAX){
+                playerController.getModel().setX(6*ItemMapModel.SIZE_TILED);
+                playerController.getModel().setY(10*ItemMapModel.SIZE_TILED);
+            }
+            flag = false;
         }
     }
 

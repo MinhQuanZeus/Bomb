@@ -30,10 +30,10 @@ public class GamePanel extends JPanel implements Runnable {
     private JLabel title;
     private int titleExist;
 
-    public GamePanel(boolean versus) {
+    public GamePanel(boolean versus, int stage) {
         setLayout(null);
         setFocusable(true);
-        gameManager = new GameManager(versus);
+        gameManager = new GameManager(versus, stage);
 
         paused = false;
         flag = true;
