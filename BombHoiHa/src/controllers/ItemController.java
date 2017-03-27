@@ -34,7 +34,6 @@ public class ItemController extends GameController implements Collision {
     @Override
     public void onContact(Collision other) {
         if (other instanceof PlayerController) {
-            Utils.playSound("item-get.wav", false);
             model.setAlive(false);
             PlayerModel playerModel = (PlayerModel) other.getModel();
             switch (type) {
@@ -42,8 +41,9 @@ public class ItemController extends GameController implements Collision {
                     if (playerModel.isDriver()) {
                         if (playerModel.getPet().equals(PlayerView.DINO)) {
                             model.setAlive(true);
+                            return;
                         } else {
-                            playerModel.speedDown();
+                            playerModel.getOutFish();
                             ((PlayerController) other).driverDino();
                         }
                     } else {
@@ -54,6 +54,7 @@ public class ItemController extends GameController implements Collision {
                     if (playerModel.isDriver()) {
                         if (playerModel.getPet().equals(PlayerView.FISH)) {
                             model.setAlive(true);
+                            return;
                         } else {
                             playerModel.expandExplosionSize(-5);
                             ((PlayerController) other).driverFish();
@@ -141,6 +142,7 @@ public class ItemController extends GameController implements Collision {
                     ((PlayerController)other).resetCountDownKickPlayer();
                     break;
             }
+            Utils.playSound("item-get.wav", false);
         }
         if (other instanceof ExplosionController) {
             model.setAlive(false);
@@ -152,8 +154,6 @@ public class ItemController extends GameController implements Collision {
         do {
             type = ItemType.getRandomItemType();
         } while (GameManager.versus && (type == ItemType.BONUS_TIME || type == ItemType.DIE));
-
-        type = ItemType.SPIDERWEB;
 
         if (type == ItemType.EGG || type == ItemType.EGGFISH) {
             new ItemController(

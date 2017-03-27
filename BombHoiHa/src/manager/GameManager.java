@@ -73,7 +73,7 @@ public class GameManager {
         mapManager.run();
         controllerManager.run();
         collisionManager.run();
-        randomItem();
+        randomAddItem();
     }
 
     public void draw(Graphics graphics) {
@@ -83,8 +83,8 @@ public class GameManager {
         drawInf(graphics);
     }
 
-    public void randomItem() {
-        if (versus) {
+    public void randomAddItem() {
+        if (versus || MapManager.mapLevel == MapManager.LEVEL_MAX) {
             countDownRandomItem++;
             if (countDownRandomItem == 1800) {
                 int x;
@@ -104,7 +104,7 @@ public class GameManager {
     public void drawInf(Graphics g) {
         if (GameManager.versus) {
             drawAbility(g, playerController, 0);
-            drawAbility(g, secondPlayerController, GameFrame.WIDTH - 30);
+            drawAbility(g, secondPlayerController, GameFrame.WIDTH - 33);
             for (int i = 0; i < ((PlayerModel) playerController.getModel()).getNumberShuriken(); i++) {
                 g.drawImage(Utils.loadImageFromRes("Bomberman/Shuriken-3"), 40 + 20 * i, 5, 20, 20, null);
             }
