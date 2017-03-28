@@ -139,6 +139,10 @@ public class PlayerModel extends GameModel {
         score += 100;
     }
 
+    public void increaseScore(int score) {
+        this.score += score;
+    }
+
     public int getScore() {
         return score;
     }

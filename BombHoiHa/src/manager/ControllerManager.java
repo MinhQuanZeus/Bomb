@@ -62,10 +62,13 @@ public class ControllerManager {
             if (gameController.getModel().isAlive()) {
                 gameController.run();
             } else {
-                gameControllers.remove(i);
                 if (gameController instanceof EnemyController) {
                     ((PlayerModel) GameManager.playerController.getModel()).increaseScore();
                 }
+                if (gameController instanceof BossEnemyController) {
+                    ((PlayerModel) GameManager.playerController.getModel()).increaseScore(500);
+                }
+                gameControllers.remove(i);
                 i--;
             }
         }

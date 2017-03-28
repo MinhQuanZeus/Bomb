@@ -47,8 +47,6 @@ public class MapManager extends ControllerManager {
                 Terrain.CHANGE_MAP,
                 new AnimationView("Portal/portal", 4)
         );
-//        GameManager.playerController.getModel().setX(70);
-//        GameManager.playerController.getModel().setY(50);
     }
 
     public void changeMap(int level) {
@@ -170,6 +168,7 @@ public class MapManager extends ControllerManager {
                 }
             }
         }
+
         if(mapLevel == 4){
             BossEnemyController.create(((PlayerModel) GameManager.playerController.getModel()),BossEnemyController.BossType.BIG_HEAD);
         }

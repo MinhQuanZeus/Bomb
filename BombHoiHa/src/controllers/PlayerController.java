@@ -194,7 +194,6 @@ public class PlayerController extends GameController implements Collision, KeyLi
 
     @Override
     public void onContact(Collision other) {
-
         if (other instanceof ItemMapController) {
             if (((ItemMapModel) other.getModel()).getTerrain() == Terrain.CHANGE_MAP) {
                 GameManager.collisionManager.remove(other);
