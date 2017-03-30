@@ -166,9 +166,7 @@ public class BombController extends GameController implements Collision {
             }
         }
 
-        playerModel.reduceCountBomb();
         GameManager.arrBlocks.remove(this);
-        MapManager.map[rowBombMatrix][colBombMatrix] = 0;
         model.setAlive(false);
     }
 

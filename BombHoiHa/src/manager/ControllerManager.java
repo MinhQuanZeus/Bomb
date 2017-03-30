@@ -2,7 +2,9 @@ package manager;
 
 import controllers.*;
 import controllers.enemy_behavior.move.Stop;
+import models.GameModel;
 import models.PlayerModel;
+import utils.Utils;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -20,9 +22,9 @@ public class ControllerManager {
     }
 
     public void add(GameController gameController) {
-        if(gameController instanceof BossEnemyController){
+        if (gameController instanceof BossEnemyController) {
             this.gameControllers.add(gameControllers.size(), gameController);
-        }else{
+        } else {
             this.gameControllers.add(0, gameController);
         }
     }
@@ -67,6 +69,11 @@ public class ControllerManager {
                 }
                 if (gameController instanceof BossEnemyController) {
                     ((PlayerModel) GameManager.playerController.getModel()).increaseScore(500);
+                }
+                if (gameController instanceof BombController) {
+                    ((PlayerModel) GameManager.playerController.getModel()).reduceCountBomb();
+                    GameModel gameModel = gameController.getModel();
+                    MapManager.map[Utils.getRowMatrix(gameModel.getY())][Utils.getColMatrix(gameModel.getX())] = 0;
                 }
                 gameControllers.remove(i);
                 i--;
