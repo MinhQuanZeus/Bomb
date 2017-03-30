@@ -1,5 +1,7 @@
 package gui;
 
+import utils.Utils;
+
 import javax.swing.*;
 
 /**
@@ -12,6 +14,8 @@ public class GameFrame extends JFrame {
     public static MainPanel mainPanel;
 
     public GameFrame() {
+        this.setIconImage(Utils.loadImageFromRes("Logo/Logo"));
+        setTitle("Bomb Hối Hả");
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);
         setResizable(false);
