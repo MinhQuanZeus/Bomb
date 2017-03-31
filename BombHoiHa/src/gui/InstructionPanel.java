@@ -32,15 +32,15 @@ public class InstructionPanel extends JPanel {
                 if (mouseEvent.getSource().equals(btnNext)) {
                     if (part == 0) {
                         part = 1;
-                        ImageIcon imageIcon = new ImageIcon("resources/System/prev-1.png");
+                        ImageIcon imageIcon = new ImageIcon("resources/System/prev-0.png");
                         btnNext.setIcon(imageIcon);
                         btnNext.setBounds(btnBackToMenu.getX() - 148, 509, imageIcon.getIconWidth(), imageIcon.getIconHeight());
                         repaint();
                     } else {
                         part = 0;
-                        ImageIcon imageIcon = new ImageIcon("resources/System/next-1.png");
+                        ImageIcon imageIcon = new ImageIcon("resources/System/next-0.png");
                         btnNext.setIcon(imageIcon);
-                        btnNext.setBounds(btnBackToMenu.getX() + 295, 509, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+                        btnNext.setBounds(btnBackToMenu.getX() + 363, 509, imageIcon.getIconWidth(), imageIcon.getIconHeight());
                         repaint();
                     }
                     repaint();
@@ -97,7 +97,7 @@ public class InstructionPanel extends JPanel {
 
         imageIcon = new ImageIcon("resources/System/next-0.png");
         btnNext = new JLabel(imageIcon);
-        btnNext.setBounds(btnBackToMenu.getX() + 295, 509, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+        btnNext.setBounds(btnBackToMenu.getX() + 363, 509, imageIcon.getIconWidth(), imageIcon.getIconHeight());
         btnNext.setFocusable(false);
         add(btnNext);
         btnNext.addMouseListener(mouseAdapter);

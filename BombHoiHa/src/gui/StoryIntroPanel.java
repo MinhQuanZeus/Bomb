@@ -88,21 +88,21 @@ public class StoryIntroPanel extends JPanel {
 
         ImageIcon imageIcon = new ImageIcon("resources/System/next-0.png");
         btnNext = new JLabel(imageIcon);
-        btnNext.setBounds(422, 35, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+        btnNext.setBounds(520, 237, imageIcon.getIconWidth(), imageIcon.getIconHeight());
         btnNext.setFocusable(false);
         add(btnNext);
         btnNext.addMouseListener(mouseAdapter);
 
         imageIcon = new ImageIcon("resources/System/prev-0.png");
         btnPrev = new JLabel(imageIcon);
-        btnPrev.setBounds(30, 35, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+        btnPrev.setBounds(0, 237, imageIcon.getIconWidth(), imageIcon.getIconHeight());
         btnPrev.setFocusable(false);
         add(btnPrev);
         btnPrev.addMouseListener(mouseAdapter);
 
         imageIcon = new ImageIcon("resources/System/skip-0.png");
         btnSkip = new JLabel(imageIcon);
-        btnSkip.setBounds(228, 15, 108, 40);
+        btnSkip.setBounds(420, 15, 108, 40);
         btnSkip.setFocusable(false);
         add(btnSkip);
         btnSkip.addMouseListener(mouseAdapter);
