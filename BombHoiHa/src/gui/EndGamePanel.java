@@ -20,10 +20,10 @@ public class EndGamePanel extends JPanel {
     private JLabel btnBackToMenu;
     private Image backGround;
     private Integer score;
+    private JLabel lbScore;
 
     public EndGamePanel(String tag, Integer score) {
         setLayout(null);
-        initComp();
         switch (tag) {
             case WIN:
                 backGround = Utils.loadImageFromRes("System/game-won");
@@ -39,6 +39,7 @@ public class EndGamePanel extends JPanel {
                 break;
         }
         this.score = score;
+        initComp();
     }
 
     private void initComp() {
@@ -69,6 +70,19 @@ public class EndGamePanel extends JPanel {
             }
         };
 
+        if (score != null) {
+            lbScore = new JLabel("Your Score: " + score);
+            lbScore.setFont(new Font("Bookman Old Style", Font.BOLD, 30));
+            lbScore.setHorizontalAlignment(SwingConstants.CENTER);
+            lbScore.setSize(500, 50);
+            lbScore.setForeground(Color.BLACK);
+            lbScore.setLocation(
+                    (GameFrame.WIDTH - lbScore.getWidth()) / 2,
+                    0
+                    );
+            add(lbScore);
+        }
+
         ImageIcon imageIcon = new ImageIcon("resources/System/back-0.png");
         btnBackToMenu = new JLabel(imageIcon);
         btnBackToMenu.setBounds((GameFrame.WIDTH - imageIcon.getIconWidth()) / 2 , 500, imageIcon.getIconWidth(), imageIcon.getIconHeight());
@@ -81,10 +95,5 @@ public class EndGamePanel extends JPanel {
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         graphics.drawImage(backGround, 0, 0, GameFrame.WIDTH, GameFrame.HEIGHT, null);
-        if (score != null) {
-            graphics.setFont(new Font("Bookman Old Style", Font.BOLD, 30));
-            graphics.setColor(Color.BLACK);
-            graphics.drawString("Your Score: " + score, 30, 30);
-        }
     }
 }
