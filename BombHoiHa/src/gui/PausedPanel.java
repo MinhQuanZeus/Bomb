@@ -18,6 +18,7 @@ public class PausedPanel extends JPanel {
     private JLabel label;
     private JLabel btnResume;
     private JLabel btnQuit;
+    private JLabel btnMute;
 
     public PausedPanel(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -45,6 +46,18 @@ public class PausedPanel extends JPanel {
                     setVisible(false);
                     gamePanel.resume();
                 }
+                if (mouseEvent.getSource().equals(btnMute)) {
+                    if (MainPanel.isMute()) {
+                        MainPanel.setMute(false);
+                        ImageIcon imageIcon = new ImageIcon("resources/System/mute-1.png");
+                        btnMute.setIcon(imageIcon);
+                    }
+                    else{
+                        MainPanel.setMute(true);
+                        ImageIcon imageIcon = new ImageIcon("resources/System/unmute-1.png");
+                        btnMute.setIcon(imageIcon);
+                    }
+                }
             }
 
             @Override
@@ -56,6 +69,16 @@ public class PausedPanel extends JPanel {
                 if (mouseEvent.getSource().equals(btnResume)) {
                     btnResume.setIcon(new ImageIcon("resources/System/resume-1.png"));
                 }
+                if (mouseEvent.getSource().equals(btnMute)) {
+                    if (MainPanel.isMute()){
+                        ImageIcon imageIcon = new ImageIcon("resources/System/unmute-1.png");
+                        btnMute.setIcon(imageIcon);
+                    }
+                    else{
+                        ImageIcon imageIcon = new ImageIcon("resources/System/mute-1.png");
+                        btnMute.setIcon(imageIcon);
+                    }
+                }
             }
 
             @Override
@@ -66,6 +89,16 @@ public class PausedPanel extends JPanel {
                 }
                 if (mouseEvent.getSource().equals(btnResume)) {
                     btnResume.setIcon(new ImageIcon("resources/System/resume-0.png"));
+                }
+                if (mouseEvent.getSource().equals(btnMute)) {
+                    if (MainPanel.isMute()){
+                        ImageIcon imageIcon = new ImageIcon("resources/System/unmute-0.png");
+                        btnMute.setIcon(imageIcon);
+                    }
+                    else{
+                        ImageIcon imageIcon = new ImageIcon("resources/System/mute-0.png");
+                        btnMute.setIcon(imageIcon);
+                    }
                 }
             }
         };
@@ -84,9 +117,18 @@ public class PausedPanel extends JPanel {
 
         imageIcon = new ImageIcon("resources/System/quit-0.png");
         btnQuit = new JLabel(imageIcon);
-        btnQuit.setBounds((this.getWidth() - imageIcon.getIconWidth()) / 2, btnResume.getY() + btnResume.getHeight() + 10, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+        btnQuit.setBounds((this.getWidth() - imageIcon.getIconWidth()) / 2, btnResume.getY() + btnResume.getHeight() + 60, imageIcon.getIconWidth(), imageIcon.getIconHeight());
         btnQuit.setFocusable(false);
         add(btnQuit);
         btnQuit.addMouseListener(mouseAdapter);
+
+        if (MainPanel.isMute())
+            imageIcon = new ImageIcon("resources/System/unmute-0.png");
+        else imageIcon = new ImageIcon("resources/System/mute-0.png");
+        btnMute = new JLabel(imageIcon);
+        btnMute.setBounds((this.getWidth() - imageIcon.getIconWidth()) / 2,btnResume.getY() + btnResume.getHeight() + 10,imageIcon.getIconWidth(),imageIcon.getIconHeight());
+        btnMute.setFocusable(false);
+        add(btnMute);
+        btnMute.addMouseListener(mouseAdapter);
     }
 }

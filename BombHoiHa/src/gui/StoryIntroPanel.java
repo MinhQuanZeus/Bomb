@@ -1,5 +1,7 @@
 package gui;
 
+import manager.GameManager;
+import models.PlayerModel;
 import utils.Utils;
 
 import javax.swing.*;
@@ -13,6 +15,7 @@ import java.awt.event.MouseEvent;
 public class StoryIntroPanel extends JPanel {
     private JLabel btnNext;
     private JLabel btnPrev;
+    private JLabel btnSkip;
 
     private int part = 0;
 
@@ -41,6 +44,10 @@ public class StoryIntroPanel extends JPanel {
                         part--;
                     repaint();
                 }
+                if (mouseEvent.getSource().equals(btnSkip)){
+                    GameFrame.mainPanel.showGamePanel(false, 1);
+                    part = 0;
+                }
             }
 
             @Override
@@ -53,6 +60,10 @@ public class StoryIntroPanel extends JPanel {
                 if (e.getSource().equals(btnPrev)) {
                     ImageIcon imageIcon = new ImageIcon("resources/System/prev-1.png");
                     btnPrev.setIcon(imageIcon);
+                }
+                if (e.getSource().equals(btnSkip)) {
+                    ImageIcon imageIcon = new ImageIcon("resources/System/skip-1.png");
+                    btnSkip.setIcon(imageIcon);
                 }
             }
 
@@ -67,23 +78,34 @@ public class StoryIntroPanel extends JPanel {
                     ImageIcon imageIcon = new ImageIcon("resources/System/prev-0.png");
                     btnPrev.setIcon(imageIcon);
                 }
+                if (e.getSource().equals(btnSkip)) {
+                    ImageIcon imageIcon = new ImageIcon("resources/System/skip-0.png");
+                    btnSkip.setIcon(imageIcon);
+                }
             }
 
         };
 
         ImageIcon imageIcon = new ImageIcon("resources/System/next-0.png");
         btnNext = new JLabel(imageIcon);
-        btnNext.setBounds(400, 460, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+        btnNext.setBounds(422, 35, imageIcon.getIconWidth(), imageIcon.getIconHeight());
         btnNext.setFocusable(false);
         add(btnNext);
         btnNext.addMouseListener(mouseAdapter);
 
         imageIcon = new ImageIcon("resources/System/prev-0.png");
         btnPrev = new JLabel(imageIcon);
-        btnPrev.setBounds(50, 460, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+        btnPrev.setBounds(30, 35, imageIcon.getIconWidth(), imageIcon.getIconHeight());
         btnPrev.setFocusable(false);
         add(btnPrev);
         btnPrev.addMouseListener(mouseAdapter);
+
+        imageIcon = new ImageIcon("resources/System/skip-0.png");
+        btnSkip = new JLabel(imageIcon);
+        btnSkip.setBounds(228, 15, 108, 40);
+        btnSkip.setFocusable(false);
+        add(btnSkip);
+        btnSkip.addMouseListener(mouseAdapter);
 
     }
 

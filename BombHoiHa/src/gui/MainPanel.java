@@ -33,6 +33,7 @@ public class MainPanel extends JPanel {
     private ChooseMapPanel chooseMapPanel;
 
     private static SoundPlayer bgm;
+    private static boolean mute = false;
 
 
     public MainPanel() {
@@ -96,30 +97,41 @@ public class MainPanel extends JPanel {
     }
 
     public static void setBGM(String tag) {
-        if (bgm != null)
-            bgm.stop();
-        switch (tag) {
-            case TAG_MENU: {
-                bgm = new SoundPlayer(new File("resources/Sounds/game-menu.wav"));
+            if (bgm != null)
+                bgm.stop();
+            switch (tag) {
+                case TAG_MENU: {
+                    bgm = new SoundPlayer(new File("resources/Sounds/game-menu.wav"));
+                }
+                break;
+                case TAG_GAME: {
+                    bgm = new SoundPlayer(new File("resources/Sounds/game-stage-" + MapManager.mapLevel + ".wav"));
+                }
+                break;
+                case TAG_END_GAME_LOSE: {
+                    bgm = new SoundPlayer(new File("resources/Sounds/game-over.wav"));
+                }
+                break;
+                case TAG_END_GAME_WIN: {
+                    bgm = new SoundPlayer(new File("resources/Sounds/game-won.wav"));
+                }
+                break;
+                case TAG_INSTRUCTION: {
+                    bgm = new SoundPlayer(new File("resources/Sounds/game-instruction.wav"));
+                }
+                break;
             }
-            break;
-            case TAG_GAME: {
-                bgm = new SoundPlayer(new File("resources/Sounds/game-stage-" + MapManager.mapLevel + ".wav"));
-            }
-            break;
-            case TAG_END_GAME_LOSE: {
-                bgm = new SoundPlayer(new File("resources/Sounds/game-over.wav"));
-            }
-            break;
-            case TAG_END_GAME_WIN: {
-                bgm = new SoundPlayer(new File("resources/Sounds/game-won.wav"));
-            }
-            break;
-            case TAG_INSTRUCTION: {
-                bgm = new SoundPlayer(new File("resources/Sounds/game-instruction.wav"));
-            }
-            break;
-        }
-        bgm.play();
+            if (!mute)
+                bgm.play();
+    }
+
+    public static void setMute(boolean mute) {
+        MainPanel.mute = mute;
+        if (mute) bgm.stop();
+        if (!mute) bgm.play();
+    }
+
+    public static boolean isMute() {
+        return mute;
     }
 }

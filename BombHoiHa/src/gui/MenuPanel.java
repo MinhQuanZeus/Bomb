@@ -19,6 +19,7 @@ public class MenuPanel extends JPanel {
     private JLabel btnInstruction;
     private JLabel btnVersus;
     private JLabel gifLabel;
+    private JLabel btnMute;
 
     public MenuPanel() {
         setLayout(null);
@@ -43,6 +44,18 @@ public class MenuPanel extends JPanel {
                 if (mouseEvent.getSource().equals(btnInstruction)) {
                     GameFrame.mainPanel.showPanel(MainPanel.TAG_INSTRUCTION);
                 }
+                if (mouseEvent.getSource().equals(btnMute)) {
+                    if (MainPanel.isMute()) {
+                        MainPanel.setMute(false);
+                        ImageIcon imageIcon = new ImageIcon("resources/System/mute-1.png");
+                        btnMute.setIcon(imageIcon);
+                    }
+                    else{
+                        MainPanel.setMute(true);
+                        ImageIcon imageIcon = new ImageIcon("resources/System/unmute-1.png");
+                        btnMute.setIcon(imageIcon);
+                    }
+                }
             }
 
             @Override
@@ -64,6 +77,16 @@ public class MenuPanel extends JPanel {
                     ImageIcon imageIcon = new ImageIcon("resources/System/versus-1.png");
                     btnVersus.setIcon(imageIcon);
                 }
+                if (e.getSource().equals(btnMute)) {
+                    if (MainPanel.isMute()){
+                        ImageIcon imageIcon = new ImageIcon("resources/System/unmute-1.png");
+                        btnMute.setIcon(imageIcon);
+                    }
+                    else{
+                        ImageIcon imageIcon = new ImageIcon("resources/System/mute-1.png");
+                        btnMute.setIcon(imageIcon);
+                    }
+                }
             }
 
             @Override
@@ -84,6 +107,16 @@ public class MenuPanel extends JPanel {
                 if (e.getSource().equals(btnVersus)) {
                     ImageIcon imageIcon = new ImageIcon("resources/System/versus-0.png");
                     btnVersus.setIcon(imageIcon);
+                }
+                if (e.getSource().equals(btnMute)) {
+                    if (MainPanel.isMute()){
+                        ImageIcon imageIcon = new ImageIcon("resources/System/unmute-0.png");
+                        btnMute.setIcon(imageIcon);
+                    }
+                    else{
+                        ImageIcon imageIcon = new ImageIcon("resources/System/mute-0.png");
+                        btnMute.setIcon(imageIcon);
+                    }
                 }
             }
         };
@@ -121,6 +154,13 @@ public class MenuPanel extends JPanel {
         gifLabel.setBounds(90, btnStart.getY() - 55, imageIcon.getIconWidth(), imageIcon.getIconHeight());
         gifLabel.setFocusable(false);
         add(gifLabel);
+
+        imageIcon = new ImageIcon("resources/System/mute-0.png");
+        btnMute = new JLabel(imageIcon);
+        btnMute.setBounds(450,2,imageIcon.getIconWidth(),imageIcon.getIconHeight());
+        btnMute.setFocusable(false);
+        add(btnMute);
+        btnMute.addMouseListener(mouseAdapter);
     }
 
     @Override
