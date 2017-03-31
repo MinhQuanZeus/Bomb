@@ -155,9 +155,12 @@ public class MenuPanel extends JPanel {
         gifLabel.setFocusable(false);
         add(gifLabel);
 
-        imageIcon = new ImageIcon("resources/System/mute-0.png");
+        if (MainPanel.isMute())
+            imageIcon = new ImageIcon("resources/System/unmute-0.png");
+        else imageIcon = new ImageIcon("resources/System/mute-0.png");
+
         btnMute = new JLabel(imageIcon);
-        btnMute.setBounds(450,2,imageIcon.getIconWidth(),imageIcon.getIconHeight());
+        btnMute.setBounds(515,2,imageIcon.getIconWidth(),imageIcon.getIconHeight());
         btnMute.setFocusable(false);
         add(btnMute);
         btnMute.addMouseListener(mouseAdapter);

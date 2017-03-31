@@ -1,5 +1,6 @@
 package utils;
 
+import gui.MainPanel;
 import models.ItemMapModel;
 
 import javax.imageio.ImageIO;
@@ -44,28 +45,30 @@ public class Utils {
     }
 
     public static void playSound(String audioUrl, boolean repeat) {
-        File soundFile = new File("resources/Sounds/" + audioUrl);
-        try {
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
-            AudioFormat baseFormat = audioIn.getFormat();
-            AudioFormat decodeFormat = new AudioFormat(
-                    AudioFormat.Encoding.PCM_SIGNED,
-                    baseFormat.getSampleRate(),
-                    16,
-                    baseFormat.getChannels(),
-                    baseFormat.getChannels() * 2,
-                    baseFormat.getSampleRate(),
-                    false
-            );
-            AudioInputStream decodedAudioIn = AudioSystem.getAudioInputStream(decodeFormat, audioIn);
-            Clip clip = AudioSystem.getClip();
-            clip.open(decodedAudioIn);
-            clip.start();
-            if (repeat) {
-                clip.loop(Clip.LOOP_CONTINUOUSLY);
-            } else clip.loop(0);
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            e.printStackTrace();
+        if (!MainPanel.isMute()) {
+            File soundFile = new File("resources/Sounds/" + audioUrl);
+            try {
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+                AudioFormat baseFormat = audioIn.getFormat();
+                AudioFormat decodeFormat = new AudioFormat(
+                        AudioFormat.Encoding.PCM_SIGNED,
+                        baseFormat.getSampleRate(),
+                        16,
+                        baseFormat.getChannels(),
+                        baseFormat.getChannels() * 2,
+                        baseFormat.getSampleRate(),
+                        false
+                );
+                AudioInputStream decodedAudioIn = AudioSystem.getAudioInputStream(decodeFormat, audioIn);
+                Clip clip = AudioSystem.getClip();
+                clip.open(decodedAudioIn);
+                clip.start();
+                if (repeat) {
+                    clip.loop(Clip.LOOP_CONTINUOUSLY);
+                } else clip.loop(0);
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                e.printStackTrace();
+            }
         }
     }
 

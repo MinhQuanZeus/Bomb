@@ -28,6 +28,7 @@ public class ChooseMapPanel extends JPanel {
         MouseAdapter mouseAdapter = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
+                Utils.playSound("select.wav", false);
                 if (mouseEvent.getSource().equals(btnBackToMenu)) {
                     GameFrame.mainPanel.showPanel(MainPanel.TAG_MENU);
                 }
