@@ -117,7 +117,7 @@ public class PausedPanel extends JPanel {
 
         imageIcon = new ImageIcon("resources/System/quit-0.png");
         btnQuit = new JLabel(imageIcon);
-        btnQuit.setBounds((this.getWidth() - imageIcon.getIconWidth()) / 2, btnResume.getY() + btnResume.getHeight() + 60, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+        btnQuit.setBounds((this.getWidth() - imageIcon.getIconWidth()) / 2, btnResume.getY() + btnResume.getHeight() + 10, imageIcon.getIconWidth(), imageIcon.getIconHeight());
         btnQuit.setFocusable(false);
         add(btnQuit);
         btnQuit.addMouseListener(mouseAdapter);
@@ -126,7 +126,7 @@ public class PausedPanel extends JPanel {
             imageIcon = new ImageIcon("resources/System/unmute-0.png");
         else imageIcon = new ImageIcon("resources/System/mute-0.png");
         btnMute = new JLabel(imageIcon);
-        btnMute.setBounds((this.getWidth() - imageIcon.getIconWidth()) / 2,btnResume.getY() + btnResume.getHeight() + 10,imageIcon.getIconWidth(),imageIcon.getIconHeight());
+        btnMute.setBounds((this.getWidth() - imageIcon.getIconWidth()) / 2,btnResume.getY() + btnResume.getHeight() + 65,imageIcon.getIconWidth(),imageIcon.getIconHeight());
         btnMute.setFocusable(false);
         add(btnMute);
         btnMute.addMouseListener(mouseAdapter);
