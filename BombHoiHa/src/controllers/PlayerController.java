@@ -199,6 +199,8 @@ public class PlayerController extends GameController implements Collision, KeyLi
                 GameManager.collisionManager.remove(other);
                 MainPanel.gamePanel.addTitle(GamePanel.clearIcon);
                 GameManager.setTransitionStart(true);
+                MainPanel.stopBGM();
+                Utils.playSound("level-clear.wav",false);
             }
         }
 

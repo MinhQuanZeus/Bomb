@@ -56,8 +56,7 @@ public class MainPanel extends JPanel {
             menuPanel = new MenuPanel();
             add(menuPanel,TAG_MENU);
         }
-        if (!tag.equals(TAG_CHOOSE_MAP))
-            setBGM(tag);
+        setBGM(tag);
         cardLayout.show(this, tag);
     }
 
@@ -76,6 +75,7 @@ public class MainPanel extends JPanel {
     public void showStoryIntroPanel() {
         StoryIntroPanel storyIntroPanel = new StoryIntroPanel();
         add(storyIntroPanel, TAG_STORY_INTRO);
+        setBGM(TAG_STORY_INTRO);
         cardLayout.show(this, TAG_STORY_INTRO);
     }
 
@@ -83,6 +83,7 @@ public class MainPanel extends JPanel {
         gamePanel.setRunning(false);
         StoryEndPanel storyEndPanel = new StoryEndPanel();
         add(storyEndPanel, TAG_STORY_END);
+        setBGM(TAG_STORY_END);
         cardLayout.show(this, TAG_STORY_END);
     }
 
@@ -124,6 +125,15 @@ public class MainPanel extends JPanel {
                     bgm = new SoundPlayer(new File("resources/Sounds/game-instruction.wav"));
                 }
                 break;
+                case TAG_STORY_INTRO: {
+                    bgm = new SoundPlayer(new File("resources/Sounds/story-intro.wav"));
+                }break;
+                case TAG_STORY_END: {
+                    bgm = new SoundPlayer(new File("resources/Sounds/story-end.wav"));
+                }break;
+                case TAG_CHOOSE_MAP: {
+                    bgm = new SoundPlayer(new File("resources/Sounds/choose-map.wav"));
+                }break;
             }
             if (!mute)
                 bgm.play();
@@ -137,5 +147,9 @@ public class MainPanel extends JPanel {
 
     public static boolean isMute() {
         return mute;
+    }
+
+    public static void stopBGM(){
+        bgm.stop();
     }
 }
