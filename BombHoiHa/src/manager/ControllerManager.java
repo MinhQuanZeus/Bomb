@@ -71,7 +71,8 @@ public class ControllerManager {
                     ((PlayerModel) GameManager.playerController.getModel()).increaseScore(500);
                 }
                 if (gameController instanceof BombController) {
-                    ((PlayerModel) GameManager.playerController.getModel()).reduceCountBomb();
+                    //((PlayerModel) GameManager.playerController.getModel()).reduceCountBomb();
+                    ((BombController) gameController).getPlayerModel().reduceCountBomb();
                     GameModel gameModel = gameController.getModel();
                     MapManager.map[Utils.getRowMatrix(gameModel.getY())][Utils.getColMatrix(gameModel.getX())] = 0;
                 }

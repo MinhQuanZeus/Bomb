@@ -165,7 +165,6 @@ public class BombController extends GameController implements Collision {
                 }
             }
         }
-
         GameManager.arrBlocks.remove(this);
         model.setAlive(false);
     }
@@ -191,5 +190,11 @@ public class BombController extends GameController implements Collision {
             }
         }
     }
+
+    public PlayerModel getPlayerModel() {
+        return playerModel;
+    }
 }
+
+
 

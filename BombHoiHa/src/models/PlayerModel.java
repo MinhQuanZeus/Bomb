@@ -55,7 +55,8 @@ public class PlayerModel extends GameModel {
     }
 
     public void reduceCountBomb() {
-        countBomb--;
+        if (countBomb>0)
+            countBomb--;
     }
 
     public boolean checkMaxBomb() {

@@ -62,7 +62,7 @@ public class MapManager extends ControllerManager {
     }
 
     private void checkLevelClear() {
-        if (EnemyModel.enemyCount == 0) {
+        //if (EnemyModel.enemyCount == 0) {
             if (mapLevel < LEVEL_MAX) {
                 int x;
                 int y;
@@ -82,7 +82,7 @@ public class MapManager extends ControllerManager {
                 MainPanel.gamePanel.addTitle(GamePanel.winIcon);
             }
         }
-    }
+    //}
 
     private String getCurrentTime() {
         if (isCountTime) {
