@@ -90,7 +90,7 @@ public class SecondPlayerController extends PlayerController {
                 }
 
             }
-            if (bitSet.get(KeyEvent.VK_B)) {
+            if (bitSet.get(KeyEvent.VK_NUMPAD0)) {
                 bombard();
             }
             if (bitSet.get(KeyEvent.VK_NUMPAD1)) {
