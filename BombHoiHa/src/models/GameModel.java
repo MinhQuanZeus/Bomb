@@ -50,7 +50,8 @@ public class GameModel {
         int dx = this.x + gameVector.dx;
         int dy = this.y + gameVector.dy;
 
-        if ((dx < 0 || dx > GameFrame.WIDTH - width) || (dy < -10 || dy > GameFrame.HEIGHT - height - 25)) {
+        Rectangle rectangle = getBottomRect(dx, dy);
+        if ((rectangle.getX() < 0 || rectangle.getX() > GameFrame.WIDTH - rectangle.getWidth()) || (rectangle.getY() < -10 || rectangle.getY() > GameFrame.HEIGHT - rectangle.getHeight() - 25)) {
             return false;
         }
 
